@@ -9,7 +9,7 @@ Align rule distribution, clarification, debugging and private-map handling; reta
 - **What**: Add WIP/Ship living-doc validation, warning-only acceptance-quality
   annotations, a private system-map validator, and read-only PR CI with pinned
   GitHub actions and Claude CLI. Align the canonical docs, optional Claude
-  mirror, and the bilingual `zoe-site` article.
+  mirror, and the bilingual the portfolio site article.
 - **Why**: The old close-loop guard proved only that a living file changed;
   hosted checks, local map claims, and falsifiable acceptance wording were not
   enforced or independently visible.
@@ -29,7 +29,7 @@ Align rule distribution, clarification, debugging and private-map handling; reta
 - **Why**: The public page was table-heavy, the generic path was secondary, and
   several written guarantees disagreed with what the local scripts enforced.
 - **Spec/Plan**: `.spec/readme-workflow-refresh/current.md`
-- **PR**: [#17](https://github.com/zoetw88/ai-workflow/pull/17)
+- **PR**: [#17](https://github.com/quietbranch88/ai-workflow/pull/17)
 - **Evidence**: 15 contract/integration tests, PowerShell parse, JSON parse,
   relative-link validation, GitHub Markdown render, and `git diff --check` pass.
 - **Notes**: Pilotfish influenced only the attributed, tool-agnostic role
@@ -51,15 +51,15 @@ Align rule distribution, clarification, debugging and private-map handling; reta
   At that commit, Claude plugin validation was blocked because the CLI was not
   installed; the later README/workflow refresh completed strict validation.
 
-## 2026-07-15 — readme-storytelling — make the public entry point sound like Zoe
+## 2026-07-15 — readme-storytelling — make the public entry point reflect the author's voice
 
 - **What**: Reframe the README around the failure and evidence loop that
   created the workflow; add dedicated Gotchas and Glossary entry points.
 - **Why**: The existing README is complete but reads like a directory manual,
-  and the two concepts Zoe expected are missing as discoverable documents.
+  and the two concepts the author expected are missing as discoverable documents.
 - **Spec/Plan**: `.spec/readme-storytelling/current.md`
 - **Commits**: `e351bd6`, plus the close-the-loop follow-up in PR #15
 - **Continues**: public-profile and repository-brand cleanup from 2026-07-13
 - **Notes**: Canonical workflow and pitfall content remains in its existing
   files; the new public docs route to it instead of copying it wholesale. The
-  repository About homepage was also updated to `https://zoe-builds.com`.
+  repository About homepage was also updated to `the legacy personal site`.
