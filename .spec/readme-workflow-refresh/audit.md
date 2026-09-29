@@ -89,12 +89,12 @@ or wording.
 - `git diff --check` — passed (Git only reported expected LF/CRLF checkout
   notices).
 - Official Claude Code CLI `2.1.210` was installed at
-  `C:\Users\Zoe\.local\bin\claude.exe`. Both strict validators passed:
+  `C:\Users\<user>\.local\bin\claude.exe`. Both strict validators passed:
   `claude plugin validate --strict .` and
   `claude plugin validate --strict .\claude-code\plugin`.
 
 ## Published handoff
 
 - Core commit: `c4ae17e`
-- Ready PR: [#17](https://github.com/zoetw88/ai-workflow/pull/17)
-- Integration is intentionally pending Zoe's explicit merge approval.
+- Ready PR: [#17](https://github.com/quietbranch88/ai-workflow/pull/17)
+- Integration is intentionally pending the repository owner's explicit merge approval.
