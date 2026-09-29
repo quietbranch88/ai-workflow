@@ -9,7 +9,7 @@
   truth.
 - Affected repositories:
   - `ai-workflow`
-  - `zoe-site`
+  - the portfolio site
 - Device type: developer tooling and GitHub-hosted CI
 - Payload shape: not applicable
 
@@ -38,7 +38,7 @@ independently testable.
   - Verify: `python -m unittest tests.test_workflow_enforcement.WorkflowDocumentValidatorTests.test_github_actions_emits_a_warning_annotation_without_failing -v`.
 - [x] Observable: `~/.ai-workflow/system-map.md` remains private and its declared
       repositories, Git roots, entrypoints, and placeholders are validated.
-  - Environment: public fixture maps in tests plus Zoe's local private map.
+  - Environment: public fixture maps in tests plus the repository owner's local private map.
   - Verify: `python -m unittest tests.test_system_map_validator -v` and
     `python scripts/validate_system_map.py --map ~/.ai-workflow/system-map.md`.
 - [x] Observable: regression tests cover WIP/Ship, mismatch, placeholders,
@@ -51,7 +51,7 @@ independently testable.
   - Verify: full Python suite plus both `claude plugin validate --strict` commands.
 - [x] Observable: both `my-ai-workflow` articles distinguish durable rules from
       ticket truth, evidence from hashes, optional adapters, and iterative loops.
-  - Environment: bilingual Markdown sources in `zoe-site`.
+  - Environment: bilingual Markdown sources in the portfolio site.
   - Verify: `node --test tests/ai-workflow-article-contract.test.mjs`.
 - [x] Observable: both article routes build and render readably without page-level
       horizontal overflow at desktop and mobile widths.
@@ -76,18 +76,18 @@ independently testable.
 - Change GitHub branch protection or repository rulesets.
 - Prevent every possible intentional bypass of local hooks.
 - Use an LLM as a correctness gate.
-- Merge or deploy without Zoe's explicit approval.
-- Change unrelated `zoe-site` runtime, Cloudflare migration, or article content.
+- Merge or deploy without the repository owner's explicit approval.
+- Change unrelated the portfolio site runtime, Cloudflare migration, or article content.
 
 ## Verification environments
 
 - Local Windows worktree for Python and PowerShell contract tests.
 - GitHub-hosted runner for the pull-request workflow.
 - Fixture repositories and maps for system-map validation.
-- Isolated `zoe-site` worktree for Astro build/check and bilingual visual QA.
+- Isolated the portfolio site worktree for Astro build/check and bilingual visual QA.
 
 ## Open questions
 
-- None. Zoe confirmed all four gaps are in scope, WIP is allowed, acceptance
+- None. the repository owner confirmed all four gaps are in scope, WIP is allowed, acceptance
   quality is warning-only, the system map stays local, and only the CI workflow
   should be added.
