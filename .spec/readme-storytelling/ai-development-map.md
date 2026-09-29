@@ -4,7 +4,7 @@
 
 1. `.spec/readme-storytelling/current.md`
 2. `.spec/readme-storytelling/audit.md`
-3. Zoe's published article: `https://zoe-builds.com/en/articles/my-ai-workflow/`
+3. the previously published workflow article
 4. `README.md`
 5. `PHILOSOPHY.md`
 6. `workflow.md`
