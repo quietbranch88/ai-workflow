@@ -1,8 +1,8 @@
 {
-  "name": "zoetw88",
-  "description": "Optional Claude Code adapter for Zoe's tool-agnostic, evidence-first six-stage development workflow.",
+  "name": "quietbranch88",
+  "description": "Optional Claude Code adapter for Quiet Branch's tool-agnostic, evidence-first six-stage development workflow.",
   "owner": {
-    "name": "zoetw88"
+    "name": "quietbranch88"
   },
   "plugins": [
     {
