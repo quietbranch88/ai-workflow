@@ -15,14 +15,14 @@
 - `claude plugin validate --strict claude-code/plugin`
 - GitHub Markdown API render and README relative-link validation
 - `python scripts/validate_system_map.py --map ~/.ai-workflow/system-map.md`
-- `npm run check` and `npm run build` in the coordinated `zoe-site` worktree
+- `npm run check` and `npm run build` in the coordinated the portfolio site worktree
 - In-app browser inspection of both language routes at desktop and mobile widths
 
 ## Findings and decisions
 
 - The private system-map file existed but was empty. It was populated locally
   with the two canonical clones and validated; it remains outside Git.
-- Acceptance-quality findings are warnings by Zoe's decision. Missing documents,
+- Acceptance-quality findings are warnings by the repository owner's decision. Missing documents,
   mismatched ticket pairs, placeholders, and incomplete Ship checklists fail.
 - GitHub actions use full commit SHAs, the token is read-only, and Claude CLI is
   fixed at `2.1.210`.
@@ -38,10 +38,10 @@
 ## Evidence boundary
 
 - GitHub-hosted evidence begins after the PRs open. `ai-workflow` uses a hosted
-  runner; private `zoe-site` requires an ephemeral Windows self-hosted runner
+  runner; private the portfolio site requires an ephemeral Windows self-hosted runner
   because paid hosted minutes are unavailable. Both checks remain required,
   while branch-protection configuration is out of scope.
 - The article was built and inspected locally; this change does not deploy or
-  prove the live `zoe-builds.com` routes.
-- `npm ci` reported six existing dependency audit findings in `zoe-site`
+  prove the live `legacy personal site` routes.
+- `npm ci` reported six existing dependency audit findings in the portfolio site
   (two low, two moderate, two high). No dependency was changed in this task.
