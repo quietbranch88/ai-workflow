@@ -26,7 +26,7 @@ clear starting command.
 1. Clone the shared workflow.
 
    ```bash
-   git clone https://github.com/zoetw88/ai-workflow.git ~/.ai-workflow
+   git clone https://github.com/quietbranch88/ai-workflow.git ~/.ai-workflow
    ```
 
 2. Add the project-instruction template without overwriting local rules.
@@ -161,8 +161,8 @@ Use [`templates/CLAUDE.md.template`](templates/CLAUDE.md.template) as a thin
 shim that imports `AGENTS.md`, or install the packaged skills and agents:
 
 ```text
-/plugin marketplace add zoetw88/ai-workflow
-/plugin install ai-workflow@zoetw88
+/plugin marketplace add quietbranch88/ai-workflow
+/plugin install ai-workflow@quietbranch88
 ```
 
 For global rules, start from
@@ -190,5 +190,5 @@ Read [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https:/
 for the failure behind these rules and why acceptance criteria changed the way
 I work with agents.
 
-More from [Zoe](https://zoe-builds.com): practical notes on AI products,
+More from Quiet Branch: practical notes on AI products,
 backend systems, and engineering judgment without the hype.
