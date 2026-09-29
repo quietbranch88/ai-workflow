@@ -1,4 +1,4 @@
-# Zoe Global Agent Rules
+# Quiet Branch Global Agent Rules
 
 These are global instructions for coding agents. Drop into `~/.claude/CLAUDE.md`
 (Claude Code) and `~/.codex/AGENTS.md` (Codex) — keep both copies identical apart
@@ -29,9 +29,9 @@ acceptance criteria.
 
 ## Code Change Approval
 
-- On an isolated worktree or branch, edit freely. Ask Zoe before: merging into the integration/main branch, database migrations, destructive or irreversible operations, and anything touching payments or user data in a deployed environment.
+- On an isolated worktree or branch, edit freely. Ask the repository owner before: merging into the integration/main branch, database migrations, destructive or irreversible operations, and anything touching payments or user data in a deployed environment.
 - When working directly on a shared branch with no isolation, ask before editing runtime-affecting code.
-- Global agent-rule files may be edited when Zoe explicitly asks to update the rules.
+- Global agent-rule files may be edited when the repository owner explicitly asks to update the rules.
 
 ## Architecture Boundaries
 
