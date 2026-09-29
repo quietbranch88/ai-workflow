@@ -186,7 +186,6 @@ boundary instead of collecting more instructions everywhere.
 
 ## The longer story
 
-Read [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
 for the failure behind these rules and why acceptance criteria changed the way
 I work with agents.
 
