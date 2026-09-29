@@ -2,7 +2,7 @@
 
 **Project type: personal**
 
-This repository is the tool-agnostic source of truth for Zoe's AI-development
+This repository is the tool-agnostic source of truth for the repository owner's AI-development
 workflow. It contains documentation, reusable prompts, templates, scripts, and
 Claude Code plugin adapters; it is not an application runtime.
 
