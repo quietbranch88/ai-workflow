@@ -29,4 +29,4 @@
 - Keep close-loop enforcement narrow: reject code pushes without a true
   living-tier document, but do not claim that it validates document accuracy.
 - Do not add provider-specific model names to canonical routing.
-- Do not merge without Zoe's explicit approval.
+- Do not merge without the repository owner's explicit approval.
