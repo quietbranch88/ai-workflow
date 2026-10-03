@@ -7,6 +7,8 @@
 
 **Project type: personal | team** ← set one. Drives the close-the-loop rules below:
 - `personal` → `devlog.md` + `todo.md` are required for non-trivial tracked tasks.
+  Configured tracked Ship checks also require these records for small doc
+  corrections outside the living tier; keep the records brief and factual.
 - `team` → they follow the team's convention; skip until the team has adopted them.
 
 ## Project context
@@ -47,7 +49,9 @@ Docs are two-tier. Never overwrite history; keep the living tier aligned with re
 
 > Steps 2–3 depend on **Project type** (top of file): `personal` → mandatory; `team` → follow the team's convention, skip until adopted. `devlog.md` / `todo.md` are project-level (one rolling file each, spanning all tickets), not per-ticket.
 
-Behavior-affecting change → update `current.md` (it IS the spec). Implementation-only decision → ADR only.
+Behavior-affecting change → update `current.md` (it IS the spec). Record routine
+implementation choices in `tasks.md` or the handoff. Use an ADR only for a real
+architecture tradeoff worth preserving.
 
 ## Shared sources
 

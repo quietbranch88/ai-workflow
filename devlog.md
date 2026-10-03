@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-10-04 — workflow readability and consistent adoption guidance
+
+- **What**: Add a six-stage Mermaid loop, plain-language descriptions, complete
+  template setup steps and links to the owner's original and later Kafka articles.
+  Clarify tracked Ship requirements and reserve ADRs for architecture tradeoffs.
+  Synchronize the Claude adapter at 0.6.1; validator behavior is unchanged.
+- **Evidence**: `.spec/workflow-readability/audit.md` records findings and validation.
+- **Dated correction**: PR #20 merged as `442a7f9` on 2026-10-03. The previous
+  entry's feature-branch status is superseded for remote delivery; it remains no
+  evidence of local installation. This follow-up is not yet merged.
+
 ## 2026-10-03 — evidence contracts and private task records
 
 - **What**: Synchronize independent acceptance oracles, defect-detection and real-boundary
