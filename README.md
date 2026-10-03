@@ -1,7 +1,11 @@
 # AI Workflow
 
-**Tool-agnostic engineering with coding agents: independent acceptance contracts,
-real-boundary verification, scoped review, and evidence-backed handoffs.**
+**Practical prompts, templates, and checks for planning, testing, and reviewing
+work with AI coding agents.**
+
+Start with a clear definition of success, make small changes, test the result,
+and review before shipping. Use the Markdown instructions with your coding
+agent; add the optional scripts and tool adapters when you need them.
 
 > **AI is a capable coworker who overstates its progress. Ask for evidence.**
 
@@ -21,8 +25,8 @@ tool-specific configuration is optional glue.
 
 ## Quick start
 
-The minimum setup is clone, merge one instruction file, and give the agent a
-clear starting command.
+Clone the workflow, configure your project's instructions, then start a task.
+This setup does not install Git hooks or CI in your project.
 
 1. Clone the shared workflow.
 
@@ -30,7 +34,8 @@ clear starting command.
    git clone https://github.com/quietbranch88/ai-workflow.git ~/.ai-workflow
    ```
 
-2. Add the project-instruction template without overwriting local rules.
+2. Change into **your target project's root directory**, then add the
+   project-instruction template without overwriting local rules.
 
    If `AGENTS.md` already exists, merge the relevant sections from
    [`templates/AGENTS.md.template`](templates/AGENTS.md.template) into it. If it
@@ -51,7 +56,15 @@ clear starting command.
    }
    ```
 
-3. Give your coding agent one instruction:
+3. Configure the copied or merged `AGENTS.md` before using it:
+
+   - Choose one project type: `personal` or `team`.
+   - Declare whether task records are tracked or
+     [local-only](docs/local-spec-policy.md). Keep private records out of Git.
+   - Fill in the project context and actual lint/test commands. Remove unused
+     placeholders; state when a check is unavailable instead of inventing one.
+
+4. Give your coding agent one instruction:
 
 ```text
 Read AGENTS.md and ~/.ai-workflow/workflow.md, then follow the six-stage
@@ -75,18 +88,49 @@ pwsh ~/.ai-workflow/scripts/start-task.ps1 -RepoPath C:\path\to\repo
 
 </details>
 
-Local pre-push uses **WIP mode**: draft checkboxes may remain open, but ticket
-documents must be structurally valid. Pull requests use **Ship mode** in
-GitHub-hosted CI: changes outside the living tier, including substantive
-Markdown, require completed living docs; repository tests and both strict
-Claude adapter validators must pass. CI pins the project type so a PR cannot
-disable its own personal-project policy. Acceptance criteria should name an
-observable result, environment, and verification step; weak wording warns
-without blocking. These checks validate evidence structure, not factual truth. Repositories with private task records
-can explicitly select [local-only validation](docs/local-spec-policy.md); those local
-checks do not publish evidence or provide server-side enforcement.
+<details>
+<summary>Optional checks and this repository's CI</summary>
+
+The [pre-push template](templates/pre-commit.template.yaml), when installed,
+uses **WIP mode**: draft checkboxes may remain open, but ticket documents must
+be structurally valid. It is a local safeguard, not server-side enforcement.
+
+**This repository's** [GitHub workflow](.github/workflows/validate.yml) runs
+tests, both strict Claude adapter validators, and **Ship mode**. Under the
+tracked policy, every change outside the living documents requires completed
+ticket records, plus `devlog.md` and `todo.md` for personal projects. This
+includes small Markdown corrections: the validator checks paths, not the size
+or meaning of a change. Keep the required records brief and factual.
+
+CI explicitly passes `--project-type personal`, so changing the project-type
+marker in `AGENTS.md` alone does not change that check. This does not prevent
+a PR from changing the workflow or validator; those changes still need review.
+Other projects must configure their own checks; cloning this repo installs none.
+
+These checks validate record structure, not whether a claim is true. Acceptance
+wording without an observable result, environment, or verification step produces
+a warning. Projects with private records can select
+[local-only validation](docs/local-spec-policy.md); do not upload private
+records to satisfy this repository's tracked-record convention.
+
+</details>
 
 ## The operating loop
+
+```mermaid
+flowchart TD
+    A["Define: agree on success"] --> B["Plan: choose small steps"]
+    B --> C["Build: make the change"]
+    C --> D["Verify: test the result"]
+    D -->|Evidence supports acceptance| E["Review: inspect changes and evidence"]
+    D -->|Test fails| C
+    E -->|Confirmed issue| C
+    E -->|Findings resolved| F["Ship: prepare the approved handoff"]
+```
+
+The loop is Define → Plan → Build → Verify → Review → Ship, with failed tests
+and confirmed findings returning to Build. Missing required evidence leaves the
+task unverified. Ship does not grant permission to merge or deploy.
 
 | Stage | The question | Evidence it leaves behind |
 |---|---|---|
@@ -104,6 +148,12 @@ Two distinctions carry most of the weight:
   is the right, safe, maintainable thing.
 
 The complete process lives in [`workflow.md`](workflow.md).
+
+Scale the work to the change: review a wording correction and check its links;
+give a behavior change explicit acceptance criteria and targeted tests; exercise
+the affected real services for a cross-service change. Keep task records brief,
+and follow any configured Ship checks described above. TDD and parallel agents
+are optional unless your project requires them.
 
 ## Choose the model; keep the gates
 
@@ -194,8 +244,11 @@ boundary instead of collecting more instructions everywhere.
 
 ## The longer story
 
-for the failure behind these rules and why acceptance criteria changed the way
-I work with agents.
+- [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
+  ([中文](https://zoe-builds.com/articles/my-ai-workflow/)) — the missing Kafka
+  integration that led to this workflow and its acceptance criteria.
+- [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
+  — a later example of deciding acceptable outcomes before implementing retries
+  and recovery. The article distinguishes investigation from deployed fixes.
 
-More from Quiet Branch: practical notes on AI products,
-backend systems, and engineering judgment without the hype.
+More writing at [Zoe Builds](https://zoe-builds.com/).

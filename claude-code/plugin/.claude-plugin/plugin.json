@@ -1,7 +1,7 @@
 {
   "name": "ai-workflow",
-  "version": "0.6.0",
-  "description": "Tool-agnostic workflow for coding agents: independent acceptance contracts, real-boundary verification, scoped review, and evidence-backed handoffs.",
+  "version": "0.6.1",
+  "description": "Practical prompts, templates, and checks for planning, testing, and reviewing work with AI coding agents.",
   "author": {
     "name": "quietbranch88"
   }

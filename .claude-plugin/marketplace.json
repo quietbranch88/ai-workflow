@@ -8,7 +8,7 @@
     {
       "name": "ai-workflow",
       "source": "./claude-code/plugin",
-      "description": "Tool-agnostic workflow for coding agents: independent acceptance contracts, real-boundary verification, scoped review, and evidence-backed handoffs."
+      "description": "Practical prompts, templates, and checks for planning, testing, and reviewing work with AI coding agents."
     }
   ]
 }

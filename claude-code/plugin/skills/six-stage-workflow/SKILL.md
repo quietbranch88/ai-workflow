@@ -69,8 +69,8 @@ without anyone having to remember to update things.
   - `.spec/<ticket>/audit.md`, `.spec/<ticket>/adr-*.md`
   - To overturn a decision, write a NEW ADR and mark the old one `Superseded by ADR-NNNN` — never edit its body.
 
-`current.md` IS the spec: a behavior-affecting change updates it; an implementation-only
-decision goes to an ADR only.
+`current.md` IS the spec: a behavior-affecting change updates it. Record routine implementation
+choices in `tasks.md` or the handoff; use an ADR only for a real architecture tradeoff worth preserving.
 
 ### Read first (Define / Plan)
 
@@ -97,7 +97,9 @@ Under the default **tracked** policy, `scripts/check_close_the_loop.py` can be w
 touched ticket document and checks the ticket pair, required headings, and placeholders;
 unchecked work remains valid. In **Ship mode**, any change outside the living tier,
 including canonical Markdown, requires changed `current.md` and `tasks.md` from the same
-ticket, no unchecked items, and personal-project `devlog.md` plus `todo.md`; CI pins project type so a PR cannot disable that policy. Weak acceptance wording emits a warning when Observable,
+ticket, no unchecked items, and personal-project `devlog.md` plus `todo.md`. This repository's
+CI passes `--project-type personal`; changing the AGENTS marker alone does not change that check.
+Workflow and validator edits still need review. Weak acceptance wording emits a warning when Observable,
 Environment, or Verify fields are missing; the warning does not fail either mode.
 The guard is intentionally narrow: it validates structure, not truth. It cannot prove
 that evidence is sufficient, prose is accurate, or the private system map is current.
@@ -109,8 +111,9 @@ Review those obligations before Ship. The tracked-policy escape hatch is
 Each project declares `Project type: personal | team` at the top of its
 `AGENTS.md` or thin tool-specific shim:
 
-- `personal` → `devlog.md` + `todo.md` are required for non-trivial tracked
-  tasks; a trivial doc correction does not need synthetic history.
+- `personal` → `devlog.md` + `todo.md` are required for non-trivial tracked tasks.
+  Tracked Ship checks also require records for small doc corrections outside the living
+  tier: the validator has no trivial-change exemption. Keep those records brief and factual.
 - `team` → they follow the team's convention; skip until the team has adopted them.
 
 Templates: `~/.ai-workflow/templates/{devlog.md,todo.md,CLAUDE.md.template,AGENTS.md.template}`.
@@ -130,14 +133,11 @@ When execution is blocked, classify the blocker before concluding anything:
 
 For any non-code blocker, report:
 
-- `blocker_type`
-- `blocker_area`
-- `observed_error`
-- `impact`
+- `blocker_type`, `blocker_area`
+- `observed_error`, `impact`
 - `next_action_needed`
 - `fallback_path`
-- `last_successful_command`
-- `working_directory`
+- `last_successful_command`, `working_directory`
 - `required_environment_or_input`
 
 If a blocker is solved and the workaround is likely reusable, ask the user whether to capture it as a pitfall. If they say yes, record it in the appropriate layer:
@@ -171,7 +171,7 @@ not a requirement for the workflow.
 - Single-file edits where main session is faster anyway
 - One deterministic verification command; independent verification surfaces may
   run in parallel when their outputs stay separate
-- Ship (linear: commit → PR → ADR)
+- Ship (linear: reconcile records → commit → PR)
 
 ### How to call them well
 
