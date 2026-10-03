@@ -78,3 +78,23 @@ No executable code, dependency or CI logic change; no artificial mutation or ser
 E2E is required. Blog contents and local installations unchanged. The branch is
 published; PR/hosted checks are recorded in the delivery response. This follow-up
 is not merged, and prior approval for PR #20 does not authorize its merge.
+
+## First-reader follow-up: FR-01 (2026-10-04)
+
+Prior review target: `da4014bc472e213b59f395ba440ddf32e485b89f` (merged PR #21).
+This supersedes the previous section's unmerged delivery state for that PR only.
+
+- **FR-01 / P2 medium / confirmed / open**: `workflow.md:74-77` told a first-time
+  cross-repo user to read a missing `system-map.md` FIRST, while
+  `context-management.md:29-37` declares the map optional. The Quick start promises
+  an actionable entry after project configuration. Expected: a missing-map path
+  that names the involved repositories and edges without requiring a global map.
+  Actual: ambiguous prerequisite. Counterevidence: the context guide offers a map
+  generator and single-repo work is unaffected. Evidence is source comparison and
+  a fresh agent's reading simulation, not an executed human usability study.
+- Proposed fix: state both existing-map and missing-map behavior in canonical
+  workflow/context guide; make close-loop map updates conditional on existence;
+  preserve bounded exploration and private-map restrictions. Synchronize the mirror.
+- Related editorial correction: display the original article title separately
+  from explicitly labeled English and Chinese links; destinations remain unchanged.
+- No executable code, tests, dependency or CI changes. Validation/review pending.

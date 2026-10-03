@@ -1,6 +1,6 @@
 {
   "name": "ai-workflow",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Practical prompts, templates, and checks for planning, testing, and reviewing work with AI coding agents.",
   "author": {
     "name": "quietbranch88"

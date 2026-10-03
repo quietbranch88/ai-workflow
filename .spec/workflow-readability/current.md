@@ -26,3 +26,13 @@ the four confirmed design-review findings, and link the owner's relevant writing
 - Change validator behavior, weaken CI, or claim a new lightweight automated exemption.
 - Edit blog articles, local installations, unrelated rules, or published history.
 - Treat preparation, PR publication and merge as the same state.
+
+## First-reader follow-up acceptance (2026-10-04)
+
+- [ ] Observable: cross-repo tasks can start without a system map; an existing
+  map is read and its affected entries are maintained, with privacy preserved.
+  - Environment: canonical workflow, context guide and packaged mirror.
+  - Verify: inspect both missing-map and existing-map instructions; mirror contract tests.
+- [ ] Observable: the original article has explicit English and Chinese link labels.
+  - Environment: README rendered by GitHub.
+  - Verify: inspect generated link text and destinations; Chrome navigation check.

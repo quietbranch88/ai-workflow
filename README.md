@@ -244,8 +244,9 @@ boundary instead of collecting more instructions everywhere.
 
 ## The longer story
 
-- [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
-  ([中文](https://zoe-builds.com/articles/my-ai-workflow/)) — the missing Kafka
+- **AI Is a Coworker Who Overstates Its Progress: How I Build With It** —
+  [English](https://zoe-builds.com/en/articles/my-ai-workflow/) ·
+  [中文](https://zoe-builds.com/articles/my-ai-workflow/) — the missing Kafka
   integration that led to this workflow and its acceptance criteria.
 - [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
   — a later example of deciding acceptable outcomes before implementing retries

@@ -16,3 +16,9 @@ and allowed links to her blog articles. Prior merge approval applied to PR #20.
 This is documentation and plugin metadata work. No validator logic or tests change.
 The Kafka incident is the author's published account, not an incident reproduced
 in this task. No agent performance or human usability improvement is measured.
+
+## First-reader follow-up (2026-10-04)
+
+Zoe requested correction of FR-01 after a fresh reader simulation. The main agent
+also makes the discussed original-article language labels explicit. Review checks
+the missing-map and existing-map paths without changing map-generation code.

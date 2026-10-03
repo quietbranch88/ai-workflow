@@ -5,6 +5,8 @@
 - [x] task-3: Synchronize plugin metadata and canonical mirror; bump adapter to 0.6.1.
 - [x] task-4: Verify contracts, links, rendering and plugin manifests; record results.
 - [x] task-5: Review the patch independently and reconcile findings and delivery state.
+- [x] task-6: Clarify optional cross-repo maps and label both original article languages.
+- [ ] task-7: Validate and independently review the first-reader follow-up; record delivery separately.
 
 ## Acceptance
 
