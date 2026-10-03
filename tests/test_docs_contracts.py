@@ -95,6 +95,17 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
 
 
 class AdapterConsistencyContractTests(unittest.TestCase):
+    def test_standalone_agents_include_required_contracts_in_the_package(self):
+        reviewer = read("claude-code/plugin/agents/reviewer.md")
+        builder = read("claude-code/plugin/agents/builder.md")
+        review = read("docs/review.md")
+        verification = read("docs/verification.md").replace(
+            "[review and delivery records](review.md)", "the review and delivery contract below"
+        )
+        self.assertIn(review, reviewer)
+        self.assertIn(review, builder)
+        self.assertIn(verification, builder)
+
     def test_evidence_skill_mirrors_match_canonical_content(self):
         for skill, source in (
             ("six-stage-workflow", "workflow.md"),

@@ -1,6 +1,7 @@
 """Acceptance tests for private records through real Git and CLI boundaries."""
 
 import os
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -53,7 +54,9 @@ class LocalSpecPolicyTests(unittest.TestCase):
         env["PRE_COMMIT_TO_REF"] = self.head
         return subprocess.run(
             [sys.executable, str(CLOSE_LOOP), "--spec-policy", "local-only",
-             "--ticket", "fixture"], cwd=self.root, env=env,
+             "--ticket", "fixture", "--native-pre-push", "origin", "unused-existing-ref"],
+            input=f"refs/heads/main {self.head} refs/heads/main {self.base}\n",
+            cwd=self.root, env=env,
             capture_output=True, text=True, timeout=20,
         )
 
@@ -134,6 +137,54 @@ class LocalSpecPolicyTests(unittest.TestCase):
             capture_output=True, text=True, timeout=20,
         )
         self.assert_result(result, False, "living document")
+
+    def prepare_native_remote(self):
+        remote = self.root / "remote.git"
+        self.git("init", "--bare", str(remote))
+        self.git("remote", "add", "origin", str(remote))
+        self.git("push", "origin", f"{self.base}:refs/heads/main")
+        hook = self.root / ".git/hooks/pre-push"
+        command = shlex.join([Path(sys.executable).as_posix(), CLOSE_LOOP.as_posix(),
+                              "--spec-policy", "local-only", "--ticket", "fixture",
+                              "--native-pre-push"])
+        hook.write_text('#!/bin/sh\nexec ' + command + ' "$@"\n', encoding="utf-8")
+        hook.chmod(0o755)
+        return remote
+
+    def push(self, *refs):
+        return subprocess.run(["git", "push", "origin", *refs], cwd=self.root,
+                              capture_output=True, text=True, timeout=30)
+
+    def test_native_hook_allows_multiple_clean_refs_and_updates_remote(self):
+        self.prepare_native_remote()
+        self.git("branch", "clean", self.head)
+        self.assert_result(self.push("main", "clean"), True)
+        remote = self.git("ls-remote", "--heads", "origin").stdout
+        self.assertIn(f"{self.head}\trefs/heads/main", remote)
+        self.assertIn(f"{self.head}\trefs/heads/clean", remote)
+
+    def test_native_hook_rejects_private_history_in_second_ref(self):
+        self.prepare_native_remote()
+        self.git("checkout", "-b", "private", self.base)
+        self.git("add", "-f", ".spec/fixture/current.md")
+        self.commit("private addition")
+        secret_sha = self.git("rev-parse", "HEAD").stdout.strip()
+        self.git("rm", "--cached", ".spec/fixture/current.md")
+        self.commit("remove private file")
+        self.git("checkout", "main")
+        # Cached origin/HEAD must not hide the private commit for a new ref.
+        self.git("update-ref", "refs/remotes/origin/main", secret_sha)
+        self.assert_result(self.push("main", "private"), False, "outgoing commit")
+        remote = self.git("ls-remote", "--heads", "origin").stdout
+        self.assertNotIn("refs/heads/private", remote)
+        self.assertIn(f"{self.base}\trefs/heads/main", remote)
+
+    def test_local_only_refuses_pre_commit_single_range_adapter(self):
+        result = subprocess.run(
+            [sys.executable, str(CLOSE_LOOP), "--spec-policy", "local-only", "--ticket", "fixture"],
+            cwd=self.root, capture_output=True, text=True, timeout=20,
+        )
+        self.assert_result(result, False, "native pre-push")
 
 
 if __name__ == "__main__":

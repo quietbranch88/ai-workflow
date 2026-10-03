@@ -1,8 +1,8 @@
 # Pre-commit hook config — drop into project root as .pre-commit-config.yaml
 # Then: pre-commit install && pre-commit install --hook-type pre-push
 # Runs selected local checks; it does not prove test adequacy or enforce server policy.
-# For private records, see docs/local-spec-policy.md: append --spec-policy local-only
-# to the hook entry and set WORKFLOW_TICKET (or pass --ticket). Keep .spec ignored.
+# For private records, use the native pre-push hook in docs/local-spec-policy.md.
+# Do not add local-only here: pre-commit exposes only one pushed ref pair.
 
 repos:
   # ---- Close the loop (workflow.md) — runs at push time ----

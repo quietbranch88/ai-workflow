@@ -51,9 +51,49 @@ This is not reported as a clean scan.
   No repository dependency-advisory configuration exists; no package advisory scan
   result is claimed. Secret scan and fresh review results are recorded below when run.
 
+### Initial independent review: df79463
+
+Base 58fd6f8; reviewer checked the complete diff and relevant callers/guards and
+independently ran 58 tests. Two findings were adopted after source/caller checks:
+
+- **EC-01, P1, confirmed / open pending follow-up.** At
+  `scripts/check_close_the_loop.py:98-103` in df79463, local-only checked one
+  PRE_COMMIT range while `docs/local-spec-policy.md:31-34` promised every outgoing
+  commit. pre-commit 3.7.1 returns on the first eligible stdin ref. A clean first
+  branch plus a second branch with added-then-removed `.spec` history could publish
+  private records. Reviewer reproduced a successful two-ref push to a disposable
+  local bare remote and read the private historical tree there. Single-ref tests
+  were counterevidence only for single-ref scope. Required: inspect the whole native
+  ref list and reject the push before any remote ref changes.
+  Fix candidate: require native local-only hook input; inspect all ref updates and
+  use fresh advertised remote tips for new refs; reject the incomplete pre-commit
+  adapter. Positive and negative real-hook tests check durable remote refs.
+  An isolated mutation that changed iteration to `updates[:1]` made
+  `test_native_hook_rejects_private_history_in_second_ref` fail at the rejection
+  assertion: both refs were actually pushed to the synthetic remote. Restoring the
+  loop made the unchanged test pass. This independently confirms detection.
+- **EC-02, P2, confirmed / open pending follow-up.** At packaged reviewer lines
+  43-45 and builder line 15 in df79463, bare source-relative references required
+  contracts outside marketplace source `claude-code/plugin`. Standalone packaged
+  roles could not locate them. Source/manifest/inventory inspection confirmed the
+  omission; no agent-runtime failure was claimed. The six-stage skill's links were
+  counterevidence for coordinated use only. Fix candidate: embed canonical review
+  and verification contracts in the relevant agents and assert content consistency.
+
+### Updated verification after review fixes
+
+- `python -m unittest discover -s tests -p test_local_spec_policy.py -v`: 16 passed.
+  Includes an actual installed native hook and real pushes to local bare remotes,
+  both clean multi-ref success and rejected second-ref private history. No live
+  service, credentials, user data or production mutation was involved.
+- Ruff and packaged-plugin strict validation passed after these fixes.
+- The earlier 58-test run and single-ref evidence remain historical. Final complete
+  suite, scanner and follow-up review results are recorded separately below.
+
 ### Limits
 
-- Tests invoke the actual Python CLI against synthetic local Git repositories, not
-  a live remote push. They prove local checks, not server-side enforcement.
+- Tests invoke the actual Python CLI/native hook and perform real Git pushes to
+  synthetic local bare remotes, not a hosted remote. They prove local checks,
+  not server-side enforcement. Earlier pre-commit-only scope was superseded by EC-01.
 - Markdown rules are intent. No agent-quality benchmark or production E2E is claimed.
 - The installed local workflow remains unchanged. No private/company overlays copied.

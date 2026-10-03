@@ -22,6 +22,7 @@ Wire-up (pre-commit framework, pre-push stage) — see pre-commit.template.yaml.
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -36,9 +37,9 @@ PROJECT_LIVING_PATHS = {"devlog.md", "todo.md"}
 SPEC_LIVING_BASENAMES = {"current.md", "tasks.md"}
 
 
-def git(*args):
+def git(*args, input=None):
     return subprocess.run(
-        ["git", *args], capture_output=True, text=True
+        ["git", *args], input=input, capture_output=True, text=True
     )
 
 
@@ -78,9 +79,9 @@ def is_doc(path):
     return is_living_doc(path) or path.lower().endswith(".md")
 
 
-def validate_private_history(from_ref, to_ref):
+def validate_private_history(revisions):
     """Reject private records even when a later outgoing commit removes them."""
-    commits = git("rev-list", f"{from_ref}..{to_ref}")
+    commits = git("rev-list", "--stdin", input="\n".join(revisions) + "\n")
     if commits.returncode:
         sys.stderr.write("close-the-loop: unable to inspect outgoing commits\n")
         return False
@@ -92,14 +93,60 @@ def validate_private_history(from_ref, to_ref):
     return True
 
 
-def main(spec_policy="tracked", ticket=None):
+def native_push_revisions(remote, stream):
+    """Consume every native pre-push update; pre-commit exposes only one pair."""
+    updates = []
+    for line in stream.splitlines():
+        fields = line.split()
+        if len(fields) != 4 or any(
+            not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", fields[index])
+            for index in (1, 3)
+        ):
+            sys.stderr.write("close-the-loop: invalid native pre-push input\n")
+            return None
+        _, local_sha, _, remote_sha = fields
+        if local_sha.strip("0"):
+            updates.append((local_sha, remote_sha))
+    if not updates:
+        return []
+
+    remote_tips = []
+    if any(not old.strip("0") for _, old in updates):
+        # A new ref has no old SHA. Use current advertised refs, not a possibly
+        # stale local origin/HEAD that can hide unpublished private history.
+        advertised = git("ls-remote", "--refs", "--", remote)
+        if advertised.returncode:
+            sys.stderr.write("close-the-loop: unable to inspect remote refs\n")
+            return None
+        for line in advertised.stdout.splitlines():
+            sha = line.split()[0]
+            if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", sha):
+                sys.stderr.write("close-the-loop: invalid remote object ID\n")
+                return None
+            if git("cat-file", "-e", f"{sha}^{{commit}}").returncode == 0:
+                remote_tips.append(sha)
+
+    ranges = []
+    for local_sha, remote_sha in updates:
+        # Check the tip even when the same object is already advertised elsewhere.
+        tree = git("ls-tree", "-r", "--name-only", local_sha, "--", ".spec")
+        if tree.returncode or tree.stdout:
+            sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
+            return None
+        excluded = [remote_sha] if remote_sha.strip("0") else remote_tips
+        ranges.append([local_sha, *(f"^{sha}" for sha in excluded)])
+    return ranges
+
+
+def main(spec_policy="tracked", ticket=None, native=False, remote=None):
     if spec_policy == "local-only":
         # Privacy policy must not be disabled by the legacy tracked-doc escape hatch.
-        resolved = resolve_range()
-        if resolved is None:
-            sys.stderr.write("close-the-loop: unable to resolve the outgoing comparison range\n")
+        if not native or not remote:
+            sys.stderr.write("close-the-loop: local-only requires the native pre-push hook; "
+                             "pre-commit does not expose every pushed ref\n")
             return 1
-        if not validate_private_history(*resolved):
+        ranges = native_push_revisions(remote, sys.stdin.read())
+        if ranges is None or any(not validate_private_history(revisions) for revisions in ranges):
             return 1
         report = validate_workflow_documents(Path.cwd(), [], "wip",
                                              spec_policy="local-only", ticket=ticket)
@@ -159,5 +206,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--spec-policy", choices=("tracked", "local-only"), default="tracked")
     parser.add_argument("--ticket", default=os.environ.get("WORKFLOW_TICKET"))
+    parser.add_argument("--native-pre-push", action="store_true")
+    parser.add_argument("remote_name", nargs="?")
+    parser.add_argument("remote_url", nargs="?")
     args = parser.parse_args()
-    sys.exit(main(args.spec_policy, args.ticket))
+    sys.exit(main(args.spec_policy, args.ticket, args.native_pre_push, args.remote_url))
