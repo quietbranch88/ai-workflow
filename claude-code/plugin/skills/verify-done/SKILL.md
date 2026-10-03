@@ -1,33 +1,38 @@
 ---
 name: verify-done
-description: Use before claiming any task, feature, or fix is complete. Produces an evidence block mapping every acceptance criterion to file:line references or a same-session test run. Never round up.
+description: Check every acceptance claim against current revision evidence and required real boundaries before reporting completion.
 ---
 
-<!-- Canonical source: ~/.ai-workflow/prompts/verify-done.md — if that file exists on this
-     machine, read it instead; it may be newer than this embedded copy. -->
+<!-- Canonical source: prompts/verify-done.md in the maintained ai-workflow repository.
+     Record the installed source revision; preserve private overlays separately. -->
 
-Before you say "done", produce this evidence block. If you cannot fill a line with a file
-path, line number, or a test run from THIS session, the honest status is "not verified" —
-go check, then report.
+# Prompt: Verify done
 
+Before claiming completion, walk every acceptance criterion against evidence from
+this session and the named revision. Follow [verification contracts](https://github.com/quietbranch88/ai-workflow/blob/main/docs/verification.md)
+and [review/delivery reconciliation](https://github.com/quietbranch88/ai-workflow/blob/main/docs/review.md).
+
+Report:
+
+```text
+Revision / environment / observed path / time window:
+Verified: criterion -> command, discovered test/assertion, result and artifact
+Source-inspected only: criterion -> file:line and limits
+Unverified: criterion -> missing evidence, blocked hop and next action
+Delivery: implemented / verified / merged / deployed (state each separately)
 ```
-Verified:
-  ✅ <criterion> → <file:line> (commit <hash>)
-  ✅ <criterion> → <test name> passed: <pasted summary line from the run>
-  ❌ <criterion> → not found / not implemented
-Unverified:
-  - <criterion> — <why it wasn't checked>
-```
 
-Rules:
-
-1. Walk EVERY acceptance criterion in `.spec/<ticket>/tasks.md` (or the task list you were
-   given). Unchecked items are reported as ❌ or Unverified — never silently dropped.
-2. "Tests pass" means you ran them after your last edit and paste the summary line.
-   A green run from before the last change proves nothing.
-3. Kafka / DB-transaction / auth work: an integration test must pass before claiming done.
-   Unit tests alone don't count for these categories.
-4. If an agent (including you) claims it edited files, check `git diff --stat` before
-   reporting the work as done. Claims describe intent, not always reality.
-5. Partial is a valid answer. "4 of 6 criteria verified, 2 open" beats a "done" that
-   unravels in review.
+- Use independent acceptance oracles and required fail-to-pass or controlled-mutation
+  evidence; never infer these from coverage or a green suite. TDD is optional unless required.
+- Tests pass only when actually run after the relevant edit. Confirm discovery and
+  assertions. Record relevant scans and absent tools separately from failures.
+- Kafka / DB-transaction / auth work requires real integration evidence. Cross-service
+  and device paths require the affected real chain; UI needs the interaction result.
+  Mocked browser APIs prove frontend flow only. Missing required gates stay unverified.
+- For irreversible behavior, require safe E2E before merge or the owner's explicit
+  acceptance of the named gap; neither authorizes a production mutation.
+- Check the actual diff when an agent claims edits. Partial completion is valid;
+  do not silently drop criteria. Source inspection is not runtime proof.
+- Reconcile authorized audit/tasks/changelog/PR/tracker records and read back remote
+  changes. Retain dated corrections and blocked next actions; this grants no authority
+  to publish, message, merge or deploy.

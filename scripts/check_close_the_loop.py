@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Pre-push guard: refuse to push code without the living-tier docs.
+"""Pre-push guard for tracked or explicitly local-only living-tier docs.
 
 Enforces workflow.md's close-the-loop rule mechanically: if the commits being
 pushed change code but touch neither `.spec/**` nor `devlog.md` / `todo.md`,
 the push is rejected with a reminder.
 
-Scope rules:
+Default tracked-policy scope rules:
 - Only enforces in repos that follow the discipline (a `.spec/` dir exists).
 - Doc-only pushes always pass.
 - Only `.spec/**/current.md`, `.spec/**/tasks.md`, `devlog.md`, and `todo.md`
@@ -13,9 +13,14 @@ Scope rules:
 - An unresolved comparison range fails visibly instead of silently passing.
 - Escape hatches: `git push --no-verify`, or `CLOSE_THE_LOOP=skip git push`.
 
+Explicit local-only policy checks the named local ticket and rejects private
+records in the index or outgoing commits, even for doc-only pushes. It does not
+use CLOSE_THE_LOOP=skip. These are local safeguards, not hosted enforcement.
+
 Wire-up (pre-commit framework, pre-push stage) — see pre-commit.template.yaml.
 """
 
+import argparse
 import os
 import subprocess
 import sys
@@ -24,7 +29,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
-from validate_workflow_docs import emit_report, validate_workflow_documents
+from validate_workflow_docs import emit_report, validate_workflow_documents  # noqa: E402
 
 ZEROS = "0" * 40
 PROJECT_LIVING_PATHS = {"devlog.md", "todo.md"}
@@ -73,7 +78,33 @@ def is_doc(path):
     return is_living_doc(path) or path.lower().endswith(".md")
 
 
-def main():
+def validate_private_history(from_ref, to_ref):
+    """Reject private records even when a later outgoing commit removes them."""
+    commits = git("rev-list", f"{from_ref}..{to_ref}")
+    if commits.returncode:
+        sys.stderr.write("close-the-loop: unable to inspect outgoing commits\n")
+        return False
+    for commit in commits.stdout.splitlines():
+        tree = git("ls-tree", "-r", "--name-only", commit, "--", ".spec")
+        if tree.returncode or tree.stdout:
+            sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
+            return False
+    return True
+
+
+def main(spec_policy="tracked", ticket=None):
+    if spec_policy == "local-only":
+        # Privacy policy must not be disabled by the legacy tracked-doc escape hatch.
+        resolved = resolve_range()
+        if resolved is None:
+            sys.stderr.write("close-the-loop: unable to resolve the outgoing comparison range\n")
+            return 1
+        if not validate_private_history(*resolved):
+            return 1
+        report = validate_workflow_documents(Path.cwd(), [], "wip",
+                                             spec_policy="local-only", ticket=ticket)
+        emit_report(report)
+        return 0 if report.ok else 1
     if os.environ.get("CLOSE_THE_LOOP", "").lower() == "skip":
         return 0
     if not os.path.isdir(".spec"):
@@ -125,4 +156,8 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--spec-policy", choices=("tracked", "local-only"), default="tracked")
+    parser.add_argument("--ticket", default=os.environ.get("WORKFLOW_TICKET"))
+    args = parser.parse_args()
+    sys.exit(main(args.spec_policy, args.ticket))

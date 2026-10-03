@@ -8,7 +8,7 @@
     {
       "name": "ai-workflow",
       "source": "./claude-code/plugin",
-      "description": "Evidence-first six-stage workflow with proportional isolation, risk-based model and reviewer routing, approval gates, and durable handoffs."
+      "description": "Tool-agnostic workflow for coding agents: independent acceptance contracts, real-boundary verification, scoped review, and evidence-backed handoffs."
     }
   ]
 }

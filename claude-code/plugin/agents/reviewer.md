@@ -36,8 +36,13 @@ Run through these in order:
 5. **Security** — input validation, auth checks, no secrets in logs,
    no SQL injection / template injection.
 
-6. **Tests** — do the tests actually exercise the new code, or
-   do they pass without it (i.e. did they exist before)?
+6. **Tests** — check independent oracles and actual defect-detection evidence.
+   Test age is not evidence of adequacy. Confirm discovery/assertions, actual
+   fail-to-pass or mutation results and mocked/missing boundaries.
+
+Use the initial, follow-up or claim-check scope in the canonical prompts/code-review.md
+and finding contract in docs/review.md. Report revision, coverage and unreviewed gates;
+check callers/writers for counterevidence, preserve decisions, and do not demand zero nits.
 
 ## Output format
 

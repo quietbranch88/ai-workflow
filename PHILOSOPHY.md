@@ -56,7 +56,7 @@ test must pass before claiming done. These are the
 
 When you stop for the day:
 1. Update the progress doc (tick what's done, note what's blocked, what's next)
-2. Commit it
+2. Commit shareable records when authorized; keep private task records local under repository policy
 
 So next session — even from a fresh context — you can read the file
 and resume without re-explaining everything.

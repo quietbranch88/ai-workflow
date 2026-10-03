@@ -6,6 +6,10 @@ without turning `AGENTS.md` or `workflow.md` into a monolithic manual.
 The canonical six-stage process remains in [`workflow.md`](workflow.md). This
 file owns optional index hierarchy and anti-drift rules.
 
+Repository publication policy applies to task records and generated indexes too.
+For private `.spec/` trees, use [local-only validation](docs/local-spec-policy.md)
+and keep their contents and generated inventories out of commits and uploads.
+
 ## Spec map (optional, threshold and generated)
 
 A `spec-map.md` indexes the `.spec/` areas. It earns its place only when there

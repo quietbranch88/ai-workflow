@@ -14,10 +14,12 @@ Role contracts and fresh-context refutation also draw on the MIT-licensed
 2. **Plan** — Break the accepted spec into atomic, dependency-ordered tasks in
    `.spec/<ticket>/tasks.md`. Each task names its change surface and verification.
 3. **Build** — Implement one accepted slice at a time on a feature branch. Use
-   test-first development for new or fixed behavior when a test harness exists;
-   use the relevant validator for documentation, configuration, and generated data.
+   test-first development when required or useful; TDD is otherwise optional.
+   Follow [verification contracts](docs/verification.md), including independent
+   oracles and applicable defect-detection evidence.
 4. **Verify** — Run the relevant checks and record exact commands, output, and
-   environment. A local pass is local evidence; it is not production-derived proof.
+   environment and exercised boundaries. A local pass is local evidence; it is
+   not production-derived proof. Missing required gates remain unverified.
 5. **Review** — Use fresh context to check spec conformance, correctness, and the
    risks the diff actually introduces. Fix and reverify findings, or record the
    human decision that explicitly accepts them.
@@ -40,8 +42,10 @@ git worktree add ../<repo>-<ticket> -b <ticket>    # or: wt <ticket> (shell/alia
 - A clean feature branch is enough for a bounded documentation or low-risk
   single-file change. Do not create process overhead that adds no isolation.
 - Parallel writers never share a working directory; give each one a worktree.
-- Remove a task worktree after its PR is opened and its state is recoverable:
-  `git worktree remove ../<repo>-<ticket>`.
+- Before worktree removal, verify the absolute path, Git registration, dirty and
+  untracked work, junctions/reparse points and shared targets; preserve unrelated
+  work. Retain it if safety is uncertain. Identify stashes by hash, inspect their
+  source/diff and destination, apply first and verify before dropping the exact entry.
 
 `scripts/start-task.ps1` offers to create the worktree during ticket intake.
 
@@ -77,9 +81,11 @@ line in the local-only map (see `prompts/system-map-scan.md`). Never include the
 1. Update the ticket's `current.md` and `tasks.md`.
 2. For personal projects, update newest-on-top `devlog.md` and `todo.md`.
 3. Patch `~/.ai-workflow/system-map.md` when a recorded entry point, public surface, integration edge, or shared library changed.
-4. Commit repository doc updates in the same PR as the change.
+4. Commit only shareable repository doc updates in the same PR. Follow an explicit
+   [local-only spec policy](docs/local-spec-policy.md) where task records are private.
+5. Reconcile audit, tasks and authorized PR/tracker claims using [docs/review.md](docs/review.md).
 
-`scripts/check_close_the_loop.py` can be wired at pre-push through `templates/pre-commit.template.yaml`. In **WIP mode**, it rejects code without a
+Under the default **tracked** policy, `scripts/check_close_the_loop.py` can be wired at pre-push through `templates/pre-commit.template.yaml`. In **WIP mode**, it rejects code without a
 touched ticket document and checks the ticket pair, required headings, and placeholders;
 unchecked work remains valid. In **Ship mode**, any change outside the living tier,
 including canonical Markdown, requires changed `current.md` and `tasks.md` from the same
@@ -87,7 +93,8 @@ ticket, no unchecked items, and personal-project `devlog.md` plus `todo.md`; CI 
 Environment, or Verify fields are missing; the warning does not fail either mode.
 The guard is intentionally narrow: it validates structure, not truth. It cannot prove
 that evidence is sufficient, prose is accurate, or the private system map is current.
-Review those obligations before Ship. Escape hatch: `CLOSE_THE_LOOP=skip git push`.
+Review those obligations before Ship. The tracked-policy escape hatch is
+`CLOSE_THE_LOOP=skip git push`; it does not disable explicit local-only safeguards.
 
 ### Project type
 
@@ -199,20 +206,14 @@ Add only the relevant review lenses when the diff touches:
 Same list as PHILOSOPHY.md's "half-done is worse than not-done" categories — the ones that
 already demand integration tests get deeper review; everything else gets one reviewer.
 
-### Review pattern (risk-specific, high-risk diffs only)
+### Review dispatch and follow-up
 
-After Build, select the smallest useful panel. For example:
-
-```
-Worker A (fresh reviewer): spec conformance against .spec/<ticket>/current.md
-Worker B (security, when relevant): trust boundaries, auth, injection, secrets
-Worker C (data integrity, when relevant): transactions, retries, migrations
-Worker D (performance, when relevant): queries, N+1, hot paths, cost
-Worker E (compatibility, when relevant): public API and rollout behavior
-```
-
-The human reads the reports, rejects or accepts each finding, and requires
-reverification after any fix. Do not spawn a specialist whose risk is absent.
+Use [prompts/code-review.md](prompts/code-review.md) with the actual acceptance source,
+immutable target, patch base, mode and prior findings. [docs/review.md](docs/review.md)
+defines initial, follow-up and claim-check scope, evidence, counterevidence and
+separate validity/disposition. Add specialists only for present risks when delegation
+is authorized. Agent agreement is not proof. Preserve rejected findings and reasons;
+reconcile delivery claims. Optional nits do not require another full review.
 
 ## Model routing: one workflow, different autonomy
 
@@ -255,10 +256,14 @@ An agent may prepare plans, diffs, migration commands, release notes, or a PR,
 but it must obtain explicit human authorization before it performs:
 
 - a merge into the repository's default or integration branch
-- a database migration, destructive operation, or irreversible data change
+- a migration on a shared/deployed database, destructive operation or irreversible data change
 - a production deployment, traffic cutover, or infrastructure mutation
 - a payment action or a write involving production user data
 - an external message, publication, or other action on the user's behalf
+
+Authoring migration files follows code-edit rules. Existing application migrations
+may run in a confirmed isolated, disposable test database with synthetic data.
+Irreversible behavior also has the pre-merge E2E gate in [docs/verification.md](docs/verification.md).
 
 Also stop before source writes when the user explicitly requested plan-first
 work, or when the proposed plan introduces a material architecture, scope, or
@@ -269,12 +274,7 @@ does not imply permission to merge it; permission to deploy staging does not
 imply permission to deploy production. Record the approved action, environment,
 and approver in the ticket handoff or PR.
 
-## What humans always own
+## Human ownership
 
-- Architectural decisions
-- Security-sensitive code
-- Performance / cost trade-offs
-- Production deployments
-- Final accept/reject on review findings
-
-AI proposes. Humans dispose.
+Humans retain architecture, security-sensitive decisions, performance/cost tradeoffs,
+production deployment and final finding acceptance. AI proposes; humans dispose.

@@ -35,12 +35,15 @@ Summarize the current parent-ticket or task scope:
 
 ## Verification checkpoints
 
-1. For new or fixed behavior, confirm a narrow test exists and capture the
-   correct failure before implementation when a test harness is available.
-2. For docs, configuration, or generated data, name the relevant validator.
-3. Implement the smallest accepted change.
-4. Re-run the narrow test or validator.
-5. Run broader verification proportional to the touched area and risk.
+1. Record the independently checkable acceptance contract and its source.
+2. Map required boundaries and existing tests; name missing coverage/environments.
+3. Record the chosen workflow. TDD is optional unless required; do not invent red/green evidence.
+4. Record required fail-to-pass or controlled-mutation outcomes without changing the oracle.
+5. Record revision, environment, discovered tests/assertions and relevant real integration/E2E results.
+6. Label mocked boundaries, scan results, missing tools and blocked/unverified gates.
+
+Use [docs/verification.md](../docs/verification.md) and repository-specific contracts.
+Behavior-neutral edits use targeted review instead of artificial failing tests.
 
 ## Verification commands
 
@@ -76,3 +79,9 @@ Do not stage:
 ## Handoff notes
 
 - 
+
+## Human and AI roles
+
+Record human decisions and the AI's implementation, investigation, documentation or
+verification role separately from earlier human work. Keep implemented, verified,
+merged and deployed states separate; follow the repository's publication policy.
