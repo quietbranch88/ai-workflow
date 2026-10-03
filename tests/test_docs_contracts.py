@@ -95,6 +95,33 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
 
 
 class AdapterConsistencyContractTests(unittest.TestCase):
+    def test_standalone_agents_include_required_contracts_in_the_package(self):
+        reviewer = read("claude-code/plugin/agents/reviewer.md")
+        builder = read("claude-code/plugin/agents/builder.md")
+        review = read("docs/review.md")
+        verification = read("docs/verification.md").replace(
+            "[review and delivery records](review.md)", "the review and delivery contract below"
+        )
+        self.assertIn(review, reviewer)
+        self.assertIn(review, builder)
+        self.assertIn(verification, builder)
+
+    def test_evidence_skill_mirrors_match_canonical_content(self):
+        for skill, source in (
+            ("six-stage-workflow", "workflow.md"),
+            ("verify-done", "prompts/verify-done.md"),
+        ):
+            with self.subTest(skill=skill):
+                canonical = read(source)
+                canonical = re.sub(
+                    r"\]\((?!https?://|#)([^)]+)\)",
+                    lambda match: "](" + "https://github.com/quietbranch88/ai-workflow/blob/main/"
+                    + match.group(1).removeprefix("../") + ")",
+                    canonical,
+                )
+                mirror = read(f"claude-code/plugin/skills/{skill}/SKILL.md")
+                self.assertEqual(canonical, mirror.split("-->\n\n", 1)[1])
+
     def test_active_agent_and_prompt_docs_use_ticket_scoped_specs(self):
         paths = [
             "claude-code/plugin/agents/builder.md",

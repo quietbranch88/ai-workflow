@@ -194,10 +194,14 @@ def validate_workflow_documents(
     changed_files: list[str],
     mode: str,
     project_type: str = "auto",
+    spec_policy: str = "tracked",
+    ticket: str | None = None,
 ) -> Report:
     root = Path(root).resolve()
     changed = [normalize(path) for path in changed_files]
     report = Report()
+    if spec_policy == "local-only":
+        return validate_local_records(root, mode, ticket)
     current_tickets, task_tickets = ticket_docs(changed)
     touched_tickets = current_tickets | task_tickets
     code_changed = any(not is_document(path) for path in changed)
@@ -252,6 +256,35 @@ def validate_workflow_documents(
     return report
 
 
+def validate_local_records(root: Path, mode: str, ticket: str | None) -> Report:
+    """Validate explicitly named private evidence without pretending it is published."""
+    report = Report()
+    if not ticket or not re.fullmatch(r"[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*", ticket):
+        report.errors.append(Finding(".spec/", "local-only requires a safe relative --ticket slug"))
+        return report
+    spec_root = root / ".spec"
+    task_root = spec_root / ticket
+    # Resolve junctions/symlinks as well as lexical paths before reading local files.
+    for path in (spec_root, task_root, task_root / "current.md", task_root / "tasks.md"):
+        if not path.resolve().is_relative_to(root):
+            report.errors.append(Finding(".spec/", "local ticket path escapes repository"))
+            return report
+    tracked = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z", "--", ".spec"],
+        capture_output=True, text=True,
+    )
+    if tracked.returncode:
+        report.errors.append(Finding(".spec/", "unable to inspect tracked private records"))
+        return report
+    if tracked.stdout:
+        report.errors.append(Finding(".spec/", "local-only records must not be tracked in the Git index"))
+        return report
+    for kind in ("current", "tasks"):
+        validate_file_structure(report, task_root / f"{kind}.md",
+                                f".spec/{ticket}/{kind}.md", kind, mode)
+    return report
+
+
 def changed_from_git(root: Path, base: str, head: str) -> list[str] | None:
     result = subprocess.run(
         ["git", "-C", str(root), "diff", "--name-only", f"{base}...{head}"],
@@ -283,6 +316,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--mode", choices=("wip", "ship"), default="wip")
+    parser.add_argument("--spec-policy", choices=("tracked", "local-only"), default="tracked",
+                        help="Select explicitly; local-only checks unpublished local evidence.")
+    parser.add_argument("--ticket", help="Required local ticket slug for local-only policy.")
     parser.add_argument(
         "--project-type",
         choices=("auto", "personal", "team"),
@@ -311,6 +347,8 @@ def main() -> int:
         changed_files,
         args.mode,
         project_type=args.project_type,
+        spec_policy=args.spec_policy,
+        ticket=args.ticket,
     )
     emit_report(report)
     return 0 if report.ok else 1

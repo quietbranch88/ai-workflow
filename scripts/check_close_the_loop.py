@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Pre-push guard: refuse to push code without the living-tier docs.
+"""Pre-push guard for tracked or explicitly local-only living-tier docs.
 
 Enforces workflow.md's close-the-loop rule mechanically: if the commits being
 pushed change code but touch neither `.spec/**` nor `devlog.md` / `todo.md`,
 the push is rejected with a reminder.
 
-Scope rules:
+Default tracked-policy scope rules:
 - Only enforces in repos that follow the discipline (a `.spec/` dir exists).
 - Doc-only pushes always pass.
 - Only `.spec/**/current.md`, `.spec/**/tasks.md`, `devlog.md`, and `todo.md`
@@ -13,10 +13,16 @@ Scope rules:
 - An unresolved comparison range fails visibly instead of silently passing.
 - Escape hatches: `git push --no-verify`, or `CLOSE_THE_LOOP=skip git push`.
 
+Explicit local-only policy checks the named local ticket and rejects private
+records in the index or outgoing commits, even for doc-only pushes. It does not
+use CLOSE_THE_LOOP=skip. These are local safeguards, not hosted enforcement.
+
 Wire-up (pre-commit framework, pre-push stage) — see pre-commit.template.yaml.
 """
 
+import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -24,16 +30,16 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
-from validate_workflow_docs import emit_report, validate_workflow_documents
+from validate_workflow_docs import emit_report, validate_workflow_documents  # noqa: E402
 
 ZEROS = "0" * 40
 PROJECT_LIVING_PATHS = {"devlog.md", "todo.md"}
 SPEC_LIVING_BASENAMES = {"current.md", "tasks.md"}
 
 
-def git(*args):
+def git(*args, input=None):
     return subprocess.run(
-        ["git", *args], capture_output=True, text=True
+        ["git", *args], input=input, capture_output=True, text=True
     )
 
 
@@ -73,7 +79,79 @@ def is_doc(path):
     return is_living_doc(path) or path.lower().endswith(".md")
 
 
-def main():
+def validate_private_history(revisions):
+    """Reject private records even when a later outgoing commit removes them."""
+    commits = git("rev-list", "--stdin", input="\n".join(revisions) + "\n")
+    if commits.returncode:
+        sys.stderr.write("close-the-loop: unable to inspect outgoing commits\n")
+        return False
+    for commit in commits.stdout.splitlines():
+        tree = git("ls-tree", "-r", "--name-only", commit, "--", ".spec")
+        if tree.returncode or tree.stdout:
+            sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
+            return False
+    return True
+
+
+def native_push_revisions(remote, stream):
+    """Consume every native pre-push update; pre-commit exposes only one pair."""
+    updates = []
+    for line in stream.splitlines():
+        fields = line.split()
+        if len(fields) != 4 or any(
+            not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", fields[index])
+            for index in (1, 3)
+        ):
+            sys.stderr.write("close-the-loop: invalid native pre-push input\n")
+            return None
+        _, local_sha, _, remote_sha = fields
+        if local_sha.strip("0"):
+            updates.append((local_sha, remote_sha))
+    if not updates:
+        return []
+
+    remote_tips = []
+    if any(not old.strip("0") for _, old in updates):
+        # A new ref has no old SHA. Use current advertised refs, not a possibly
+        # stale local origin/HEAD that can hide unpublished private history.
+        advertised = git("ls-remote", "--refs", "--", remote)
+        if advertised.returncode:
+            sys.stderr.write("close-the-loop: unable to inspect remote refs\n")
+            return None
+        for line in advertised.stdout.splitlines():
+            sha = line.split()[0]
+            if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", sha):
+                sys.stderr.write("close-the-loop: invalid remote object ID\n")
+                return None
+            if git("cat-file", "-e", f"{sha}^{{commit}}").returncode == 0:
+                remote_tips.append(sha)
+
+    ranges = []
+    for local_sha, remote_sha in updates:
+        # Check the tip even when the same object is already advertised elsewhere.
+        tree = git("ls-tree", "-r", "--name-only", local_sha, "--", ".spec")
+        if tree.returncode or tree.stdout:
+            sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
+            return None
+        excluded = [remote_sha] if remote_sha.strip("0") else remote_tips
+        ranges.append([local_sha, *(f"^{sha}" for sha in excluded)])
+    return ranges
+
+
+def main(spec_policy="tracked", ticket=None, native=False, remote=None):
+    if spec_policy == "local-only":
+        # Privacy policy must not be disabled by the legacy tracked-doc escape hatch.
+        if not native or not remote:
+            sys.stderr.write("close-the-loop: local-only requires the native pre-push hook; "
+                             "pre-commit does not expose every pushed ref\n")
+            return 1
+        ranges = native_push_revisions(remote, sys.stdin.read())
+        if ranges is None or any(not validate_private_history(revisions) for revisions in ranges):
+            return 1
+        report = validate_workflow_documents(Path.cwd(), [], "wip",
+                                             spec_policy="local-only", ticket=ticket)
+        emit_report(report)
+        return 0 if report.ok else 1
     if os.environ.get("CLOSE_THE_LOOP", "").lower() == "skip":
         return 0
     if not os.path.isdir(".spec"):
@@ -125,4 +203,11 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--spec-policy", choices=("tracked", "local-only"), default="tracked")
+    parser.add_argument("--ticket", default=os.environ.get("WORKFLOW_TICKET"))
+    parser.add_argument("--native-pre-push", action="store_true")
+    parser.add_argument("remote_name", nargs="?")
+    parser.add_argument("remote_url", nargs="?")
+    args = parser.parse_args()
+    sys.exit(main(args.spec_policy, args.ticket, args.native_pre_push, args.remote_url))

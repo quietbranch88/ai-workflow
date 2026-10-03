@@ -4,9 +4,9 @@ These are global instructions for coding agents. Drop into `~/.claude/CLAUDE.md`
 (Claude Code) and `~/.codex/AGENTS.md` (Codex) — keep both copies identical apart
 from the trailing RTK reference path.
 
-Rewritten 2026-07-06 for the Fable 5 generation: step-by-step workflow lists were
-removed (the model plans those itself); what remains is goals, boundaries, and
-acceptance criteria.
+Portable example; preserve private machine/company overlays separately. Use the
+maintained workflow's docs/verification.md and docs/review.md as the detailed
+contracts. Record the installed source revision (docs/rule-distribution.md).
 
 ---
 
@@ -25,31 +25,43 @@ acceptance criteria.
 - Claims of progress or completion point to evidence from this session: test output, grep/read results, or commands, cited with files and lines. Not verified — say so. Partial — say what is missing.
 - Non-trivial changes need acceptance criteria in the project spec/progress file and targeted tests. Wire new modules into their caller in the same change. Record blockers separately from code failures.
 - Auth, database transactions, realtime, payments, messaging, legal/privacy, or user-data work is not production-done without integration or smoke evidence. If the environment blocks that evidence, record the blocker.
-- Frontend/UI changes: before claiming done, run targeted widget/app-flow tests and, when a runnable UI target exists, open the actual screen (emulator/browser) and check layout, states, and the happy path. Never done from code review or memory alone.
+- Follow `~/.ai-workflow/docs/verification.md`: independent acceptance oracles,
+  required fail-to-pass/mutation evidence, real boundaries, UI interaction results,
+  domain gates and scans. TDD is optional unless specifically required.
+- Irreversible behavior requires safe E2E before merge or explicit owner acceptance
+  of the named gap; a waiver remains unverified and grants no production authority.
+- Follow `~/.ai-workflow/docs/review.md`: initial/follow-up/claim checks, evidence
+  and counterevidence, separate validity/disposition, and authorized record reconciliation.
 
 ## Code Change Approval
 
-- On an isolated worktree or branch, edit freely. Ask the repository owner before: merging into the integration/main branch, database migrations, destructive or irreversible operations, and anything touching payments or user data in a deployed environment.
+- On an isolated worktree or branch, edit freely. Ask the repository owner before: merging into the integration/main branch, migrations on shared/deployed databases, destructive or irreversible operations, and anything touching payments or user data in a deployed environment.
 - When working directly on a shared branch with no isolation, ask before editing runtime-affecting code.
+- Existing application migrations may run in a confirmed disposable, isolated test
+  database with synthetic data. Authoring migration files follows normal edit rules.
+- Before worktree removal verify paths, registration, dirty/untracked work and linked
+  targets. Before applying/dropping a stash identify its hash, diff and destination;
+  apply first and verify before dropping. Preserve unrelated work.
 - Global agent-rule files may be edited when the repository owner explicitly asks to update the rules.
 
 ## Architecture Boundaries
 
-Use Clean Architecture unless the repo explicitly documents another pattern.
-
-Dependency direction:
+Follow the repository's documented architecture. Without guidance, prefer inward
+dependencies for substantial work spanning domain, application, delivery and data.
+Preserve existing structure for local changes; small scripts and tools do not need
+layers solely to satisfy a checklist.
 
 ```text
-ui -> application -> domain <- data
+delivery/UI -> application -> domain <- adapters/data
 ```
 
-- `domain/` is pure models and business logic — no Flutter, Supabase, Drift, filesystem, network, or platform imports.
-- UI never sees data-layer internals: no data-service/adapter/SDK imports, no raw rows, JSON maps, or SDK response objects. Row-to-model mapping lives in data mappers/repositories.
-- Application code depends on repository/adapter abstractions with intention-revealing methods; controllers do not query Drift/Supabase/SQL directly.
-- User-triggered or multi-step workflows go through command/use-case objects in `application/` — one intent, one `call()`/`execute()`, unit-testable with fakes. UI calls commands; it does not assemble workflows. Data adapters never call upward into application or UI.
-- Entrypoints only initialize platform services and run the app. Seed/demo data belongs in data fakes or test fixtures. Route construction, share sheets, notifications, and plugin mechanics live in UI/platform adapters, not business controllers.
-- Fake/demo adapters implement the same boundary as production adapters.
-- If a requested change would violate these boundaries, refactor the boundary first.
+- Domain logic is independent of UI, database/cloud SDKs and platform/network clients.
+- Map vendor objects and raw rows at adapter boundaries; delivery exposes intentional contracts.
+- Application workflows depend on ports; controllers do not query storage or queues directly.
+- Use command/use-case boundaries where they make a workflow independently testable.
+- Entrypoints compose/start the application; demo data belongs in fixtures/fakes.
+- Fakes share production contracts; verify the real adapter with relevant integration tests.
+- Repair only the boundary required by the change; record larger migrations separately.
 
 ## Scope
 
@@ -106,7 +118,11 @@ Rules:
 
 ## Project Files
 
-Prefer repo/task-specific rules over this global file when they are narrower and coherent.
+Narrower, coherent repository/task rules apply within global approval, privacy and
+verification boundaries. Explicit user decisions retain their scope. Declare tracked
+or local-only task-record policy; see `~/.ai-workflow/docs/local-spec-policy.md`.
+Local-only records must not be committed, pushed, attached or uploaded. Keep reusable
+tests/tools outside private task records. Local hooks are not server enforcement.
 
 For substantial work, create or update:
 

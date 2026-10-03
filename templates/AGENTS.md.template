@@ -41,7 +41,9 @@ Docs are two-tier. Never overwrite history; keep the living tier aligned with re
 1. Update every living-tier doc the change touched (`current.md`, `tasks.md`).
 2. Append a newest-on-top entry to project `devlog.md`, linking back to the ticket's spec/ADR and noting which session it continues.
 3. Refresh `todo.md`.
-4. Commit the doc updates into the SAME PR as the change.
+4. Commit only shareable doc updates into the same PR. For private task records,
+   explicitly configure the local-only policy in `~/.ai-workflow/docs/local-spec-policy.md`;
+   never commit, upload or attach those records.
 
 > Steps 2–3 depend on **Project type** (top of file): `personal` → mandatory; `team` → follow the team's convention, skip until adopted. `devlog.md` / `todo.md` are project-level (one rolling file each, spanning all tickets), not per-ticket.
 
@@ -57,6 +59,16 @@ Align with:
 
 Tool-specific global instructions may add adapter details, but they must not
 duplicate or silently override this repository's rules.
+
+## Verification and review contracts
+
+- `~/.ai-workflow/docs/verification.md`: independent oracles, defect detection,
+  applicable real boundaries and domain gates; TDD is optional unless required.
+- `~/.ai-workflow/docs/review.md`: initial/follow-up/claim-check scope, finding
+  evidence and decisions, and delivery reconciliation.
+- Existing architecture is authoritative. Make only the boundary repair needed
+  for this task; small scripts and tools do not need artificial layers.
+- Declare task-record policy explicitly: tracked (default) or local-only.
 
 ## Task-local files
 

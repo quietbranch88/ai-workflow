@@ -1,6 +1,7 @@
 # AI Workflow
 
-**Evidence-first engineering with coding agents.**
+**Tool-agnostic engineering with coding agents: independent acceptance contracts,
+real-boundary verification, scoped review, and evidence-backed handoffs.**
 
 > **AI is a capable coworker who overstates its progress. Ask for evidence.**
 
@@ -81,7 +82,9 @@ Markdown, require completed living docs; repository tests and both strict
 Claude adapter validators must pass. CI pins the project type so a PR cannot
 disable its own personal-project policy. Acceptance criteria should name an
 observable result, environment, and verification step; weak wording warns
-without blocking. These checks validate evidence structure, not factual truth.
+without blocking. These checks validate evidence structure, not factual truth. Repositories with private task records
+can explicitly select [local-only validation](docs/local-spec-policy.md); those local
+checks do not publish evidence or provide server-side enforcement.
 
 ## The operating loop
 
@@ -144,6 +147,11 @@ Canonical documents stay tool-agnostic. Adapter copies that declare a
 `Canonical source` must be updated with their source so drift stays visible.
 
 </details>
+
+The detailed [verification contracts](docs/verification.md) require independent
+test oracles, applicable defect-detection evidence and real integration/E2E boundaries.
+TDD is optional unless required. [Review modes and decisions](docs/review.md) distinguish
+initial reviews, focused follow-ups and claim checks, preserving evidence and counterevidence.
 
 ## Tool adapters
 

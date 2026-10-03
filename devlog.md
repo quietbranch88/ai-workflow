@@ -1,5 +1,20 @@
 # Devlog
 
+## 2026-10-03 — evidence contracts and private task records
+
+- **What**: Synchronize independent acceptance oracles, defect-detection and real-boundary
+  verification, scoped review with finding decisions, and proportional architecture.
+  Add opt-in local-only record validation and synchronize the Claude adapter at 0.6.0.
+- **Why**: Portable templates still required test-first behavior and stopped review at
+  the first blocker; tracked-document guards could not support private task records.
+- **Evidence**: `.spec/evidence-contracts/audit.md`; real disposable Git fixtures,
+  controlled mutation, repository contracts, strict plugin validation and Markdown render.
+- **Delivery**: Repository About description updated and read back. Code/docs are on
+  a feature branch; merge and local installation are separate, not completed states.
+- **Dated correction**: The September 15 entry described preparation at that time.
+  Remote main `58fd6f8` now contains those rule-distribution sources. Its publication
+  is observed in the current tree; local installation is not established by that fact.
+
 ## 2026-09-15 — rule delivery preparation
 
 Align rule distribution, clarification, debugging and private-map handling; retain the current plugin baseline and increment it to 0.5.1. Validation and scope: `.spec/rules-delivery-20260915/audit.md`. Prepared locally; no remote publication.

@@ -19,6 +19,12 @@ specs stay workable; Ship still requires every checkbox to be complete.
 - [ ] Observable: <result a reviewer can see or measure>
   - Environment: <local, CI, staging, production, or named device>
   - Verify: <exact command or numbered manual steps>
+  - Oracle: <independent requirement, invariant, versioned contract or incident fixture>
+  - Required boundary: <actual entrypoint through services/storage/devices to the result>
+
+Name compatibility and affected failure/recovery expectations. Declare substituted
+boundaries and required defect-detection evidence under `docs/verification.md` in
+the workflow source. Keep these records local when repository policy requires it.
 
 ## Interface
 
