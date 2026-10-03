@@ -97,3 +97,26 @@ independently ran 58 tests. Two findings were adopted after source/caller checks
   not server-side enforcement. Earlier pre-commit-only scope was superseded by EC-01.
 - Markdown rules are intent. No agent-quality benchmark or production E2E is claimed.
 - The installed local workflow remains unchanged. No private/company overlays copied.
+
+### Follow-up and final local verification: 4aa40a2
+
+- Fresh follow-up reviewed df79463 -> 4aa40a2 against the same acceptance contract.
+  No new blockers. EC-01 and EC-02 are now **confirmed / fixed**, fix revision
+  4aa40a234b222d02a40d44d671dfa24d206763fd. The earlier open entries are retained
+  as history; the reason for closure is inspected fixes plus the evidence below.
+- Reviewer independently ran 16 local-policy tests and 19 documentation contracts;
+  all passed, including positive/negative actual native-hook pushes and in-package
+  contract consistency. `git diff --check` passed. No agent-quality evaluation claimed.
+- Coordinator's final runtime/test revision: 4aa40a2. Complete suite: **62 tests
+  passed** on Windows, Python 3.11.9, Git 2.49.0.windows.1. Both controlled mutations
+  failed the intended assertions and passed after restoration in isolated copies.
+- Ruff passed on changed scripts/tests; staged Gitleaks passed after the fixes.
+  Final Bandit output still has the same eight low warnings and zero medium/high;
+  SCAN-01/02 dispositions remain applicable. No security warning was suppressed.
+- Packaged strict validation passed again after embedding the contracts; marketplace
+  metadata is unchanged from its passing strict run. CLI version: 2.1.210.
+- Final 39 relative Markdown links resolved; GitHub Markdown API rendering passed.
+  Default tracked WIP check passed with zero warnings.
+- Implemented and locally verified; not merged, deployed or installed. This source
+  snapshot records pre-publication evidence. Hosted checks and PR publication are
+  separate observations recorded in the PR, rather than inferred from local results.
