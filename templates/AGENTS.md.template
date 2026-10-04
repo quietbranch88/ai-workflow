@@ -102,7 +102,7 @@ Use `~/.ai-workflow/templates/ai-development-map.md` as the handoff template.
 
 ## Out of bounds
 
-> Applies to `Project type: team`. For `personal`, drop this section — the global
-> "destructive operations require explicit approval" rule is the only backstop you need.
+> Remove unused project-specific constraints. The approval gates in
+> `~/.ai-workflow/workflow.md` apply to both personal and team projects.
 
 - <repo-specific constraints>

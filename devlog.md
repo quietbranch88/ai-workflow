@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-10-04 - personal-project approval clarification
+
+- **What**: Correct the template's claim that destructive-operation approval is
+  the only safeguard personal projects need. Both project types retain the
+  canonical workflow approval gates; unused local constraints may be removed.
+- **Evidence**: `.spec/workflow-readability/audit.md`, WD-01 follow-up.
+- **Dated correction**: PR #22 is merged as `9034daa`; its earlier preparation
+  status below is superseded. This wording follow-up is a separate local change.
+
 ## 2026-10-04 — first-reader onboarding follow-up
 
 - **What**: Clarify how cross-repo work starts without an optional system map,

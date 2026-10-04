@@ -189,3 +189,32 @@ The owner authorized PR #22's merge including this directory follow-up. Final-he
 hosted checks, remote merge SHA and post-merge directory state are verified and
 reported in the PR/delivery response after this preparation record is committed.
 This record does not assert that the merge has already happened.
+
+### WD-01: personal-project approval wording (2026-10-04)
+
+Remote PR #22 was read back as MERGED at `9034daa6d4f3d7d50459eb73f5e88e1c8110cbba`
+on 2026-10-04. This supersedes its preparation status above; it does not authorize
+merging this later follow-up.
+
+- **WD-01 / medium / confirmed / fixed locally**: fresh source review against
+  `9034daa` found `templates/AGENTS.md.template:105-106` telling personal-project
+  adopters that destructive-operation approval is the only required backstop.
+  Expected: both project types retain all `workflow.md:253-262` approval gates.
+  Trigger: copying the template and removing its Out of bounds section for a
+  personal project. Impact: readers may infer merge/deploy/publication approval
+  no longer applies. Counterevidence: the template already references workflow.md;
+  full readers can discover the correct gates. No unauthorized action was observed.
+- Fix: allow removing unused local constraints while explicitly preserving
+  workflow approval gates for both project types. Fix revision: the commit
+  containing this dated entry on `fix-personal-approval-guidance-20261004`.
+- Source check: the conflicting phrase had one occurrence, in this template.
+  Canonical workflow and its packaged mirror retain their existing approval gates;
+  this template has no declared packaged mirror. No plugin version change needed.
+- `python -m unittest discover -s tests -p test_docs_contracts.py -v`: 19 passed
+  in 4.935 seconds on Windows. `git diff --check`: passed. Direct review of the
+  replacement against canonical Approval gates confirms the wording correction;
+  the existing tests establish surrounding contract consistency only.
+- `python scripts/check_close_the_loop.py`: exit 0 for the local state.
+- No executable, dependency, public README structure or rendered UI changes.
+  No new runtime install, model session, usability study or service E2E was run.
+  This is a local documentation correction; publication and merge remain separate.

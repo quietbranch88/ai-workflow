@@ -21,6 +21,13 @@ the four confirmed design-review findings, and link the owner's relevant writing
   - Environment: repository metadata and public article pages.
   - Verify: JSON parsing, article reads, Markdown rendering and About readback.
 
+## Approval wording follow-up (2026-10-04)
+
+- [x] Observable: the project template preserves workflow approval gates for
+  both personal and team projects while allowing unused local constraints to be removed.
+  - Environment: distributed Markdown template and canonical workflow.
+  - Verify: direct comparison with `workflow.md` Approval gates and docs contract checks.
+
 ## Non-goals
 
 - Change validator behavior, weaken CI, or claim a new lightweight automated exemption.

@@ -9,6 +9,9 @@
       `58fd6f8` (observed 2026-10-03); this does not establish local installation.
 - [x] Merge the evidence-contracts update: PR #20, `442a7f9`, verified 2026-10-04.
 - [x] Review and merge the workflow-readability update: PR #21, `da4014b`.
-- [ ] Review the first-reader map clarification and downloadable-hook repair.
+- [x] Review and merge the first-reader map clarification, downloadable-hook repair
+      and Codex entry: PR #22, `9034daa`.
+- [ ] Publish the WD-01 template approval clarification after local verification;
+      merge requires authorization for this follow-up.
 - [ ] Compare local installations separately, preserving private overlays and recording
       the installed source revision.
