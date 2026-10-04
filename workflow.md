@@ -71,16 +71,16 @@ latest `devlog.md` entries), and state which docs you consulted. If the approach
 with a recorded decision, STOP and flag it immediately — do not defer to Review. The user
 decides: honor the past decision, or update the docs because the new requirement supersedes it.
 
-Cross-repo task → also read `~/.ai-workflow/system-map.md` FIRST, before any Explore
-fan-out. Spot-verify only the entry points and edges the ticket touches; do NOT re-explore
-repos the ticket doesn't touch. If the map contradicts reality, the map is stale — fix that
-line in the local-only map (see `prompts/system-map-scan.md`). Never include the private map in a PR; commit only shareable repository documentation.
+For cross-repo tasks, read `~/.ai-workflow/system-map.md` first if it exists; spot-check only the affected entry points and edges.
+Without a map, identify the repositories and integration edges this task touches; creating a reusable map is optional.
+If an existing map contradicts reality, update the affected local entries; see [the map guide](prompts/system-map-scan.md).
+Do not explore unrelated repositories or include the private map in a PR; commit only shareable repository documentation.
 
 ### Close the loop (before opening a PR)
 
 1. Update the ticket's `current.md` and `tasks.md`.
 2. For personal projects, update newest-on-top `devlog.md` and `todo.md`.
-3. Patch `~/.ai-workflow/system-map.md` when a recorded entry point, public surface, integration edge, or shared library changed.
+3. If `~/.ai-workflow/system-map.md` exists, update its affected entries when a recorded entry point, public surface, integration edge, or shared library changed.
 4. Commit only shareable repository doc updates in the same PR. Follow an explicit
    [local-only spec policy](docs/local-spec-policy.md) where task records are private.
 5. Reconcile audit, tasks and authorized PR/tracker claims using [docs/review.md](docs/review.md).

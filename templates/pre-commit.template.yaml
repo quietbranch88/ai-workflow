@@ -12,7 +12,8 @@ repos:
     hooks:
       - id: close-the-loop
         name: living-tier docs updated (close the loop)
-        entry: python ~/.ai-workflow/scripts/check_close_the_loop.py
+        # pre-commit does not invoke a shell: expand the home path in Python.
+        entry: python -c "from pathlib import Path; import runpy; runpy.run_path(str(Path.home() / '.ai-workflow' / 'scripts' / 'check_close_the_loop.py'), run_name='__main__')"
         language: system
         stages: [pre-push]
         pass_filenames: false

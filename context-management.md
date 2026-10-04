@@ -30,6 +30,9 @@ hand-maintained sections; update those maps deliberately.
 
 Above each repository sit two optional views:
 
+If no system map exists, identify the repositories and integration edges needed
+for the current task and proceed. Creating a reusable map is optional.
+
 - `~/.ai-workflow/system-map.md` — structure across repositories: entry points,
   public surfaces, integration edges, and shared libraries. Build it with
   `prompts/system-map-scan.md`; spot-check only the edges a ticket touches. Run

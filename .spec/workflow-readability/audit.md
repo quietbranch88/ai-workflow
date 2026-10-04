@@ -78,3 +78,114 @@ No executable code, dependency or CI logic change; no artificial mutation or ser
 E2E is required. Blog contents and local installations unchanged. The branch is
 published; PR/hosted checks are recorded in the delivery response. This follow-up
 is not merged, and prior approval for PR #20 does not authorize its merge.
+
+## First-reader follow-up: FR-01 (2026-10-04)
+
+Prior review target: `da4014bc472e213b59f395ba440ddf32e485b89f` (merged PR #21).
+This supersedes the previous section's unmerged delivery state for that PR only.
+
+- **FR-01 / P2 medium / confirmed / open**: `workflow.md:74-77` told a first-time
+  cross-repo user to read a missing `system-map.md` FIRST, while
+  `context-management.md:29-37` declares the map optional. The Quick start promises
+  an actionable entry after project configuration. Expected: a missing-map path
+  that names the involved repositories and edges without requiring a global map.
+  Actual: ambiguous prerequisite. Counterevidence: the context guide offers a map
+  generator and single-repo work is unaffected. Evidence is source comparison and
+  a fresh agent's reading simulation, not an executed human usability study.
+- Proposed fix: state both existing-map and missing-map behavior in canonical
+  workflow/context guide; make close-loop map updates conditional on existence;
+  preserve bounded exploration and private-map restrictions. Synchronize the mirror.
+- Related editorial correction: display the original article title separately
+  from explicitly labeled English and Chinese links; destinations remain unchanged.
+- No executable code, tests, dependency or CI changes. Validation/review pending.
+
+### Scope correction and download verification (2026-10-04)
+
+Zoe subsequently requested English-only links and asked whether the downloadable
+code works with Codex. This supersedes the bilingual-label proposal above. The
+real-hook defect below expands the patch to one executable template and one test;
+the earlier documentation-only scope statement no longer describes the final patch.
+
+- Fresh public clone of `main@da4014b`: 62 tests passed in 23.784 seconds, including
+  real PowerShell task/bootstrap and disposable Git push tests. This establishes
+  those exercised paths, not every optional helper or agent's future behavior.
+- `pwsh -NoProfile -File scripts/build-spec-map.ps1 -SpecPath .spec -DryRun`:
+  exit 0, six task areas listed, no map written. Status remains a heuristic as documented.
+- Environment: Windows, Python 3.11.9, PowerShell 7.6.5, pre-commit 4.6.2.
+- Official AGENTS guidance https://learn.chatgpt.com/docs/agent-configuration/agents-md
+  confirms project-root instruction discovery. README now says to configure and
+  open the target project, not just clone the shared library. No Codex model run
+  or real `-LaunchCodex` session was executed. That optional switch needs user-defined
+  profiles, which the repo does not install; this requirement is now documented.
+- **DL-01 / P2 medium / confirmed / open pending final review**: distributed
+  `templates/pre-commit.template.yaml:15` passes a literal `~` as a Python script
+  argument. Trigger: copying/installing the advertised hook in a target repo.
+  Expected: invoke the installed close-loop guard. Actual: pre-commit launches
+  without a shell, so Python reports file-not-found under the target repo's `~`
+  directory. Real pre-commit reproduction on downloaded main confirmed exit 2
+  from Python, before the guard. Counterevidence: direct shell invocations and
+  existing validator tests work; neither exercises this template entry.
+- Fix: resolve Path.home inside Python and execute the installed script via runpy.
+  A new integration test runs the actual template local block through pre-commit
+  with a disposable home containing spaces, checks code-only rejection by the
+  real guard and acceptance after adding valid draft records.
+- Test development correction: the first draft expected the wrong rejection
+  wording. After matching the existing guard diagnostic, the unchanged final test
+  failed against the historical template in an isolated copy at the launch/guard
+  assertion, then passed after restoring the fixed template. This is regression
+  evidence for the launch defect; startup failure is the defect being tested.
+- `ruff check scripts tests`: passed. Bandit 1.9.4 on the new test reported five
+  LOW B404/B603/B607 warnings, zero medium/high; scan exit 1, not a clean scan.
+  **DL-SCAN-01 / low / false-positive / dismissed** for introduced command injection:
+  test-only subprocess import/calls at lines 5,37,57 use argument arrays without
+  a shell and fixed tool names plus disposable paths/known Git refs. Trusted local
+  PATH is required, as with the existing Git integration tests; no remote input
+  or privilege elevation is introduced. No dependencies were added/upgraded;
+  pyproject declares no dependency inventory, so no advisory result is claimed.
+
+### Final follow-up verification and dispositions
+
+Product target `01c8d3b9fa00f2d743377d7a7ead37dad8f82731`, base `da4014b`:
+
+- Full local suite: 63 tests passed in 30.116 seconds; new real pre-commit test ran,
+  not skipped. Both strict Claude package surfaces passed; Ruff and diff check passed.
+  Close-loop WIP check passed with zero warnings. Final Ship check follows record closure.
+- Independent reviewer found no new actionable issues. Independently ran the new
+  hook test (1 passed), docs contracts (19 passed), close-loop and whitespace checks.
+  Checked existing guards, runpy argument/exit handling and sibling imports.
+- **FR-01: confirmed / fixed at 01c8d3b**. Existing/missing map instructions now agree;
+  source review plus mirror tests establish the correction. No human usability claim.
+- **DL-01: confirmed / fixed at 01c8d3b**. Actual template invocation reaches the
+  guard with a spaced home path; denial and permitted draft paths both pass their
+  assertions. Historical-template fail-to-pass evidence recorded above.
+- **DL-SCAN-01 remains false-positive / dismissed** with the recorded trusted-PATH
+  and test-only argument-array counterevidence. Do not report Bandit as clean.
+- 35 relative Markdown destinations verified. GitHub Markdown API rendered README.
+  Chrome opened the published branch at `01c8d3b`; observed the new Codex setup and
+  prerequisites, English-only story link, and preserved rendered Mermaid nodes.
+  Clicked the story link and confirmed English destination, title and body. One
+  immediate heading query timed out during navigation; the subsequent page state
+  confirmed success. No mock, no blog mutation, no Codex model session.
+- Limitations: Bash aliases, optional Codex launcher and Linux hook execution were
+  not run. The new test skips without pre-commit/Git; CI does not explicitly install
+  pre-commit, so hosted success alone cannot establish this integration path.
+- Branch published; this follow-up is not merged. PR and hosted check results are
+  recorded in the PR and delivery response. No local installation was changed.
+
+### Codex directory entry and merge authorization (2026-10-04)
+
+Zoe noted that the Claude-only directory naming implied exclusive support, then
+explicitly requested MERGE. Add `codex/README.md` and visible root links while
+retaining the shared canonical files; do not rename or break the Claude package.
+
+At `7c1da5a`, 19 docs contract tests passed, 38 README/workflow/template relative
+destinations and all 7 Codex-guide destinations resolved. Both README documents
+rendered through GitHub's Markdown API; whitespace check passed. Focused independent
+claim-check of `acb99a6..7c1da5a` found no actionable issue and independently verified
+guide links, target-project setup and local/cloud file-access wording against the
+official AGENTS guide. No executable change after the reviewed/tested hook fix.
+
+The owner authorized PR #22's merge including this directory follow-up. Final-head
+hosted checks, remote merge SHA and post-merge directory state are verified and
+reported in the PR/delivery response after this preparation record is committed.
+This record does not assert that the merge has already happened.
