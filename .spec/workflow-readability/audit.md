@@ -218,3 +218,17 @@ merging this later follow-up.
 - No executable, dependency, public README structure or rendered UI changes.
   No new runtime install, model session, usability study or service E2E was run.
   This is a local documentation correction; publication and merge remain separate.
+
+### WD-01 delivery authorization (2026-10-04)
+
+Zoe explicitly requested merge after local fix commit `97b40e4`. This supersedes
+the earlier pending-authorization state for this follow-up. The close-loop check
+was rerun and passed with zero warnings; PR creation, hosted validation and merge
+will be read back and recorded in the PR delivery record.
+
+- Fresh independent claim-check of `9034daa..97b40e4`: no actionable findings;
+  WD-01 confirmed fixed. Reviewer independently passed 19 docs tests, diff check
+  and close-loop validation. Later authorization-only notes were checked by the
+  main agent against Zoe's explicit merge request.
+- Pre-PR full suite: `python -m unittest discover -s tests -v`, 63 passed in
+  28.891 seconds, including the real pre-commit hook test, on Windows.
