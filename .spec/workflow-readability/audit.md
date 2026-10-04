@@ -171,3 +171,21 @@ Product target `01c8d3b9fa00f2d743377d7a7ead37dad8f82731`, base `da4014b`:
   pre-commit, so hosted success alone cannot establish this integration path.
 - Branch published; this follow-up is not merged. PR and hosted check results are
   recorded in the PR and delivery response. No local installation was changed.
+
+### Codex directory entry and merge authorization (2026-10-04)
+
+Zoe noted that the Claude-only directory naming implied exclusive support, then
+explicitly requested MERGE. Add `codex/README.md` and visible root links while
+retaining the shared canonical files; do not rename or break the Claude package.
+
+At `7c1da5a`, 19 docs contract tests passed, 38 README/workflow/template relative
+destinations and all 7 Codex-guide destinations resolved. Both README documents
+rendered through GitHub's Markdown API; whitespace check passed. Focused independent
+claim-check of `acb99a6..7c1da5a` found no actionable issue and independently verified
+guide links, target-project setup and local/cloud file-access wording against the
+official AGENTS guide. No executable change after the reviewed/tested hook fix.
+
+The owner authorized PR #22's merge including this directory follow-up. Final-head
+hosted checks, remote merge SHA and post-merge directory state are verified and
+reported in the PR/delivery response after this preparation record is committed.
+This record does not assert that the merge has already happened.

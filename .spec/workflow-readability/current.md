@@ -42,7 +42,7 @@ the four confirmed design-review findings, and link the owner's relevant writing
   without required living records is still rejected and a valid draft passes.
   - Environment: disposable Git repository and real pre-commit runner.
   - Verify: fail-to-pass regression using the template's actual local-hook block.
-- [ ] Observable: a visible root `codex/` entry and README links guide Codex users
+- [x] Observable: a visible root `codex/` entry and README links guide Codex users
   to the shared sources without implying a separate installer or copied rules.
   - Environment: repository root, Codex guide and GitHub Markdown.
   - Verify: link checks, rendered documentation and focused claim review.
