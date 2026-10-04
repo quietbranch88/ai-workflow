@@ -276,3 +276,17 @@ The story now follows the short introduction and precedes Quick start; the
 shorter setup, task example and optional sections remain. This supersedes the
 story-last and unapproved-merge statements above. Validation and independent
 review will be recorded below; remote delivery will be read back in the PR.
+
+- Final document target `1a7cccd`: 63 tests passed in 29.633 seconds; Ship passed
+  with zero warnings; diff check passed; 32 relative links/anchors validated and
+  both README files rendered with GitHub's Markdown API.
+- Fresh independent review of `e996b12..1a7cccd`: no actionable findings. Checked
+  ordering, onboarding, canonical policy and actual CI/bootstrap behavior.
+  The original blog article was rechecked; the second article was inaccessible
+  to the reviewer's web tool, so its unchanged-meaning summary was compared with
+  the baseline rather than newly verified against the external article.
+- Chrome connection recovered. On the final local preview, the top screenshot
+  shows the story immediately after the intro. Clicked Codex and then Optional
+  setup; observed the guide and return URL `index.html#optional-setup` with the
+  expected section. This closes the prior local navigation gap, not a human
+  usability or live GitHub styling claim. Source diagram remains unchanged.
