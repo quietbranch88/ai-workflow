@@ -142,3 +142,32 @@ the earlier documentation-only scope statement no longer describes the final pat
   PATH is required, as with the existing Git integration tests; no remote input
   or privilege elevation is introduced. No dependencies were added/upgraded;
   pyproject declares no dependency inventory, so no advisory result is claimed.
+
+### Final follow-up verification and dispositions
+
+Product target `01c8d3b9fa00f2d743377d7a7ead37dad8f82731`, base `da4014b`:
+
+- Full local suite: 63 tests passed in 30.116 seconds; new real pre-commit test ran,
+  not skipped. Both strict Claude package surfaces passed; Ruff and diff check passed.
+  Close-loop WIP check passed with zero warnings. Final Ship check follows record closure.
+- Independent reviewer found no new actionable issues. Independently ran the new
+  hook test (1 passed), docs contracts (19 passed), close-loop and whitespace checks.
+  Checked existing guards, runpy argument/exit handling and sibling imports.
+- **FR-01: confirmed / fixed at 01c8d3b**. Existing/missing map instructions now agree;
+  source review plus mirror tests establish the correction. No human usability claim.
+- **DL-01: confirmed / fixed at 01c8d3b**. Actual template invocation reaches the
+  guard with a spaced home path; denial and permitted draft paths both pass their
+  assertions. Historical-template fail-to-pass evidence recorded above.
+- **DL-SCAN-01 remains false-positive / dismissed** with the recorded trusted-PATH
+  and test-only argument-array counterevidence. Do not report Bandit as clean.
+- 35 relative Markdown destinations verified. GitHub Markdown API rendered README.
+  Chrome opened the published branch at `01c8d3b`; observed the new Codex setup and
+  prerequisites, English-only story link, and preserved rendered Mermaid nodes.
+  Clicked the story link and confirmed English destination, title and body. One
+  immediate heading query timed out during navigation; the subsequent page state
+  confirmed success. No mock, no blog mutation, no Codex model session.
+- Limitations: Bash aliases, optional Codex launcher and Linux hook execution were
+  not run. The new test skips without pre-commit/Git; CI does not explicitly install
+  pre-commit, so hosted success alone cannot establish this integration path.
+- Branch published; this follow-up is not merged. PR and hosted check results are
+  recorded in the PR and delivery response. No local installation was changed.

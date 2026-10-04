@@ -29,15 +29,15 @@ the four confirmed design-review findings, and link the owner's relevant writing
 
 ## First-reader follow-up acceptance (2026-10-04)
 
-- [ ] Observable: cross-repo tasks can start without a system map; an existing
+- [x] Observable: cross-repo tasks can start without a system map; an existing
   map is read and its affected entries are maintained, with privacy preserved.
   - Environment: canonical workflow, context guide and packaged mirror.
   - Verify: inspect both missing-map and existing-map instructions; mirror contract tests.
-- [ ] Observable: the original article links directly to English only, following
+- [x] Observable: the original article links directly to English only, following
   Zoe's later correction; no separate language selector is added.
   - Environment: README rendered by GitHub.
   - Verify: inspect generated link text and destinations; Chrome navigation check.
-- [ ] Observable: the optional pre-push template launches the installed validator
+- [x] Observable: the optional pre-push template launches the installed validator
   from a target repository even when the user's home path contains spaces; code
   without required living records is still rejected and a valid draft passes.
   - Environment: disposable Git repository and real pre-commit runner.
