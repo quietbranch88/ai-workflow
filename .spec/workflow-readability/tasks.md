@@ -10,6 +10,8 @@
 - [x] task-7: Validate and independently review the first-reader follow-up; record delivery separately.
 - [x] task-9: Add the Codex directory entry, validate its links and prepare the approved PR for merge.
 
+- [x] task-10: Correct WD-01 personal-project approval wording and validate the document contract.
+
 ## Acceptance
 
 - [x] Acceptance criteria have direct review or executed validation evidence.
