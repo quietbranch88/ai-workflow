@@ -38,7 +38,7 @@ cloning the repo alone does not register every prompt as a Codex skill.
 
 ## Optional helpers
 
-See the root [Quick start](../README.md#quick-start) for Python, PowerShell and
+See [Optional setup](../README.md#optional-setup) for Python, PowerShell and
 hook prerequisites. The default task bootstrap prints a prompt that you can paste
 into Codex. Its optional launcher needs your own named Codex profiles.
 

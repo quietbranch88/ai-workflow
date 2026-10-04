@@ -232,3 +232,39 @@ will be read back and recorded in the PR delivery record.
   main agent against Zoe's explicit merge request.
 - Pre-PR full suite: `python -m unittest discover -s tests -v`, 63 passed in
   28.891 seconds, including the real pre-commit hook test, on Windows.
+
+### Concise onboarding follow-up (2026-10-04)
+
+Baseline: merged main `e996b120d824ca750882c4254865a85cf9e0af2a` (PR #23).
+Zoe requested the proposed shorter first-reader README. This is editorial work,
+not a new assertion that the earlier README failed a measured usability test.
+
+- README now leads with purpose, three setup steps, a synthetic CSV bug example
+  and the unchanged Mermaid flow. Advanced tool prerequisites, CI and model
+  routing are folded; the blog story is last. The stage table has two columns.
+- Retained the existing-rule preservation guard, required template configuration,
+  private-record policy, local/cloud file-access caveat, verification gaps and
+  separate merge/deployment authorization. Core contracts, scripts, manifests
+  and tests are unchanged. The example is illustrative, not an executed CSV fix.
+- Updated the Codex guide's prerequisites link from Quick start to Optional setup.
+  Source search found no in-repository links to the removed section anchors.
+- `python -m unittest discover -s tests -p test_docs_contracts.py -v`: 19 passed
+  in 3.346 seconds. `git diff --check`: passed.
+- A temporary local verifier checked 32 relative destinations and heading anchors,
+  compared the unchanged Mermaid source with main, and rendered both edited
+  README files through GitHub's Markdown API. Whitespace-token counts for the
+  root Markdown file: 1,623 before, 1,142 after (30% fewer, rounded); this is a
+  length measurement, not evidence of improved comprehension.
+- Chrome preview at `http://127.0.0.1:8769/`, rendered from this commit's document
+  content with local styling: inspected the three steps and example; expanded
+  copy commands and observed both guarded commands; collapsed them; expanded
+  optional CI and observed prerequisites and strict Ship text; collapsed it.
+  The accessibility tree contained all six Mermaid stages and both repair paths;
+  the screenshot showed the example and upper flow. This establishes local
+  document/disclosure behavior, not production GitHub styling or a model session.
+- Subsequent browser inspection lost its connection. Rebinding and opening a
+  fresh tab did not recover it. Full-page visual inspection and clicking through
+  the Codex guide's updated anchor were not completed; source link validation
+  passed. No mobile or human usability test was run.
+- Local-only delivery for this follow-up; no new PR, push or merge. Earlier merge
+  authorization applied to PR #23, not this newly requested README revision.

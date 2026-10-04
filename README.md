@@ -1,131 +1,85 @@
 # AI Workflow
 
-**Practical prompts, templates, and checks for planning, testing, and reviewing
-work with AI coding agents.**
+**Prompts, templates, and checks that help coding agents plan changes, test results,
+and show evidence before calling work done.**
 
-Start with a clear definition of success, make small changes, test the result,
-and review before shipping. Use the Markdown instructions with your coding
-agent; add the optional scripts and tool adapters when you need them.
-
-Start here: [Codex](codex/) · [Claude Code](#tool-adapters).
-Both use the shared workflow, prompts, and templates in this repository.
-
-> **AI is a capable coworker who overstates its progress. Ask for evidence.**
-
-This started with more than 20,000 lines of AI-assisted code and one missing
-critical path: the Kafka integration the AI had already called "done."
-
-The files were there. The code looked clean. The system still did not work.
-
-So I stopped treating AI development as a better prompt and started treating
-it as a system:
-
-`messy request → explicit contract → isolated work → evidence → independent review → durable handoff`
-
-This repository contains the portable Markdown contracts, prompts, templates,
-and checks behind that system. Any coding agent can use the canonical files;
-tool-specific configuration is optional glue.
+Use the shared Markdown files with [Codex](codex/) or [Claude Code](#tool-adapters).
+Scripts and plugins are optional.
 
 ## Quick start
 
-Clone the workflow, configure your project's instructions, then start a task.
-This setup does not install Git hooks or CI in your project.
+You need Git, a coding agent, and a project to work on. Cloning this repository
+does not install hooks or CI in your project.
 
-You need Git and a coding agent for the steps below. Optional Python checks need
-Python 3.10 or newer; the PowerShell helpers need PowerShell 7 (`pwsh`). Installing
-the hook template also needs `pre-commit`. These tools are not bundled with the repo.
+### 1. Download the shared workflow
 
-1. Clone the shared workflow.
+```bash
+git clone https://github.com/quietbranch88/ai-workflow.git ~/.ai-workflow
+```
 
-   ```bash
-   git clone https://github.com/quietbranch88/ai-workflow.git ~/.ai-workflow
-   ```
+### 2. Configure your project
 
-2. Change into **your target project's root directory**, then add the
-   project-instruction template without overwriting local rules.
+Open **your target project's root directory**. Copy
+[`templates/AGENTS.md.template`](templates/AGENTS.md.template) to `AGENTS.md` there.
+If `AGENTS.md` already exists, merge the relevant sections and preserve existing rules.
 
-   If `AGENTS.md` already exists, merge the relevant sections from
-   [`templates/AGENTS.md.template`](templates/AGENTS.md.template) into it. If it
-   does not exist, use the guarded copy command for your shell:
+Before using it, choose `personal` or `team`, fill in the project context and
+real lint/test commands, and remove unused placeholders. State when a check is
+unavailable. Choose whether task notes belong in Git (`tracked`) or must stay
+private ([`local-only`](docs/local-spec-policy.md)).
 
-   ```bash
-   # macOS / Linux
-   test -e ./AGENTS.md && echo "AGENTS.md exists; merge it manually" || \
-     cp ~/.ai-workflow/templates/AGENTS.md.template ./AGENTS.md
-   ```
+<details>
+<summary>Copy commands for macOS / Linux and PowerShell</summary>
 
-   ```powershell
-   # PowerShell
-   if (Test-Path ./AGENTS.md) {
-     Write-Host "AGENTS.md exists; merge it manually"
-   } else {
-     Copy-Item "$HOME/.ai-workflow/templates/AGENTS.md.template" ./AGENTS.md
-   }
-   ```
+Run from your target project. These commands preserve an existing `AGENTS.md`.
 
-3. Configure the copied or merged `AGENTS.md` before using it:
+```bash
+# macOS / Linux
+test -e ./AGENTS.md && echo "AGENTS.md exists; merge it manually" || \
+  cp ~/.ai-workflow/templates/AGENTS.md.template ./AGENTS.md
+```
 
-   - Choose one project type: `personal` or `team`.
-   - Declare whether task records are tracked or
-     [local-only](docs/local-spec-policy.md). Keep private records out of Git.
-   - Fill in the project context and actual lint/test commands. Remove unused
-     placeholders; state when a check is unavailable instead of inventing one.
+```powershell
+# PowerShell
+if (Test-Path ./AGENTS.md) {
+  Write-Host "AGENTS.md exists; merge it manually"
+} else {
+  Copy-Item "$HOME/.ai-workflow/templates/AGENTS.md.template" ./AGENTS.md
+}
+```
 
-4. Give your coding agent one instruction:
+</details>
+
+### 3. Start a task
+
+Open the target project in your coding agent and start a new session. Send this
+instruction followed by the task you want done:
 
 ```text
 Read AGENTS.md and ~/.ai-workflow/workflow.md, then follow the six-stage
 workflow for this task. Do not claim completion without verification evidence.
+
+Task: [describe the change and what a successful result looks like]
 ```
 
-Optional shell helpers live in [`shell/aliases.sh`](shell/aliases.sh).
+Use your actual clone path if it differs. The shared files must be accessible
+where the agent runs; a local clone is not automatically available in the cloud.
+For Claude Code, add the [thin CLAUDE.md shim](templates/CLAUDE.md.template)
+that imports `AGENTS.md`, preserving any existing instructions.
 
-<details>
-<summary>Optional task bootstrap</summary>
+For example, in a project with a CSV export, a first task could be:
 
-For a guided intake that can create ticket files and an isolated workspace:
-
-```powershell
-# Run inside the target repository:
-pwsh ~/.ai-workflow/scripts/start-task.ps1
-
-# Or name the repository explicitly:
-pwsh ~/.ai-workflow/scripts/start-task.ps1 -RepoPath C:\path\to\repo
+```text
+Task: Fix CSV export when a field contains a comma.
+Success: Exporting the name "Doe, Jane" produces one name field, not two columns.
+Check: Use synthetic data in the local test environment. Parse the exported CSV
+with a CSV reader and assert the original field values and column count.
+Show the failing case before the fix, then the passing result. If you cannot
+run the check, report the blocker and leave that result unverified.
 ```
 
-The default prints a kickoff prompt you can paste into Codex or another agent.
-The optional `-LaunchCodex` switch additionally needs the Codex CLI and your own
-named profiles (`plan`, `build`, `test`, `review`, `ship`); this repo does not
-install those profiles. Use the default when they are not configured.
-
-</details>
-
-<details>
-<summary>Optional checks and this repository's CI</summary>
-
-The [pre-push template](templates/pre-commit.template.yaml), when installed,
-uses **WIP mode**: draft checkboxes may remain open, but ticket documents must
-be structurally valid. It is a local safeguard, not server-side enforcement.
-
-**This repository's** [GitHub workflow](.github/workflows/validate.yml) runs
-tests, both strict Claude adapter validators, and **Ship mode**. Under the
-tracked policy, every change outside the living documents requires completed
-ticket records, plus `devlog.md` and `todo.md` for personal projects. This
-includes small Markdown corrections: the validator checks paths, not the size
-or meaning of a change. Keep the required records brief and factual.
-
-CI explicitly passes `--project-type personal`, so changing the project-type
-marker in `AGENTS.md` alone does not change that check. This does not prevent
-a PR from changing the workflow or validator; those changes still need review.
-Other projects must configure their own checks; cloning this repo installs none.
-
-These checks validate record structure, not whether a claim is true. Acceptance
-wording without an observable result, environment, or verification step produces
-a warning. Projects with private records can select
-[local-only validation](docs/local-spec-policy.md); do not upload private
-records to satisfy this repository's tracked-record convention.
-
-</details>
+Expect a focused change, test commands and results, review findings, and any
+remaining gaps. You still authorize merges and deployments separately.
 
 ## The operating loop
 
@@ -140,137 +94,119 @@ flowchart TD
     E -->|Findings resolved| F["Ship: prepare the approved handoff"]
 ```
 
-The loop is Define → Plan → Build → Verify → Review → Ship, with failed tests
-and confirmed findings returning to Build. Missing required evidence leaves the
-task unverified. Ship does not grant permission to merge or deploy.
+| Stage | What to leave behind |
+|---|---|
+| **Define** | The problem, scope, and observable success criteria |
+| **Plan** | Small steps with a way to check each one |
+| **Build** | A focused change on an isolated branch or worktree |
+| **Verify** | Test commands, results, and unverified gaps |
+| **Review** | Independent findings and how they were resolved |
+| **Ship** | The change and evidence prepared for an authorized handoff |
 
-| Stage | The question | Evidence it leaves behind |
-|---|---|---|
-| **Define** | What are we actually solving? | scope, constraints, acceptance criteria |
-| **Plan** | What are the smallest verifiable steps? | atomic task list |
-| **Build** | Can the change be made safely and in scope? | focused diff on an isolated branch or worktree |
-| **Verify** | Does it work in the environment tested? | commands, tests, output, file references |
-| **Review** | Is it right, safe, and maintainable? | independent findings and decisions |
-| **Ship** | Can the next person recover the truth? | commit, PR, updated handoff docs |
+Failed tests and confirmed findings return to Build. Missing required evidence
+leaves the task unverified. Ship does not grant permission to merge or deploy.
 
-Two distinctions carry most of the weight:
+Scale checks to the change: review text and links for a wording correction;
+use targeted tests for a behavior change; exercise affected real services for
+a cross-service change. TDD and parallel agents are optional unless your project
+requires them. See [`workflow.md`](workflow.md) for the full process.
 
-- **A claim is not evidence.** "Done" means the acceptance criteria have proof.
-- **Verify is not Review.** Tests ask whether it works; review asks whether it
-  is the right, safe, maintainable thing.
-
-The complete process lives in [`workflow.md`](workflow.md).
-
-Scale the work to the change: review a wording correction and check its links;
-give a behavior change explicit acceptance criteria and targeted tests; exercise
-the affected real services for a cross-service change. Keep task records brief,
-and follow any configured Ship checks described above. TDD and parallel agents
-are optional unless your project requires them.
-
-## Choose the model; keep the gates
-
-There is no separate smart-model and cheap-model workflow. Every model keeps
-the same acceptance criteria, verification, review, and evidence gates.
-
-- **Fast / low-cost** — search, classification, formatting, and deterministic
-  checks. Give exact files, narrow output, and read-only access by default.
-- **General coding** — the default for accepted, well-bounded implementation
-  and review work. Give one slice, one allowed change surface, and exact checks.
-- **Strongest reasoning** — escalate for ambiguity, architecture, conflicting
-  evidence, high-risk changes, or repeated failure on the same bounded task.
-
-Use a weaker model by shrinking the task and making the contract explicit, not
-by lowering the definition of done. See the full routing policy in
-[`workflow.md`](workflow.md#model-routing-one-workflow-different-autonomy).
-
-## Find what you need
-
-- **Understand the principles** — [`PHILOSOPHY.md`](PHILOSOPHY.md)
-- **Run Define → Ship** — [`workflow.md`](workflow.md)
-- **Recognize recurring failure patterns** — [`GOTCHAS.md`](GOTCHAS.md)
-- **Decode workflow terminology** — [`GLOSSARY.md`](GLOSSARY.md)
-- **Manage ticket and cross-project context** — [`context-management.md`](context-management.md)
-- **Clarify a vague request** — [`prompts/grill-me.md`](prompts/grill-me.md)
-- **Prove completion** — [`prompts/verify-done.md`](prompts/verify-done.md)
-- **Review adversarially** — [`prompts/review-checklist.md`](prompts/review-checklist.md)
-- **Avoid technical traps** — [`pitfalls/`](pitfalls)
+## Optional setup
 
 <details>
-<summary>Repository map</summary>
+<summary>Optional task bootstrap</summary>
 
-- [`prompts/`](prompts) — reusable clarification, debugging, review, audit, and
-  verification actions.
-- [`pitfalls/`](pitfalls) — pre-write checklists for mistakes agents repeat.
-- [`templates/`](templates) — project rules, specs, tasks, ADRs, maps, and hooks.
-- [`scripts/`](scripts) — task bootstrap, map validation, and WIP/Ship close-loop guards.
-- [`codex/`](codex) — Codex setup guide using the shared Markdown instructions.
-- [`claude-code/plugin/`](claude-code/plugin) — optional Claude Code adapter.
+The guided intake can create task records and an isolated workspace. It needs
+PowerShell 7 (`pwsh`). Run inside the target repository:
 
-Canonical documents stay tool-agnostic. Adapter copies that declare a
-`Canonical source` must be updated with their source so drift stays visible.
+```powershell
+pwsh ~/.ai-workflow/scripts/start-task.ps1
+```
+
+The default prints a kickoff prompt to paste into your agent. `-LaunchCodex`
+also needs the Codex CLI and your own named profiles (`plan`, `build`, `test`,
+`review`, `ship`); this repo does not install them. Use the default if they are
+not configured. Optional shell helpers: [`shell/aliases.sh`](shell/aliases.sh).
 
 </details>
 
-The detailed [verification contracts](docs/verification.md) require independent
-test oracles, applicable defect-detection evidence and real integration/E2E boundaries.
-TDD is optional unless required. [Review modes and decisions](docs/review.md) distinguish
-initial reviews, focused follow-ups and claim checks, preserving evidence and counterevidence.
+<details>
+<summary>Optional checks and this repository's CI</summary>
+
+Python checks need Python 3.10 or newer. Installing the
+[pre-push template](templates/pre-commit.template.yaml) also needs `pre-commit`.
+These tools are not bundled. The installed hook uses **WIP mode**: draft task
+checkboxes may remain open, but records must be structurally valid. This is a
+local safeguard, not server-side enforcement.
+
+**This repository's** [GitHub workflow](.github/workflows/validate.yml) runs tests,
+both strict Claude adapter validators, and **Ship mode**. Under the tracked
+policy, every change outside the living documents requires completed task
+records, plus `devlog.md` and `todo.md` for personal projects. This includes small
+Markdown corrections: the validator checks paths, not change size or meaning.
+Keep records brief and factual.
+
+CI pins `--project-type personal`, so editing the AGENTS marker alone does not
+change that check. Workflow and validator changes still need review. Other
+projects must configure their own checks; cloning this repo installs none.
+
+These checks validate record structure, not whether claims are true. Acceptance
+wording missing an observable result, environment, or verification step produces
+a warning. Use [local-only validation](docs/local-spec-policy.md) for private
+records; do not upload them to satisfy a tracked-record convention.
+
+</details>
+
+<details>
+<summary>Model choice and parallel agents</summary>
+
+Start with a general coding model for a bounded task. Use faster models for
+search and deterministic checks; escalate ambiguous, high-risk or repeatedly
+failing tasks to stronger reasoning. Every model keeps the same acceptance and
+evidence gates. See [model routing](workflow.md#model-routing-one-workflow-different-autonomy).
+Parallel agents are optional; they do not replace verification.
+
+</details>
 
 ## Tool adapters
 
-The tool folders are entry points to the same workflow: [Codex setup](codex/)
-uses project instructions; `claude-code/` also provides a packaged Claude plugin.
-Shared rules live in `workflow.md`, `prompts/`, `docs/`, and `templates/`.
-
-**Codex** reads project `AGENTS.md` files directly. Other coding agents should
-use their project-instruction mechanism to read the same file. If a tool cannot
-import it, keep a thin shim that points to `AGENTS.md`; do not duplicate rules.
-
-For Codex, use the same clone and template setup above, then open **your target
-project** in Codex and send the Quick start instruction. The shared clone supplies
-the referenced workflow files; cloning it alone does not configure other projects.
-The Claude marketplace commands below are only for the optional Claude adapter.
-
-Parallel agents and automatic model routing are optional optimizations, not
-prerequisites for the six-stage workflow.
+Both tools use the same shared workflow. [Codex setup](codex/) explains project
+instruction discovery and file access. Other agents can use their own instruction
+mechanism to read `AGENTS.md`; keep adapters thin instead of copying the rules.
 
 <details>
 <summary>Claude Code plugin (optional)</summary>
 
-Use [`templates/CLAUDE.md.template`](templates/CLAUDE.md.template) as a thin
-shim that imports `AGENTS.md`, or install the packaged skills and agents:
+For packaged Claude skills and agents:
 
 ```text
 /plugin marketplace add quietbranch88/ai-workflow
 /plugin install ai-workflow@quietbranch88
 ```
 
-For global rules, start from
-[`claude-code/CLAUDE.md.example`](claude-code/CLAUDE.md.example).
+For global instructions, see [`claude-code/CLAUDE.md.example`](claude-code/CLAUDE.md.example).
+Codex uses the shared Markdown files without this plugin.
 
 </details>
 
-## Keep lessons durable
+## Find what you need
 
-Every reusable lesson should have one home:
-
-- reusable prompt pattern → `prompts/`
-- language or library trap → `pitfalls/<language>.md`
-- repo-specific rule → that repository's `AGENTS.md`
-- ticket-specific workaround → `.spec/<ticket>/ai-development-map.md`
-- process change → `workflow.md`
-- principle change → `PHILOSOPHY.md` — rarely
-
-This is how the workflow improves: turn real failures into rules at the correct
-boundary instead of collecting more instructions everywhere.
+- **Principles and common mistakes:** [`PHILOSOPHY.md`](PHILOSOPHY.md), [`GOTCHAS.md`](GOTCHAS.md), [`GLOSSARY.md`](GLOSSARY.md)
+- **Task prompts:** [clarify a request](prompts/grill-me.md), [verify completion](prompts/verify-done.md), [review changes](prompts/review-checklist.md)
+- **Detailed contracts:** [verification](docs/verification.md), [review](docs/review.md), [cross-project context](context-management.md)
+- **Reusable project files:** [`templates/`](templates), [`scripts/`](scripts), [`pitfalls/`](pitfalls)
 
 ## The longer story
 
+> **AI is a capable coworker who overstates its progress. Ask for evidence.**
+
+This workflow grew out of an AI-assisted project whose Kafka integration was
+missing even after the AI called it done. The background and later lessons:
+
 - [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
-  — the missing Kafka
-  integration that led to this workflow and its acceptance criteria.
+  — the missing integration that led to this workflow.
 - [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
-  — a later example of deciding acceptable outcomes before implementing retries
-  and recovery. The article distinguishes investigation from deployed fixes.
+  — deciding acceptable outcomes before implementing retries and recovery;
+  investigation and deployed fixes are distinguished.
 
 More writing at [Zoe Builds](https://zoe-builds.com/).

@@ -28,3 +28,11 @@ fix; no model-performance or automatic profile installation is claimed.
 Zoe then identified the Claude-only directory naming as misleading and explicitly
 authorized merge of the current work. Add a Codex guide pointing to shared sources,
 validate it, and merge PR #22 only after checks pass at the final head.
+
+## Concise onboarding follow-up (2026-10-04)
+
+After PR #23 merged, Zoe requested a shorter, clearer first-reader README.
+The main agent reorganized the existing guidance, added a synthetic CSV task
+example and checked supporting instructions. This is an editorial change;
+no measured comprehension improvement or executed CSV implementation is claimed.
+The current request authorizes this correction; it does not authorize merging it.

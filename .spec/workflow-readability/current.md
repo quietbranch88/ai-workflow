@@ -28,6 +28,18 @@ the four confirmed design-review findings, and link the owner's relevant writing
   - Environment: distributed Markdown template and canonical workflow.
   - Verify: direct comparison with `workflow.md` Approval gates and docs contract checks.
 
+## Concise onboarding follow-up (2026-10-04)
+
+- [x] Observable: a first-time reader reaches download, project configuration
+  and a concrete first task before advanced tooling or the background story.
+  - Environment: root README and Codex guide.
+  - Verify: source order, required-setup retention and rendered-page inspection.
+- [x] Observable: disclosure controls reveal optional guidance, setup links resolve,
+  and the existing six-stage diagram remains available.
+  - Environment: GitHub Markdown API output in a local Chrome preview.
+  - Verify: link validation, disclosure interactions and diagram inspection;
+    this is not a human usability study or live GitHub page verification.
+
 ## Non-goals
 
 - Change validator behavior, weaken CI, or claim a new lightweight automated exemption.
