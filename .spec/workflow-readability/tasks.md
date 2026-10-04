@@ -12,6 +12,10 @@
 
 - [x] task-10: Correct WD-01 personal-project approval wording and validate the document contract.
 
+- [x] task-11: Simplify the README into three setup steps, one example and the existing flow.
+- [x] task-12: Validate links, render Markdown, inspect the preview and record verification.
+- [x] task-13: Move The longer story ahead of Quick start per Zoe's final ordering request.
+
 ## Acceptance
 
 - [x] Acceptance criteria have direct review or executed validation evidence.

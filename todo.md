@@ -11,7 +11,8 @@
 - [x] Review and merge the workflow-readability update: PR #21, `da4014b`.
 - [x] Review and merge the first-reader map clarification, downloadable-hook repair
       and Codex entry: PR #22, `9034daa`.
-- [ ] Publish and merge the verified WD-01 template approval clarification;
-      Zoe authorized this follow-up's merge on 2026-10-04, pending hosted checks.
+- [x] Publish and merge WD-01 approval clarification: PR #23, `e996b12`.
+- [ ] Deliver the concise onboarding README with the story first; Zoe authorized
+      merge on 2026-10-04, pending review and checks. Final delivery is recorded in the PR.
 - [ ] Compare local installations separately, preserving private overlays and recording
       the installed source revision.
