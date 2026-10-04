@@ -35,4 +35,5 @@ After PR #23 merged, Zoe requested a shorter, clearer first-reader README.
 The main agent reorganized the existing guidance, added a synthetic CSV task
 example and checked supporting instructions. This is an editorial change;
 no measured comprehension improvement or executed CSV implementation is claimed.
-The current request authorizes this correction; it does not authorize merging it.
+Zoe subsequently requested The longer story as the first section and explicitly
+authorized merging this README revision. Preserve the shorter setup and example.

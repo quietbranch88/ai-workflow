@@ -30,8 +30,9 @@ the four confirmed design-review findings, and link the owner's relevant writing
 
 ## Concise onboarding follow-up (2026-10-04)
 
-- [x] Observable: a first-time reader reaches download, project configuration
-  and a concrete first task before advanced tooling or the background story.
+- [x] Observable: the background story is the first section after the brief
+  introduction, followed by download, project configuration and a concrete
+  first task before advanced tooling, per Zoe's final ordering request.
   - Environment: root README and Codex guide.
   - Verify: source order, required-setup retention and rendered-page inspection.
 - [x] Observable: disclosure controls reveal optional guidance, setup links resolve,

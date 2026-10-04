@@ -12,6 +12,7 @@
 - [x] Review and merge the first-reader map clarification, downloadable-hook repair
       and Codex entry: PR #22, `9034daa`.
 - [x] Publish and merge WD-01 approval clarification: PR #23, `e996b12`.
-- [ ] Review the concise onboarding README; delivery and merge are separate steps.
+- [ ] Deliver the concise onboarding README with the story first; Zoe authorized
+      merge on 2026-10-04, pending review and checks. Final delivery is recorded in the PR.
 - [ ] Compare local installations separately, preserving private overlays and recording
       the installed source revision.

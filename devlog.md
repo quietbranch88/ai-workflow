@@ -2,8 +2,8 @@
 
 ## 2026-10-04 - concise first-reader README
 
-- **What**: Lead with three setup steps and a concrete synthetic-data task example.
-  Move the background story to the end, fold optional tooling and model guidance,
+- **What**: Place the background story first, as Zoe requested, followed by three
+  setup steps and a concrete synthetic-data task example. Fold optional tooling and model guidance,
   and keep required setup, privacy, verification and approval boundaries visible.
 - **Evidence**: `.spec/workflow-readability/audit.md`, concise onboarding follow-up.
 - **Dated correction**: PR #23 merged as `e996b12`; the earlier preparation state

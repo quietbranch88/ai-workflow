@@ -268,3 +268,11 @@ not a new assertion that the earlier README failed a measured usability test.
   passed. No mobile or human usability test was run.
 - Local-only delivery for this follow-up; no new PR, push or merge. Earlier merge
   authorization applied to PR #23, not this newly requested README revision.
+
+### Final ordering and merge authorization (2026-10-04)
+
+Zoe subsequently requested moving The longer story to the front and merging.
+The story now follows the short introduction and precedes Quick start; the
+shorter setup, task example and optional sections remain. This supersedes the
+story-last and unapproved-merge statements above. Validation and independent
+review will be recorded below; remote delivery will be read back in the PR.

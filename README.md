@@ -6,6 +6,21 @@ and show evidence before calling work done.**
 Use the shared Markdown files with [Codex](codex/) or [Claude Code](#tool-adapters).
 Scripts and plugins are optional.
 
+## The longer story
+
+> **AI is a capable coworker who overstates its progress. Ask for evidence.**
+
+This workflow grew out of an AI-assisted project whose Kafka integration was
+missing even after the AI called it done. The background and later lessons:
+
+- [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
+  — the missing integration that led to this workflow.
+- [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
+  — deciding acceptable outcomes before implementing retries and recovery;
+  investigation and deployed fixes are distinguished.
+
+More writing at [Zoe Builds](https://zoe-builds.com/).
+
 ## Quick start
 
 You need Git, a coding agent, and a project to work on. Cloning this repository
@@ -195,18 +210,3 @@ Codex uses the shared Markdown files without this plugin.
 - **Task prompts:** [clarify a request](prompts/grill-me.md), [verify completion](prompts/verify-done.md), [review changes](prompts/review-checklist.md)
 - **Detailed contracts:** [verification](docs/verification.md), [review](docs/review.md), [cross-project context](context-management.md)
 - **Reusable project files:** [`templates/`](templates), [`scripts/`](scripts), [`pitfalls/`](pitfalls)
-
-## The longer story
-
-> **AI is a capable coworker who overstates its progress. Ask for evidence.**
-
-This workflow grew out of an AI-assisted project whose Kafka integration was
-missing even after the AI called it done. The background and later lessons:
-
-- [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
-  — the missing integration that led to this workflow.
-- [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
-  — deciding acceptable outcomes before implementing retries and recovery;
-  investigation and deployed fixes are distinguished.
-
-More writing at [Zoe Builds](https://zoe-builds.com/).
