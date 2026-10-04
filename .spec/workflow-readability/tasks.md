@@ -8,6 +8,7 @@
 - [x] task-6: Clarify optional cross-repo maps; use English-only article links per Zoe's correction.
 - [x] task-8: Smoke-test a fresh download and repair the pre-push template launch path.
 - [x] task-7: Validate and independently review the first-reader follow-up; record delivery separately.
+- [ ] task-9: Add the Codex directory entry, validate its links and merge the approved PR.
 
 ## Acceptance
 

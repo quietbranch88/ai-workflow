@@ -7,6 +7,9 @@ Start with a clear definition of success, make small changes, test the result,
 and review before shipping. Use the Markdown instructions with your coding
 agent; add the optional scripts and tool adapters when you need them.
 
+Start here: [Codex](codex/) · [Claude Code](#tool-adapters).
+Both use the shared workflow, prompts, and templates in this repository.
+
 > **AI is a capable coworker who overstates its progress. Ask for evidence.**
 
 This started with more than 20,000 lines of AI-assisted code and one missing
@@ -200,6 +203,7 @@ by lowering the definition of done. See the full routing policy in
 - [`pitfalls/`](pitfalls) — pre-write checklists for mistakes agents repeat.
 - [`templates/`](templates) — project rules, specs, tasks, ADRs, maps, and hooks.
 - [`scripts/`](scripts) — task bootstrap, map validation, and WIP/Ship close-loop guards.
+- [`codex/`](codex) — Codex setup guide using the shared Markdown instructions.
 - [`claude-code/plugin/`](claude-code/plugin) — optional Claude Code adapter.
 
 Canonical documents stay tool-agnostic. Adapter copies that declare a
@@ -213,6 +217,10 @@ TDD is optional unless required. [Review modes and decisions](docs/review.md) di
 initial reviews, focused follow-ups and claim checks, preserving evidence and counterevidence.
 
 ## Tool adapters
+
+The tool folders are entry points to the same workflow: [Codex setup](codex/)
+uses project instructions; `claude-code/` also provides a packaged Claude plugin.
+Shared rules live in `workflow.md`, `prompts/`, `docs/`, and `templates/`.
 
 **Codex** reads project `AGENTS.md` files directly. Other coding agents should
 use their project-instruction mechanism to read the same file. If a tool cannot

@@ -24,3 +24,7 @@ English-only article links and asked whether the downloadable code works with
 Codex. The main agent checked a fresh remote clone, real hook invocation and
 official AGENTS guidance. Review covers missing/existing maps and the hook launch
 fix; no model-performance or automatic profile installation is claimed.
+
+Zoe then identified the Claude-only directory naming as misleading and explicitly
+authorized merge of the current work. Add a Codex guide pointing to shared sources,
+validate it, and merge PR #22 only after checks pass at the final head.

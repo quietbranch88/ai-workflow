@@ -6,6 +6,8 @@
   preserve read/update duties for existing maps, and retain English-only article
   links. Document Codex setup and optional tool requirements. Fix the pre-push
   template's literal-home-path failure; synchronize the Claude mirror at 0.6.2.
+- **Codex entry**: Add `codex/README.md` and visible root links so the directory
+  listing no longer suggests Claude-only support; keep all process rules shared.
 - **Evidence**: `.spec/workflow-readability/audit.md`, finding FR-01 and follow-up checks.
 - **Dated correction**: The readability update below merged in PR #21 as `da4014b`.
   Its earlier unmerged status is superseded; this follow-up remains a separate change.
