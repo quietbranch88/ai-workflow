@@ -98,3 +98,47 @@ This supersedes the previous section's unmerged delivery state for that PR only.
 - Related editorial correction: display the original article title separately
   from explicitly labeled English and Chinese links; destinations remain unchanged.
 - No executable code, tests, dependency or CI changes. Validation/review pending.
+
+### Scope correction and download verification (2026-10-04)
+
+Zoe subsequently requested English-only links and asked whether the downloadable
+code works with Codex. This supersedes the bilingual-label proposal above. The
+real-hook defect below expands the patch to one executable template and one test;
+the earlier documentation-only scope statement no longer describes the final patch.
+
+- Fresh public clone of `main@da4014b`: 62 tests passed in 23.784 seconds, including
+  real PowerShell task/bootstrap and disposable Git push tests. This establishes
+  those exercised paths, not every optional helper or agent's future behavior.
+- `pwsh -NoProfile -File scripts/build-spec-map.ps1 -SpecPath .spec -DryRun`:
+  exit 0, six task areas listed, no map written. Status remains a heuristic as documented.
+- Environment: Windows, Python 3.11.9, PowerShell 7.6.5, pre-commit 4.6.2.
+- Official AGENTS guidance https://learn.chatgpt.com/docs/agent-configuration/agents-md
+  confirms project-root instruction discovery. README now says to configure and
+  open the target project, not just clone the shared library. No Codex model run
+  or real `-LaunchCodex` session was executed. That optional switch needs user-defined
+  profiles, which the repo does not install; this requirement is now documented.
+- **DL-01 / P2 medium / confirmed / open pending final review**: distributed
+  `templates/pre-commit.template.yaml:15` passes a literal `~` as a Python script
+  argument. Trigger: copying/installing the advertised hook in a target repo.
+  Expected: invoke the installed close-loop guard. Actual: pre-commit launches
+  without a shell, so Python reports file-not-found under the target repo's `~`
+  directory. Real pre-commit reproduction on downloaded main confirmed exit 2
+  from Python, before the guard. Counterevidence: direct shell invocations and
+  existing validator tests work; neither exercises this template entry.
+- Fix: resolve Path.home inside Python and execute the installed script via runpy.
+  A new integration test runs the actual template local block through pre-commit
+  with a disposable home containing spaces, checks code-only rejection by the
+  real guard and acceptance after adding valid draft records.
+- Test development correction: the first draft expected the wrong rejection
+  wording. After matching the existing guard diagnostic, the unchanged final test
+  failed against the historical template in an isolated copy at the launch/guard
+  assertion, then passed after restoring the fixed template. This is regression
+  evidence for the launch defect; startup failure is the defect being tested.
+- `ruff check scripts tests`: passed. Bandit 1.9.4 on the new test reported five
+  LOW B404/B603/B607 warnings, zero medium/high; scan exit 1, not a clean scan.
+  **DL-SCAN-01 / low / false-positive / dismissed** for introduced command injection:
+  test-only subprocess import/calls at lines 5,37,57 use argument arrays without
+  a shell and fixed tool names plus disposable paths/known Git refs. Trusted local
+  PATH is required, as with the existing Git integration tests; no remote input
+  or privilege elevation is introduced. No dependencies were added/upgraded;
+  pyproject declares no dependency inventory, so no advisory result is claimed.

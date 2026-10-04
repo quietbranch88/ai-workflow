@@ -19,6 +19,8 @@ in this task. No agent performance or human usability improvement is measured.
 
 ## First-reader follow-up (2026-10-04)
 
-Zoe requested correction of FR-01 after a fresh reader simulation. The main agent
-also makes the discussed original-article language labels explicit. Review checks
-the missing-map and existing-map paths without changing map-generation code.
+Zoe requested correction of FR-01 after a fresh reader simulation, then specified
+English-only article links and asked whether the downloadable code works with
+Codex. The main agent checked a fresh remote clone, real hook invocation and
+official AGENTS guidance. Review covers missing/existing maps and the hook launch
+fix; no model-performance or automatic profile installation is claimed.

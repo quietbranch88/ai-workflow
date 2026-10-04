@@ -33,6 +33,12 @@ the four confirmed design-review findings, and link the owner's relevant writing
   map is read and its affected entries are maintained, with privacy preserved.
   - Environment: canonical workflow, context guide and packaged mirror.
   - Verify: inspect both missing-map and existing-map instructions; mirror contract tests.
-- [ ] Observable: the original article has explicit English and Chinese link labels.
+- [ ] Observable: the original article links directly to English only, following
+  Zoe's later correction; no separate language selector is added.
   - Environment: README rendered by GitHub.
   - Verify: inspect generated link text and destinations; Chrome navigation check.
+- [ ] Observable: the optional pre-push template launches the installed validator
+  from a target repository even when the user's home path contains spaces; code
+  without required living records is still rejected and a valid draft passes.
+  - Environment: disposable Git repository and real pre-commit runner.
+  - Verify: fail-to-pass regression using the template's actual local-hook block.

@@ -3,8 +3,9 @@
 ## 2026-10-04 — first-reader onboarding follow-up
 
 - **What**: Clarify how cross-repo work starts without an optional system map,
-  preserve read/update duties for existing maps, and label the original article
-  links English and Chinese. Synchronize the Claude workflow mirror at 0.6.2.
+  preserve read/update duties for existing maps, and retain English-only article
+  links. Document Codex setup and optional tool requirements. Fix the pre-push
+  template's literal-home-path failure; synchronize the Claude mirror at 0.6.2.
 - **Evidence**: `.spec/workflow-readability/audit.md`, finding FR-01 and follow-up checks.
 - **Dated correction**: The readability update below merged in PR #21 as `da4014b`.
   Its earlier unmerged status is superseded; this follow-up remains a separate change.

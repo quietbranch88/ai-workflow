@@ -28,6 +28,10 @@ tool-specific configuration is optional glue.
 Clone the workflow, configure your project's instructions, then start a task.
 This setup does not install Git hooks or CI in your project.
 
+You need Git and a coding agent for the steps below. Optional Python checks need
+Python 3.10 or newer; the PowerShell helpers need PowerShell 7 (`pwsh`). Installing
+the hook template also needs `pre-commit`. These tools are not bundled with the repo.
+
 1. Clone the shared workflow.
 
    ```bash
@@ -85,6 +89,11 @@ pwsh ~/.ai-workflow/scripts/start-task.ps1
 # Or name the repository explicitly:
 pwsh ~/.ai-workflow/scripts/start-task.ps1 -RepoPath C:\path\to\repo
 ```
+
+The default prints a kickoff prompt you can paste into Codex or another agent.
+The optional `-LaunchCodex` switch additionally needs the Codex CLI and your own
+named profiles (`plan`, `build`, `test`, `review`, `ship`); this repo does not
+install those profiles. Use the default when they are not configured.
 
 </details>
 
@@ -209,6 +218,11 @@ initial reviews, focused follow-ups and claim checks, preserving evidence and co
 use their project-instruction mechanism to read the same file. If a tool cannot
 import it, keep a thin shim that points to `AGENTS.md`; do not duplicate rules.
 
+For Codex, use the same clone and template setup above, then open **your target
+project** in Codex and send the Quick start instruction. The shared clone supplies
+the referenced workflow files; cloning it alone does not configure other projects.
+The Claude marketplace commands below are only for the optional Claude adapter.
+
 Parallel agents and automatic model routing are optional optimizations, not
 prerequisites for the six-stage workflow.
 
@@ -244,9 +258,8 @@ boundary instead of collecting more instructions everywhere.
 
 ## The longer story
 
-- **AI Is a Coworker Who Overstates Its Progress: How I Build With It** —
-  [English](https://zoe-builds.com/en/articles/my-ai-workflow/) ·
-  [中文](https://zoe-builds.com/articles/my-ai-workflow/) — the missing Kafka
+- [AI Is a Coworker Who Overstates Its Progress: How I Build With It](https://zoe-builds.com/en/articles/my-ai-workflow/)
+  — the missing Kafka
   integration that led to this workflow and its acceptance criteria.
 - [AI Found the Kafka Bugs. Which Decisions Are Still Mine?](https://zoe-builds.com/en/articles/kafka-ai-human-decisions/)
   — a later example of deciding acceptable outcomes before implementing retries
