@@ -1,8 +1,5 @@
 # Todo
 
-- [ ] Review and merge the routing-gate branch (`.spec/routing-gate-20261015/`).
-      Merge remains Zoe's explicit decision.
-
 - [ ] Review the coordinated workflow-enforcement PRs and their hosted checks.
       Merge remains Zoe's explicit decision.
 - [ ] Add new language pitfall guides only when repeated failures produce real
@@ -15,6 +12,7 @@
 - [x] Review and merge the first-reader map clarification, downloadable-hook repair
       and Codex entry: PR #22, `9034daa`.
 - [x] Publish and merge WD-01 approval clarification: PR #23, `e996b12`.
+- [x] Merge the routing gate for the full loop: PR #25, `8e4097c`, 2026-10-15.
 - [ ] Deliver the concise onboarding README with the story first; Zoe authorized
       merge on 2026-10-04, pending review and checks. Final delivery is recorded in the PR.
 - [ ] Compare local installations separately, preserving private overlays and recording
