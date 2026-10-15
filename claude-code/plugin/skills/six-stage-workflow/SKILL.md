@@ -13,6 +13,13 @@ then adapted around evidence, proportional controls, and durable handoffs.
 Role contracts and fresh-context refutation also draw on the MIT-licensed
 [pilotfish design](https://github.com/Nanako0129/pilotfish/blob/main/docs/design.md).
 
+## When to use the full loop
+
+Use it for substantial multi-file work, coordinated cross-repository changes, or
+high-risk behavior (auth, data, money, messaging, privacy, deployment); risk wins
+over size. Questions, read-only audits, routine test runs, and small low-risk fixes
+skip the stages, not the record checks; an audit that finds a defect enters at Define.
+
 ## Stages
 
 1. **Define** — Turn the request into scope, constraints, non-goals, and
@@ -116,11 +123,8 @@ Each project declares `Project type: personal | team` at the top of its
   tier: the validator has no trivial-change exemption. Keep those records brief and factual.
 - `team` → they follow the team's convention; skip until the team has adopted them.
 
-Templates: `~/.ai-workflow/templates/{devlog.md,todo.md,CLAUDE.md.template,AGENTS.md.template}`.
-
-Detailed rules for `spec-map.md`, `system-map.md`, `portfolio.md`, and their
-generators live in [context-management.md](https://github.com/quietbranch88/ai-workflow/blob/main/context-management.md). Keep this
-file focused on the execution loop.
+Rules for `spec-map.md`, `system-map.md`, `portfolio.md`, and their generators
+live in [context-management.md](https://github.com/quietbranch88/ai-workflow/blob/main/context-management.md); templates in `templates/`.
 
 ## Blockers and pitfalls
 
@@ -211,9 +215,6 @@ Add only the relevant review lenses when the diff touches:
 - public API contracts
 - production operations, availability, or material cost
 
-Same list as PHILOSOPHY.md's "half-done is worse than not-done" categories — the ones that
-already demand integration tests get deeper review; everything else gets one reviewer.
-
 ### Review dispatch and follow-up
 
 Use [prompts/code-review.md](https://github.com/quietbranch88/ai-workflow/blob/main/prompts/code-review.md) with the actual acceptance source,
@@ -235,9 +236,8 @@ Review work. Prefer deterministic tools over a model for Verify; use a fast
 model only to classify or summarize exact output. A fast model can also prepare
 routine Ship metadata, but it cannot grant approval.
 
-Escalate to the strongest reasoning tier only when ambiguity, risk, scope, or
-conflicting evidence requires broader judgment. These are capability profiles,
-not brand mappings: provider names and prices change faster than this workflow.
+These are capability profiles, not brand mappings: provider names and prices
+change faster than this workflow.
 
 ### How the operating style changes
 
