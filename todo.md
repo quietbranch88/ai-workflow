@@ -1,5 +1,8 @@
 # Todo
 
+- [ ] Review and merge the routing-gate branch (`.spec/routing-gate-20261015/`).
+      Merge remains Zoe's explicit decision.
+
 - [ ] Review the coordinated workflow-enforcement PRs and their hosted checks.
       Merge remains Zoe's explicit decision.
 - [ ] Add new language pitfall guides only when repeated failures produce real

@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-10-15 - routing gate for the full loop
+
+- **What**: Add a "When to use the full loop" section to `workflow.md` and the
+  Claude mirror: substantial multi-file, cross-repository, or high-risk work uses
+  all six stages; questions, read-only audits, routine test runs, and small fixes
+  skip it; an audit that confirms a high-risk defect to fix enters at Define.
+  Trimmed three restated lines to stay within the 280-line contract. Plugin 0.6.3.
+- **Why**: The boundary lived only in tool adapters and personal rules, so an
+  audit that turned into an auth fix had no canonical instruction to switch loops.
+- **Evidence**: `.spec/routing-gate-20261015/audit.md`. Prepared on a branch;
+  merge remains Zoe's explicit decision.
+
 ## 2026-10-04 - concise first-reader README
 
 - **What**: Place the background story first, as Zoe requested, followed by three
