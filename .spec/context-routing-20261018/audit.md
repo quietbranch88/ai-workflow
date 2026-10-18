@@ -56,3 +56,22 @@ These are source-based scenario checks, not measured agent-behavior trials.
 
 Prepared locally. Not pushed, merged or installed. Installed global files and new
 session loading are outside the verified boundary.
+
+## 2026-10-18 - source publication follow-up
+
+- Zoe explicitly authorized pushing the reviewed changes to GitHub main if a new
+  GPT-6 Astra review found no remaining issue.
+- A fresh GPT-6 Astra reviewer examined all seven changed files at `4bbe318`
+  against baseline `dda8272`, including mandatory-source loading, capture
+  authorization, evidence claims and public/private separation. Its completed
+  diff scan had no confirmed or deferred findings. This covers the document
+  changes, not runtime behavior or measured workflow gains.
+- Before publication, `python3 -m unittest discover -s tests -v` ran 63 tests in
+  24.985 seconds: 62 passed, one existing hook-installation test skipped because
+  pre-commit was unavailable. Ship validation with `--base dda8272 --head HEAD`
+  passed with zero warnings. Close-loop and exact-range whitespace checks passed.
+- `git push origin 4bbe318af991850bbabd93e2ff7b94b4492ae9dc:refs/heads/main`
+  succeeded without force. `git ls-remote origin refs/heads/main` returned the
+  same full commit ID after publication.
+- This entry supersedes the prepared/not-pushed delivery snapshot above. No
+  local installation, global-rule copy or new-session loading was performed.

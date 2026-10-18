@@ -1,7 +1,8 @@
 # Todo
 
-- [ ] Review and authorize publication of the prepared context-routing and
-      evidence-handoff change; source preparation does not establish installation.
+- [x] Publish the reviewed context-routing and evidence-handoff source change
+      `4bbe318` to GitHub main (verified 2026-10-18). Local installation remains
+      a separate action.
 
 - [ ] Review the coordinated workflow-enforcement PRs and their hosted checks.
       Merge remains Zoe's explicit decision.

@@ -6,6 +6,7 @@
 - [x] task-4: Review the final patch in fresh context and resolve confirmed findings.
 - [x] task-5: Run repository tests, document checks and changed-link validation.
 - [x] task-6: Record evidence and keep prepared, published and installed states distinct.
+- [x] task-7: Publish the reviewed source under explicit authorization and verify GitHub main.
 
 
 ## Acceptance

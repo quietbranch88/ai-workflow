@@ -27,6 +27,7 @@ review contracts, plugin mirrors and runtime behavior stay outside this change.
 
 ## Non-goals
 
-No new runtime, plugin installation, remote publication, merge, deployment or
-claim that another agent session loaded the changed files. Documentation review
-does not establish measured time/token savings or agent reliability improvement.
+No new runtime, plugin installation, deployment or claim that another agent
+session loaded the changed files. Source publication was separately authorized
+after fresh review and is recorded in audit.md. Documentation review does not
+establish measured time/token savings or agent reliability improvement.

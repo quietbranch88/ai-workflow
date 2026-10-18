@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-10-18 - context-routing source published
+
+- **Delivery**: Zoe authorized publication after a fresh GPT-6 Astra review.
+  Source commit `4bbe318` is on GitHub main, confirmed with `git ls-remote`.
+- **Review and checks**: No confirmed or deferred findings across the seven
+  changed files. The repository suite ran 63 tests, with 62 passing and the
+  existing pre-commit-dependent test skipped. Ship validation passed without
+  warnings; close-loop and whitespace checks passed.
+- **Boundary**: Source publication supersedes the earlier prepared-only state.
+  Local installation and loading in another agent session were not performed.
+- **Evidence**: `.spec/context-routing-20261018/audit.md`, publication follow-up.
+
 ## 2026-10-18 - task context and evidence handoffs
 
 - **What**: Add phase-specific context routing, evidence-based lesson capture and
