@@ -26,3 +26,9 @@ Base: `a1444616b04a909ba5205b21f6d681e7341b7a87`.
 No new agent router, runtime mechanism, benchmark, test framework, installation,
 commit, publication or merge in this builder step. No private audit paths or company
 material in published records. No measured performance or token reduction claim.
+
+## Delivery state
+
+Reviewed source 8cc6234 is published and installed, with separate remote/local SHA
+readback recorded in audit.md. These are source-file observations; running-session
+reload and runtime/agent-quality claims remain outside the verification evidence.

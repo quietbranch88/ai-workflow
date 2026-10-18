@@ -11,8 +11,10 @@
   checks only, with no measured speed or token savings.
 - **Review**: Fresh independent Astra review found no actionable defects; all
   65 tests passed without skips and both strict plugin validations passed.
-- **Delivery**: Reviewed source prepared; publication and installation still
-  require their own readback evidence.
+- **Delivery**: Reviewed source `8cc6234` published to GitHub main and read back;
+  actual local checkout fast-forwarded and verified separately. Local settings
+  and private overlays were preserved. This records source-file installation,
+  not a running-session reload or agent-performance improvement.
 
 ## 2026-10-18 - acceptance warnings and interrupted operations
 

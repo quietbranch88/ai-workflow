@@ -3,8 +3,8 @@
 ## Resume snapshot
 
 - Branch: workflow-context-slimming-20261018; base a1444616b04a909ba5205b21f6d681e7341b7a87.
-- Goal/next action: publish the reviewed source under the user's existing authorization, then verify installation.
-- State: implementation and fresh review complete; source checks are recorded in audit.md. Publication and installation pending.
+- Goal/next action: source delivery complete; recheck current remote/local state before any later work.
+- State: source 8cc6234 is published and installed; review, checks and separate delivery readbacks are in audit.md.
 - Recheck final diff and branch revision before review or publication.
 
 ## Read order

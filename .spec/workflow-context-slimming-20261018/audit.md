@@ -66,3 +66,17 @@ The builder's earlier skipped check is superseded by this complete run.
 
 These are documentation/repository checks, not an agent-quality or runtime trial.
 Publication and installation still require separate readback evidence.
+
+## Delivery readback — 2026-10-18
+
+Source commit `8cc6234b64765b60c2f8b6f63d4b4c4fe02904c5` contains the reviewed
+implementation and fixes CS-01 through CS-04. An authorized normal fast-forward
+push to GitHub main was followed by `git ls-remote` readback of that exact SHA.
+The actual installed workflow checkout was clean on main, fetched the same SHA
+and fast-forwarded to it; local HEAD/status readback matched. Private overlays
+and configuration were preserved. The changed-file secret scan had zero findings.
+
+Publication and source-file installation are confirmed observations, separate
+from the documentation and repository checks. No running-session reload, Windows
+execution, company service test, or agent-quality/performance trial is claimed.
+These closeout records do not alter the reviewed workflow behavior.

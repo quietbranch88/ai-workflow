@@ -5,13 +5,15 @@
 - [x] task-3: Align glossary isolation and narrow clarification-skip examples.
 - [x] task-4: Run direct documentation checks and existing checks; record evidence and hand off to the coordinator.
 - [x] task-5: Complete fresh independent review, the full 65-test suite and both strict plugin validations.
+- [x] task-6: Publish reviewed source 8cc6234 and read back the remote and actual local installation.
 
 ## Acceptance
 
 - [x] Dispatch/lifecycle tabletop and handoff preservation checks recorded in audit.md.
 - [x] Repository checks pass with evidence and limitations recorded.
 
-## Next owner and boundaries
+## Delivery boundary
 
-The coordinator owns fresh review and authorized delivery. This builder changes only
-the isolated source checkout; publication and installation remain separate states.
+The builder prepared the isolated patch; the coordinator completed independent review,
+authorized publication and separate source-file installation readback. Evidence and
+unverified runtime/session boundaries remain in audit.md.
