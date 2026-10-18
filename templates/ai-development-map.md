@@ -12,6 +12,18 @@ Keep this block short and current; link to detailed records below.
 - Open findings, blockers and unverified boundaries:
 - Recheck before relying on: <mutable fact, source and trigger; e.g. remote head before opening a PR>
 
+### Pending operation (only when applicable)
+
+Follow [operation resumption](../context-management.md#resume-pending-operations).
+Keep references rather than copying sensitive payloads; repeat only for distinct
+pending operations.
+
+- Target / operation identity / scope:
+- Authorization evidence reference:
+- Attempt / known returned ID:
+- State: not-attempted | confirmed | unknown; observed outcome and evidence:
+- Next readback / reconciliation step before retry or redispatch:
+
 ## Authoritative sources
 
 Read these in order before changing code:

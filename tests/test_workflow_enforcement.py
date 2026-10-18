@@ -86,6 +86,54 @@ def run_validator(
 
 
 class WorkflowDocumentValidatorTests(unittest.TestCase):
+    def test_acceptance_field_quality_is_warning_only_in_both_modes(self):
+        cases = {
+            "missing": ("- [x] The report exists.", True),
+            "empty": ("- [x] Observable:\n  - Environment:\n  - Verify:", True),
+            "whitespace": ("- [x] Observable: \t\n  - Environment: \t\n  - Verify: \t", True),
+            "prose_labels": (
+                "- [x] The guide explains Observable: results, Environment: setup, and Verify: checks.",
+                True,
+            ),
+            "populated": (
+                "- [x] Observable: report exists.\n  - Environment: fixture.\n  - Verify: inspect report.",
+                False,
+            ),
+            "case_insensitive": (
+                "- [x] observable: report exists.\n  - ENVIRONMENT: fixture.\n  - verify: inspect report.",
+                False,
+            ),
+        }
+        for mode in ("wip", "ship"):
+            for name, (criterion, warns) in cases.items():
+                with self.subTest(mode=mode, case=name), tempfile.TemporaryDirectory() as fixture:
+                    root = Path(fixture)
+                    create_docs(root, complete=True)
+                    write(root / ".spec/fixture/current.md",
+                          "# Report\n\n## Goal\nCreate report.\n\n## Acceptance criteria\n\n" + criterion)
+                    result = run_validator(root, mode, [
+                        "app.py", ".spec/fixture/current.md", ".spec/fixture/tasks.md",
+                        "devlog.md", "todo.md",
+                    ])
+                    self.assertEqual(0, result.returncode, result.stderr)
+                    self.assertIn(f"pass with {int(warns)} warning(s)", result.stdout)
+                    if warns:
+                        self.assertIn("Observable:, Environment:, Verify:", result.stdout)
+
+    def test_acceptance_warning_identifies_only_the_empty_field(self):
+        for field, value in (("Observable", "`report.json` contains the normalized result."),
+                             ("Environment", "local fixture repository."),
+                             ("Verify", "`python verify_report.py`.")):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as fixture:
+                root = Path(fixture)
+                create_docs(root, complete=True)
+                current = VALID_CURRENT.replace("- [ ]", "- [x]").replace(f"{field}: {value}", f"{field}:   ")
+                write(root / ".spec/fixture/current.md", current)
+                result = run_validator(root, "ship", [".spec/fixture/current.md", ".spec/fixture/tasks.md"])
+                self.assertEqual(0, result.returncode, result.stderr)
+                self.assertIn("pass with 1 warning(s)", result.stdout)
+                self.assertIn(f"(missing or empty: {field}:)", result.stdout)
+
     def test_wip_accepts_unchecked_but_structurally_complete_ticket_docs(self):
         with tempfile.TemporaryDirectory(prefix="workflow-wip-") as fixture:
             root = Path(fixture)

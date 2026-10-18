@@ -167,14 +167,21 @@ def validate_file_structure(report: Report, path: Path, relative: str, kind: str
                 Finding(relative, "Acceptance criteria requires at least one checklist item")
             )
         for index, block in enumerate(blocks, start=1):
-            missing = [field for field in QUALITY_FIELDS if field.lower() not in block.lower()]
+            missing = [
+                field for field in QUALITY_FIELDS
+                if not re.search(
+                    rf"(?mi)^[ \t]*(?:-[ \t]+(?:\[[ xX]\][ \t]+)?)?"
+                    rf"{re.escape(field)}[ \t]*\S[^\r\n]*$",
+                    block,
+                )
+            ]
             if missing:
                 report.warnings.append(
                     Finding(
                         relative,
                         "acceptance criterion "
                         f"{index} is weak; add observable result, environment, and verify "
-                        f"command/manual step (missing: {', '.join(missing)})",
+                        f"command/manual step (missing or empty: {', '.join(missing)})",
                     )
                 )
     else:

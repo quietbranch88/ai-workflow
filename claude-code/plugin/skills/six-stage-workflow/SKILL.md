@@ -107,7 +107,7 @@ including canonical Markdown, requires changed `current.md` and `tasks.md` from 
 ticket, no unchecked items, and personal-project `devlog.md` plus `todo.md`. This repository's
 CI passes `--project-type personal`; changing the AGENTS marker alone does not change that check.
 Workflow and validator edits still need review. Weak acceptance wording emits a warning when Observable,
-Environment, or Verify fields are missing; the warning does not fail either mode.
+Environment, or Verify field lines are missing or empty; the warning does not fail either mode.
 The guard is intentionally narrow: it validates structure, not truth. It cannot prove
 that evidence is sufficient, prose is accurate, or the private system map is current.
 Review those obligations before Ship. The tracked-policy escape hatch is

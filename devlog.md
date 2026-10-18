@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-10-18 - acceptance warnings and interrupted operations
+
+- **What**: Warn on missing or empty acceptance field lines, including labels only
+  mentioned in prose; preserve warning-only WIP/Ship behavior. Add minimal pending
+  operation state and reconciliation guidance to the existing resume handoff.
+- **Evidence**: `.spec/workflow-hardening-20261018/audit.md` records original
+  baseline and regression fail-to-pass evidence; full checks recorded there.
+- **Review**: Fresh independent review found no actionable defects; all 65 tests
+  and both strict plugin validations passed. Static/secret scan scope is in the audit.
+- **Distribution**: Updated workflow mirror and plugin 0.6.4. Reviewed source;
+  publication and local installation remain separate.
+
 ## 2026-10-18 - context-routing source published
 
 - **Delivery**: Zoe authorized publication after a fresh GPT-6 Astra review.

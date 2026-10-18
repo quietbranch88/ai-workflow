@@ -28,6 +28,30 @@ changes. A new phase does not require rereading unrelated documents. A missing
 optional index does not block work; a missing required contract or safety rule
 must be resolved before the dependent action.
 
+## Resume pending operations
+
+Use the existing [resume snapshot](templates/ai-development-map.md) for external
+writes or operations still running at handoff. Record the target and operation
+identity, a reference to the authorization evidence, attempt and any returned ID,
+state (`not-attempted`, `confirmed`, or `unknown`), and next readback/reconciliation
+step. For `confirmed`, name the observed outcome (including rejected or still
+running) and evidence; it does not automatically mean completed successfully.
+Keep references and necessary identifiers, not duplicate sensitive payloads.
+Record this minimal state before dispatch when interruption could lose the result,
+and update it when evidence arrives; omit the block when nothing is pending.
+
+After timeout or interruption, reconcile the remote outcome before retrying. Use
+a returned ID or the provider's supported lookup to inspect the actual result;
+a missing response is not evidence of failure. A title match or an empty search
+result alone is not sufficient evidence of identity or non-application.
+A definite rejection may use an
+already-authorized fallback. If readback cannot establish the outcome, retain
+`unknown`, report the missing evidence and do not replay. Use idempotency keys
+only where the provider supports them. Existing authorization still applies;
+readback and an already-authorized next step need no repeated approval.
+For a running worker or job, preserve its ID and scope, then check whether it is
+still running before cancellation or redispatch; record any resulting state.
+
 ## Reusable lessons
 
 Keep one-off observations in the task record. When a failure is reproducible or
