@@ -9,8 +9,8 @@
   baseline and regression fail-to-pass evidence; full checks recorded there.
 - **Review**: Fresh independent review found no actionable defects; all 65 tests
   and both strict plugin validations passed. Static/secret scan scope is in the audit.
-- **Distribution**: Updated workflow mirror and plugin 0.6.4. Reviewed source;
-  publication and local installation remain separate.
+- **Distribution**: Workflow mirror and plugin 0.6.4 published in `b55fe9d`;
+  GitHub main readback verified. Machine installation has its own receipt.
 
 ## 2026-10-18 - context-routing source published
 

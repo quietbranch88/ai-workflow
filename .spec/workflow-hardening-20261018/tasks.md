@@ -6,6 +6,8 @@
 - [x] task-4: Extend existing resume guidance and synchronize changed mirrors.
 - [x] task-5: Run final checks and record limits, devlog and todo.
 
+- [x] task-6: Publish reviewed source `b55fe9d` and verify GitHub main readback.
+
 ## Acceptance
 
 - [x] Current acceptance criteria have recorded evidence and limitations.

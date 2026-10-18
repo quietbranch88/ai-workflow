@@ -106,3 +106,12 @@ a hard-gate bypass. WH-01 and WH-02 remain confirmed/fixed in the reviewed
 captured patch. The root added an explicit non-unique-title/empty-search
 qualification before capture; it was included in fresh review. Publication and
 local installation will be recorded separately after remote readback.
+
+## 2026-10-18 — publication readback
+
+Reviewed implementation commit `b55fe9d3bfa7be982d9b77041a72918e2e660992` was pushed to GitHub main and
+independently read back with `git ls-remote origin refs/heads/main`. The committed
+range from 709e2d9 passed Ship validation with zero warnings, close-loop and diff
+checks. This publication supersedes earlier prepared-only snapshots. Machine
+installation remains independently recorded in the local delivery receipt.
+WH-01 and WH-02 fix revision: `b55fe9d3bfa7be982d9b77041a72918e2e660992`.

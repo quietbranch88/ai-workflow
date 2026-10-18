@@ -4,8 +4,8 @@
       resume guidance; evidence in `.spec/workflow-hardening-20261018/audit.md`.
 - [x] Independently review workflow-hardening-20261018; 65 tests and both strict
       plugin validations pass.
-- [ ] Publish workflow-hardening-20261018 under existing authorization; compare
-      local installations after source delivery.
+- [x] Publish reviewed workflow-hardening-20261018 source `b55fe9d` to main;
+      remote readback verified. Machine installation is recorded separately.
 
 - [x] Publish the reviewed context-routing and evidence-handoff source change
       `4bbe318` to GitHub main (verified 2026-10-18). Local installation remains

@@ -20,4 +20,5 @@ state to reconcile interrupted external writes in the existing handoff.
 ## Non-goals
 
 No Jira integration, agent-behavior evaluation, new journal framework, new approval
-ceremony, installation, publication, merge or unrelated audit fixes.
+ceremony or unrelated audit fixes. Source publication follows the owner's existing
+authorization; machine installation has a separate local delivery receipt.
