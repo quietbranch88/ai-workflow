@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-10-18 - task context and evidence handoffs
+
+- **What**: Add phase-specific context routing, evidence-based lesson capture and
+  a compact resume snapshot to the handoff template. Reuse existing clarification
+  and review contracts; mandatory instructions and authorization gates still apply.
+- **Why**: Indexes identify documents but do not say when context needs refreshing
+  or which facts a resumed task must verify again.
+- **Evidence**: `.spec/context-routing-20261018/audit.md`. Prepared locally;
+  publication and installation are separate, unperformed actions.
+
 ## 2026-10-15 - routing gate for the full loop
 
 - **What**: Add a "When to use the full loop" section to `workflow.md` and the

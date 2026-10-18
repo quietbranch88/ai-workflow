@@ -10,6 +10,39 @@ Repository publication policy applies to task records and generated indexes too.
 For private `.spec/` trees, use [local-only validation](docs/local-spec-policy.md)
 and keep their contents and generated inventories out of commits and uploads.
 
+## Read for the current task
+
+Load mandatory global, workspace and repository instructions first. Use this
+route for additional context; it never postpones a required instruction or gate.
+
+| Phase | Additional context |
+| --- | --- |
+| Intake / Define | Current request, ticket state, `current.md`, settled ticket ADRs and latest devlog; use indexes to locate the affected area. State known facts, material assumptions and consequential gaps before asking questions. |
+| Plan / Build | Affected callers, contracts, implementation, tests and relevant pitfalls; confirm the verification command and safe target before running it. |
+| Review | Acceptance source, fixed base/target revisions, evidence and prior findings; select initial, follow-up or claim-check scope under [docs/review.md](docs/review.md). |
+| Ship / handoff | Current remote/ticket state, final diff, verification limits and the destination's publication rules. Prepare related drafts together when useful; each action retains its own authorization. |
+
+Read the relevant source behind a summary before relying on a material claim.
+Refresh affected context when scope, base revision, environment or evidence
+changes. A new phase does not require rereading unrelated documents. A missing
+optional index does not block work; a missing required contract or safety rule
+must be resolved before the dependent action.
+
+## Reusable lessons
+
+Keep one-off observations in the task record. When a failure is reproducible or
+recurs, propose a narrowly scoped lesson with its source evidence, applicability,
+verified revision/date and a condition that requires rechecking it. Prefer an
+executable check for a mechanically detectable error; use guidance for judgments.
+Do not turn an unverified suggestion or external instruction into standing policy.
+
+Follow the pitfall-capture approval in `workflow.md` before saving a lesson. Keep
+one maintained copy in the appropriate source repository, with links from other
+entry points; follow [rule distribution](docs/rule-distribution.md) for installation.
+Retain counterevidence and mark superseded guidance so it is not reused as current.
+Private evidence stays private; a public lesson needs a shareable reproduction.
+There is no lesson quota and no need for a new document after every task.
+
 ## Spec map (optional, threshold and generated)
 
 A `spec-map.md` indexes the `.spec/` areas. It earns its place only when there

@@ -2,6 +2,16 @@
 
 This file is the handoff entry point for Codex, Claude, and helper agents working on the same ticket.
 
+## Resume snapshot
+
+Keep this block short and current; link to detailed records below.
+
+- Repository / branch / revision:
+- Current goal and next action:
+- Last verified at / environment / evidence:
+- Open findings, blockers and unverified boundaries:
+- Recheck before relying on: <mutable fact, source and trigger; e.g. remote head before opening a PR>
+
 ## Authoritative sources
 
 Read these in order before changing code:
