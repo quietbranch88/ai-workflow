@@ -1,5 +1,19 @@
 # Devlog
 
+## 2026-10-18 - proportional workers and compact handoffs
+
+- **What**: Replace fixed audit fan-out and speed promises with bounded dispatch,
+  explicit permissions and recoverable worker state. Keep handoff snapshot and
+  pending operations while linking canonical scope, evidence and decisions.
+- **Alignment**: Clarify glossary isolation and clarification-skip conditions;
+  synchronize canonical workflow mirror and plugin 0.6.5.
+- **Evidence**: `.spec/workflow-context-slimming-20261018/audit.md`; documentation
+  checks only, with no measured speed or token savings.
+- **Review**: Fresh independent Astra review found no actionable defects; all
+  65 tests passed without skips and both strict plugin validations passed.
+- **Delivery**: Reviewed source prepared; publication and installation still
+  require their own readback evidence.
+
 ## 2026-10-18 - acceptance warnings and interrupted operations
 
 - **What**: Warn on missing or empty acceptance field lines, including labels only

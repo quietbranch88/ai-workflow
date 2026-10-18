@@ -1,6 +1,11 @@
 # <ticket> AI development map
 
-This file is the handoff entry point for Codex, Claude, and helper agents working on the same ticket.
+This is the ticket handoff entry point, not a second spec or evidence log.
+Keep the snapshot below current and link to canonical sections for details.
+When copying this template, record the workflow source root (repository URL or
+installed directory) and resolve its guidance links from that root, not from the
+ticket directory. The relative links below work only in this source template.
+Mandatory global, workspace and repository instructions still load first.
 
 ## Resume snapshot
 
@@ -24,86 +29,39 @@ pending operations.
 - State: not-attempted | confirmed | unknown; observed outcome and evidence:
 - Next readback / reconciliation step before retry or redispatch:
 
-## Authoritative sources
+## Read order and canonical records
 
-Read these in order before changing code:
+1. `current.md`: goal, scope/non-goals, acceptance criteria and required boundaries.
+2. Every settled ticket ADR and latest project devlog, as required by the workflow.
+3. `tasks.md`: next work, implementation/caller/test locations, verification commands,
+   blockers and the task's implementation choices.
+4. Relevant live findings and evidence in `audit.md`, plus linked prior decisions,
+   rejected findings and counterevidence affecting this work. Follow those links
+   before repeating or reopening a finding; do not erase historical evidence.
+5. Relevant deferred/subtask records, only when the next action depends on them.
 
-1. `<master spec path>`
-2. `<repo task list path>`
-3. `<repo audit path>`
-4. `<deferred or sub-task path if any>`
+Replace these names with section links when needed. Keep required records; do not
+copy their scope, command lists, blockers or results here. If a source changes,
+refresh its pointer and the short snapshot. Preserve settled decisions and retain
+reasons/evidence when updating state. Missing required context blocks dependent work.
 
-## Current scope
+## Task-specific pointers
 
-Summarize the current parent-ticket or task scope:
+- Acceptance / scope / non-goals: `current.md` section
+- Implementation / callers / tests / next action: `tasks.md` section
+- Verification evidence / unverified gates / blockers: `audit.md` and `tasks.md` sections
+- Prior decisions / counterevidence: relevant ADR or `audit.md` finding IDs
+- Pitfall capture: task-local note or evidence pointer; record whether capture was
+  proposed/approved, status and destination under the existing approval rule.
 
-1. 
-2. 
-3. 
-
-## Implementation files
-
-### Production
-
-- 
-
-### Tests
-
-- 
-
-### Call sites or integration points
-
-- 
-
-## Verification checkpoints
-
-1. Record the independently checkable acceptance contract and its source.
-2. Map required boundaries and existing tests; name missing coverage/environments.
-3. Record the chosen workflow. TDD is optional unless required; do not invent red/green evidence.
-4. Record required fail-to-pass or controlled-mutation outcomes without changing the oracle.
-5. Record revision, environment, discovered tests/assertions and relevant real integration/E2E results.
-6. Label mocked boundaries, scan results, missing tools and blocked/unverified gates.
-
-Use [docs/verification.md](../docs/verification.md) and repository-specific contracts.
-Behavior-neutral edits use targeted review instead of artificial failing tests.
-
-## Verification commands
-
-```text
-ruff check ...
-pytest <narrow target>
-pytest <broader target>
-```
-
-## Known blockers
-
-- 
-
-## Pitfall capture
-
-- ask_to_capture_as_pitfall:
-- pitfall_status:
-- pitfall_target:
-- pitfall_note:
-
-## Out of scope
-
-- 
-
-## Git hygiene
-
-Do not stage:
-
-- local worktrees
-- cache files
-- unrelated untracked files
-
-## Handoff notes
-
-- 
+Verification follows [docs/verification.md](../docs/verification.md) and repository
+contracts: preserve independent oracles, applicable defect-detection evidence,
+revision/environment, real boundaries, substitutions and missing gates in the audit.
+Behavior-neutral changes use direct checks, without artificial failing tests.
 
 ## Human and AI roles
 
 Record human decisions and the AI's implementation, investigation, documentation or
-verification role separately from earlier human work. Keep implemented, verified,
-merged and deployed states separate; follow the repository's publication policy.
+verification role separately from earlier human work. Link to decisions/evidence;
+keep implemented, verified, merged and deployed states separate. Follow publication
+policy and preserve unrelated work; never stage private inventories or local caches.

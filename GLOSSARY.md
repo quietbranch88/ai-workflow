@@ -96,5 +96,7 @@ criteria are met. Verify asks "does it work?"
 
 ## Worktree
 
-An isolated Git working directory attached to its own branch. The workflow uses
-one worktree per ticket so concurrent tasks do not overwrite each other.
+An isolated Git working directory attached to its own branch. Use dedicated
+worktrees for non-trivial or parallel writes; a clean feature branch can suffice
+for bounded low-risk work. See [proportional isolation](workflow.md#proportional-workspace-isolation)
+for ownership, shared-checkout and cleanup rules.

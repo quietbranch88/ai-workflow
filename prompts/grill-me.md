@@ -56,6 +56,10 @@ Read the request, prior decisions, repository contracts, and relevant task docs 
 
 ## When NOT to grill
 
+Skip clarification in these cases only if no consequential unknown remains. A
+reproduction or planner checklist does not resolve missing product or authorization
+decisions by itself.
+
 - Trivial requests ("rename this variable")
 - Bug fixes with clear reproduction (the spec is "make this test pass")
 - Tasks already broken down by a planner

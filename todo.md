@@ -1,5 +1,12 @@
 # Todo
 
+- [x] Prepare proportional worker lifecycle and compact handoff documentation;
+      see `.spec/workflow-context-slimming-20261018/`.
+- [x] Complete fresh review, all 65 tests and both strict plugin validations
+      for the context-slimming source.
+- [ ] Publish reviewed context-slimming source and verify actual installation
+      with separate remote and local readback evidence.
+
 - [x] Prepare acceptance-quality warning fix and minimal interrupted-operation
       resume guidance; evidence in `.spec/workflow-hardening-20261018/audit.md`.
 - [x] Independently review workflow-hardening-20261018; 65 tests and both strict

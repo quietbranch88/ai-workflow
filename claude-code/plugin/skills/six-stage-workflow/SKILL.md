@@ -152,11 +152,11 @@ If a blocker is solved and the workaround is likely reusable, ask the user wheth
 
 ## Parallel agents
 
-If the current tool supports subagents, use them as isolated workers with
-self-contained prompts and independent context. The orchestrator should receive
-short final reports rather than every raw search result. Claude Code, Codex, and
-other agent tools expose different APIs for this; parallelism is an optimization,
-not a requirement for the workflow.
+When delegation is authorized and supported, use bounded workers with self-contained
+prompts and short reports. Choose count from independent scopes, capacity and total
+budget; honor explicit user model/count choices. Requested read-only behavior is
+not enforced isolation. The [audit recipe](https://github.com/quietbranch88/ai-workflow/blob/main/prompts/parallel-audit.md) defines worker
+ID/status, bounded recovery and partial coverage; parallelism is optional.
 
 ### Use parallel agents for
 
@@ -179,9 +179,9 @@ not a requirement for the workflow.
 
 ### How to call them well
 
-- **Dispatch independent calls concurrently.** Use the tool's actual parallel mechanism; sequential calls do not become parallel because the prompts look similar.
+- **Dispatch using actual API semantics.** Launch independent work without waiting for each completion; message grouping alone does not determine concurrency.
 - **Each prompt is a bounded role contract.** Include the phase and role,
-  allowed scope, exclusive ownership, constraints, done criteria, evidence
+  allowed scope, exclusive file/resource ownership, constraints, done criteria, evidence
   format, permissions, and budget or stop condition. A fresh worker does not
   inherit the main conversation unless the tool explicitly says it does.
 - **Cap each agent's report length.** Long reports refill main context — defeats the purpose. "Report in under 200 words" is a fair default.
