@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "case-01": {
+      "defects": [
+        "mode-dispatch"
+      ]
+    },
+    "case-02": {
+      "defects": []
+    },
+    "case-03": {
+      "defects": []
+    },
+    "case-04": {
+      "defects": [
+        "empty-acceptance"
+      ]
+    }
+  }
+}

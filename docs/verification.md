@@ -121,6 +121,9 @@ use repeated trials and report sample size, pass rate, variance and failure clas
 separate infrastructure failures from assertions. Coverage/mutation scores and one
 synthetic session do not establish agent quality, reliability or adoption.
 
+For a bounded reviewer-specific pilot, see `evals/reviewer/README.md` in the workflow
+source. Its adjudicated metrics do not replace patch acceptance or human authorization.
+
 ## Evidence record
 
 Record revision, environment/service versions, exact commands or reproducible steps,

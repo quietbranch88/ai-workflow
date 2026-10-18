@@ -8,6 +8,8 @@ Independently review this work. Treat my explanations and previous reviewer conc
 Repository/worktree: <absolute path>
 Target: <commit SHA or captured uncommitted patch identifier>
 Mode: <initial | follow-up | claim check>
+Completed substantive rounds for this change: <number; initial dispatch is 0>
+Latest convergence reassessment and next-round budget: <record link or not yet required>
 Acceptance source: <resolved spec path or explicit requirements>
 Initial patch base: <SHA>
 Previously reviewed revision/report: <SHA and report path, or none>
@@ -26,3 +28,5 @@ Return review coverage, evidence-backed findings, dispositions for requested fin
 ```
 
 After review, the coordinator checks the evidence before adopting recommendations, applies authorized fixes, updates their existing records, and dispatches only the appropriate follow-up scope. Stop once blockers and applicable gates are addressed and claims agree; optional style suggestions alone do not require another round. Track additional review rounds only when they resolve a named uncertainty or inspect a new change.
+
+Before dispatch, apply the three-round convergence checkpoint in `docs/review.md`. A new commit does not reset the count; a missing reassessment after three unresolved rounds pauses automatic redispatch, not the outstanding verification gates.

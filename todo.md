@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Prepare review convergence guidance and a small independently grounded reviewer evaluation set.
+- [x] Complete pilot scoring, independent review and targeted verification for review-convergence-evals-20261019.
+- [ ] Publish/install the reviewed convergence/eval update only within authorized delivery scope.
+
 - [x] Prepare proportional worker lifecycle and compact handoff documentation;
       see `.spec/workflow-context-slimming-20261018/`.
 - [x] Complete fresh review, all 65 tests and both strict plugin validations

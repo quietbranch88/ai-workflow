@@ -120,6 +120,32 @@ and requests only the appropriate follow-up scope. Finish when blockers and
 applicable gates are addressed and material claims agree; optional nits do not
 require repeated full reviews. Existing approval requirements still apply.
 
+## Convergence checkpoint
+
+Count completed substantive review passes for the same change as rounds: the
+initial pass is round 1, and each completed follow-up is another round. Parallel
+reviewers in one pass count as one round; transport retries and incomplete passes
+do not advance it. Record their failures separately. A new commit does not reset
+the count. Stop earlier when findings and applicable gates are resolved.
+
+After three rounds without convergence, pause automatic review/fix redispatch.
+In the existing audit record, list remaining finding IDs, repeated defect classes,
+new evidence, and why the loop has not converged. Reassess the requirement, test
+oracle, patch approach and review scope; group instances of the same defect class.
+Record the revised approach, bounded next scope and review budget before another
+pass. A further three unresolved rounds require another reassessment. Routine
+in-scope corrections may proceed under existing authorization; material scope,
+architecture, risk or approval decisions still belong to the user.
+
+This checkpoint never approves code, closes findings, waives tests or forces a
+merge. Optional nits alone do not justify more rounds. Follow-up scope includes
+changed code and relevant callers/guards; a diff-only view must not hide a newly
+revealed serious risk. Cite new evidence before reopening a disposed finding.
+
+Reviewer evaluation is separate from patch acceptance. Use the small pilot in
+`evals/reviewer/README.md` in the workflow source for known-defect/clean controls,
+adjudicated outcomes and round counts; its score is not a merge gate.
+
 ## Close the delivery loop
 
 Before substantial work closes, reconcile audit, tasks, changelog, PR description
