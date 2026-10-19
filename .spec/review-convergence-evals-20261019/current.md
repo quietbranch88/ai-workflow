@@ -31,7 +31,8 @@ publication/installation status must be recorded separately.
 
 ## Delivery state
 
-Implemented and locally verified on `review-convergence-evals-20261019`.
-Independent review completed with its navigation finding fixed. See audit.md for
-the reviewed payload hash and evidence. Main merge, publication and installation
-have not occurred for this update; those are separate from local completion.
+Reviewed source `878fd47e6ff702c97b58389197341f2a9da269f8` is merged and published
+on main following Zoe's explicit 2026-10-19 approval. Remote SHA readback matched.
+The navigation finding is fixed; the reviewed payload hash and verification remain
+unchanged. Machine installation was not part of this main-only delivery and remains
+at the previous source revision; see audit.md for the separate delivery states.

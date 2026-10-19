@@ -7,6 +7,7 @@
 - Synchronize packaged review/verification contracts and plugin 0.6.6.
 - Verify all 71 repository tests without skips, scorer mutation detection, strict plugin packaging and a fresh independent review. Four final pilot cases found both known defect classes with no clean-case false alarms; two reference-fixture defects were corrected and retained separately.
 - Validation and delivery state: see `.spec/review-convergence-evals-20261019/audit.md`; preparation is separate from publication and installation. No general reviewer-quality improvement is claimed.
+- Authorized main delivery: publish reviewed source `878fd47` and verify remote SHA readback. Machine installation remains unchanged; no hosted CI result is implied.
 
 ## 2026-10-18 - proportional workers and compact handoffs
 

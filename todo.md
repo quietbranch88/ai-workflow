@@ -2,7 +2,8 @@
 
 - [x] Prepare review convergence guidance and a small independently grounded reviewer evaluation set.
 - [x] Complete pilot scoring, independent review and targeted verification for review-convergence-evals-20261019.
-- [ ] Publish/install the reviewed convergence/eval update only within authorized delivery scope.
+- [x] Publish reviewed convergence/eval source `878fd47` to main and verify remote SHA readback under explicit approval.
+- [ ] Synchronize the reviewed convergence/eval update to the machine installation within authorized scope; main-only delivery did not update it.
 
 - [x] Prepare proportional worker lifecycle and compact handoff documentation;
       see `.spec/workflow-context-slimming-20261018/`.

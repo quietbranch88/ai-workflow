@@ -127,3 +127,29 @@ Implemented, reviewed and locally verified on the feature branch. This update ha
 not been merged, pushed or installed. Existing installed main and current sessions
 are unchanged. No PR/tracker/message surface was created; only local records were
 reconciled. Source completion does not imply automatic execution of the checkpoint.
+
+## Authorized main delivery — 2026-10-19
+
+Zoe explicitly requested the main merge after the reviewed local result. Fetched
+origin and independently read back main at `d6f1e10`; the reviewed target was one
+commit ahead with no divergence. A fresh read-only preflight verified the target
+Git blobs and working files against the same 19-file reviewed hash, existing
+verification evidence, clean state, closed findings and publication boundaries.
+No substantive code or prompt changed, so the passing tests were not repeated.
+
+Ran `git pull --ff-only origin main`, then fast-forwarded to
+`878fd47e6ff702c97b58389197341f2a9da269f8` and ran `git push origin main`.
+Push succeeded; `git ls-remote origin refs/heads/main` returned that exact SHA.
+Ship validation against the fetched base passed without warnings. The first
+sandboxed remote-read attempt hit DNS restrictions; the permitted network retry
+succeeded. No rejected approval or uncertain remote mutation remains.
+
+This entry supersedes the earlier unmerged delivery snapshot. The accompanying
+record-only follow-up reconciles current/tasks/devlog/todo without changing the
+reviewed payload. This repository's hosted workflow triggers on pull requests;
+no hosted CI pass is claimed for this direct authorized main push. Existing local
+71-test, packaging and scan evidence remains the verification basis.
+
+This request was main-only. Machine source installation and active-session reload
+were not performed; installed workflow source remains `d6f1e10`. No personal
+overlays, memories or tool-entrypoint files were changed.
