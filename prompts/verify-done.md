@@ -19,8 +19,10 @@ Delivery: implemented / verified / merged / deployed (state each separately)
 - Tests pass only when actually run after the relevant edit. Confirm discovery and
   assertions. Record relevant scans and absent tools separately from failures.
 - Kafka / DB-transaction / auth work requires real integration evidence. Cross-service
-  and device paths require the affected real chain; UI needs the interaction result.
-  Mocked browser APIs prove frontend flow only. Missing required gates stay unverified.
+  and device paths require the affected real chain. For UI, exercise the visible result
+  from the acceptance or QA case in the real client before relying on the project's
+  repeatable UI check. Mocked browser APIs prove frontend flow only. Missing required
+  gates stay unverified.
 - For irreversible behavior, require safe E2E before merge or the owner's explicit
   acceptance of the named gap; neither authorizes a production mutation.
 - Check the actual diff when an agent claims edits. Partial completion is valid;

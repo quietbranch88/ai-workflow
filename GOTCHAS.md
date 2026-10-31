@@ -22,6 +22,15 @@ not-done because it looks shippable.
 **Do instead:** require integration or smoke evidence through the real
 boundary before making a production claim.
 
+## End-to-end checks can restate the code
+
+A test written by reading the implementation can follow internal branches and stay
+green while the user hits a covered control or a screen that never finishes loading.
+
+**Do instead:** take the visible result from the acceptance or QA case, exercise
+that path in the real browser, then keep it in the project's repeatable UI check.
+The order lives in [`docs/verification.md`](docs/verification.md).
+
 ## Verify and Review catch different failures
 
 Passing tests can still prove the wrong behavior. A good-looking review can

@@ -1,5 +1,20 @@
 # Devlog
 
+## 2026-10-31 - user-visible checks before the repeatable UI runner
+
+- **What**: UI and end-to-end assertions come from the acceptance or QA case.
+  Exercise the visible result in the real browser before encoding it in the
+  project's existing UI test runner. A green suite without that result, and a
+  flaky run, stay unverified. Plugin 0.6.8.
+- **Why**: Checks written by restating the implementation stay green while a
+  covered control or a delayed screen still fails the user.
+- **Spec/Plan**: [.spec/user-visible-checks-20261031/current.md](.spec/user-visible-checks-20261031/current.md)
+- **ADR**: —
+- **Commits**: this change
+- **Continues**: new
+- **Notes**: No test-product mandate, analytics requirement, or measured speed
+  claim. Machine installation and merge are separate.
+
 ## 2026-10-31 - align drifted instructions
 
 - **What**: The packaged grill-me skill now skips clarification only when no

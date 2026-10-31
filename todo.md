@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Record user-visible UI checks: acceptance or QA case, real browser, then the
+      project's existing UI runner. Plugin 0.6.8. See
+      `.spec/user-visible-checks-20261031/`. Machine installation is separate.
+
 - [x] Align grill-me skip rules with the canonical prompt, keep the portfolio scan
       command independent of `mine`, and remove the missing `verify-deps` name.
       Plugin 0.6.7. See `.spec/doc-drift-20261031/`. Machine installation is separate.

@@ -147,6 +147,22 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn("including canonical Markdown", mirror)
         self.assertGreaterEqual(version, (0, 5, 0))
 
+    def test_user_visible_checks_use_the_acceptance_case_and_existing_runner(self):
+        verification = read("docs/verification.md")
+        gotchas = read("GOTCHAS.md")
+        verify_done = read("prompts/verify-done.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        self.assertIn("## User-visible checks", verification)
+        self.assertIn("real browser before encoding", verification)
+        self.assertIn("project's existing UI test runner", verification)
+        self.assertIn("The acceptance contract remains the requirement", verification)
+        self.assertIn("exercise the visible result", verify_done)
+        self.assertIn("docs/verification.md", gotchas)
+        self.assertNotIn("Playwright", verification)
+        self.assertGreaterEqual(version, (0, 6, 8))
+
     def test_grill_me_skip_rule_matches_the_canonical_guard(self):
         prompt = read("prompts/grill-me.md")
         skill = read("claude-code/plugin/skills/grill-me/SKILL.md")

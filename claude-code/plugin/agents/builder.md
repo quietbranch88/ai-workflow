@@ -106,6 +106,34 @@ from code defects.
 - If a producer, consumer, credential, device or environment is unavailable, name
   the blocked hop. Do not downgrade the gate or call the full path verified.
 
+## User-visible checks
+
+A UI or end-to-end check proves a result a person or client can observe. Take the
+assertions from the acceptance contract or an existing product or QA case: the flow,
+the page or client, and what is visible on success, while waiting, and on failure.
+Reading the implementation and restating its branches checks the code structure.
+
+An API check through the real client belongs when that response is the contract.
+A result the user sees still needs the UI path.
+
+For a web UI change, exercise the affected path in the real browser before encoding
+it as a repeatable check. Record the entry, the actions, the visible result, and
+any blocker the source does not show, such as an obscured control or a delayed load.
+The walk narrative is a claim. The recorded visible result is the evidence. A
+screenshot or log may carry that result; pair it with the asserted outcome and any
+required durable state or downstream effect.
+
+Keep the confirmed path in the project's existing UI test runner so later
+verification does not depend on an agent repeating the walk. A green suite that
+does not assert this visible result, or that has no fail-to-pass or mutation
+evidence for it, leaves the path unproven; use the defect-detection rules above.
+A check that passes and fails with no product change is unstable evidence: record
+the flake and leave that run unverified. A missing browser or device leaves the
+flow unverified.
+
+Observed usage may suggest a case. The acceptance contract remains the requirement
+source.
+
 ## Domain-specific checks
 
 Select from the affected contract, not a universal checklist:
