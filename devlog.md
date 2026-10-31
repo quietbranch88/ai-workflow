@@ -10,7 +10,7 @@
   would pass.
 - **Spec/Plan**: [.spec/review-fixes-20261031/current.md](.spec/review-fixes-20261031/current.md)
 - **ADR**: —
-- **Commits**: pending
+- **Commits**: `7d37a4e`
 - **Continues**: duplicated-rule trim in `943737d`, merged as PR #30 `ecef65d`
 - **Notes**: Ship mode still sees an open checklist item after an unclosed
   fence, a mismatched fence closer, or an HTML comment, including a fence

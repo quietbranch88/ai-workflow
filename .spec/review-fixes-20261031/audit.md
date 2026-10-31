@@ -30,7 +30,9 @@ What this run exercised:
 - `git diff --check`: pass.
 - Relative links in the 25 changed Markdown files: 40 links, 3 template
   placeholders only (`templates/devlog.md`).
-- Ship-mode validation against `origin/main` is recorded with the commit SHA.
+- Ship-mode validation of this branch against `origin/main`: pass, 0 warnings,
+  after the ticket criteria were written as checklist items. Work commit
+  `7d37a4e`.
 
 That comparison checks the copies and the validator. It does not install the
 plugin on this machine or prove a later agent will follow the text.
