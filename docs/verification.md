@@ -54,6 +54,66 @@ from code defects.
 - If a producer, consumer, credential, device or environment is unavailable, name
   the blocked hop. Do not downgrade the gate or call the full path verified.
 
+## User-visible checks
+
+A UI or end-to-end check proves a result a person or client can observe. Take the
+assertions from the acceptance contract or an existing product or QA case: the flow,
+the page or client, and what is visible on success, while waiting, and on failure.
+Reading the implementation and restating its branches checks the code structure.
+
+An API check through the real client belongs when that response is the contract.
+A result the user sees still needs the UI path.
+
+For a web UI change, exercise the affected path in the real browser before encoding
+it as a repeatable check. Record the entry, the actions, the visible result, and
+any blocker the source does not show, such as an obscured control or a delayed load.
+The walk narrative is a claim. The recorded visible result is the evidence. A
+screenshot or log may carry that result; pair it with the asserted outcome and any
+required durable state or downstream effect.
+
+After each action, record the new visible state. Stop when it is not the case's
+result; later actions in that walk do not count. Reaching the same screen by
+another path is not that flow. Find the control by its accessible name, label, or
+visible text, and act only once it is visible and operable. While walking, also
+notice a focus trap, scrolling behind an overlay, a control that moves before the
+action, and a narrow viewport.
+
+A repair may change how a control is found or how long the runner waits. It may
+not replace the acceptance result with the behavior just observed. A generated
+check that fails on the current tree is inspected as a possible product failure.
+Do not drop or rewrite it to make the suite green, and do not count an assertion
+that accepts the error just seen. Review matches each assertion to the acceptance
+case and the observed result. Expected values copied from the implementation, or
+checks that only assert no error or that a page opened, do not prove the result.
+On a failed or blocked walk, keep the last visible state from the failing attempt.
+That record explains the failure and leaves the run unverified.
+
+Keep the confirmed path in the project's existing UI test runner so later
+verification does not depend on an agent repeating the walk. A green suite that
+does not assert this visible result, or that has no fail-to-pass or mutation
+evidence for it, leaves the path unproven; use the defect-detection rules above.
+A check that passes and fails with no product change is unstable evidence: record
+the flake and leave that run unverified. A later attempt that passes after a
+failure on the same code is still unstable evidence. A retry is not a pass.
+Quarantine removes a known flake from the blocking gate only. Record an owner and
+a reason, keep the check visible, and leave every path it covers unverified until
+the check is stable and back on the gate. A missing browser or device leaves the
+flow unverified.
+
+When an agent drives the browser, confirm the origin, data store, providers, and
+credentials are the isolated test target, and start a clean browser rather than a
+person's profile or ambient session. Each attempt creates its own synthetic
+records, changes only those records, and deletes those exact ids if the walk stops
+early. A shared account is for sign-in only. A missing target or seed leaves the
+browser path unverified.
+
+Keep a browser check for a critical journey whose failure a unit, service, or
+contract test cannot observe. One such journey needs one browser check. Cases
+those lower layers can already fail stay there.
+
+Observed usage may suggest a case. The acceptance contract remains the requirement
+source.
+
 ## Domain-specific checks
 
 Select from the affected contract, not a universal checklist:

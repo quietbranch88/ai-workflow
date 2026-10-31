@@ -1,5 +1,36 @@
 # Devlog
 
+## 2026-10-31 - tighten user-visible checks before merge
+
+- **What**: Stop a walk that leaves the case's result. A repair may not replace
+  that result, and a retry is not a pass. An agent browser uses an isolated test
+  target and its own synthetic records. Keep one browser check for a critical
+  journey a lower layer cannot observe. Plugin 0.6.9.
+- **Why**: A green retry, a rewritten expected value, or a browser run against a
+  personal session can record the current behavior as if it were the contract.
+- **Spec/Plan**: [.spec/user-visible-checks-20261031/current.md](.spec/user-visible-checks-20261031/current.md)
+- **ADR**: —
+- **Commits**: `05334bd`
+- **Continues**: `15df6ba`
+- **Notes**: No named test product, mutation score, or measured speed claim.
+  Machine installation remains separate. Merge of this pull request was
+  authorized on 2026-10-31.
+
+## 2026-10-31 - user-visible checks before the repeatable UI runner
+
+- **What**: UI and end-to-end assertions come from the acceptance or QA case.
+  Exercise the visible result in the real browser before encoding it in the
+  project's existing UI test runner. A green suite without that result, and a
+  flaky run, stay unverified. Plugin 0.6.8.
+- **Why**: Checks written by restating the implementation stay green while a
+  covered control or a delayed screen still fails the user.
+- **Spec/Plan**: [.spec/user-visible-checks-20261031/current.md](.spec/user-visible-checks-20261031/current.md)
+- **ADR**: —
+- **Commits**: `15df6ba`
+- **Continues**: new
+- **Notes**: No test-product mandate, analytics requirement, or measured speed
+  claim. Machine installation and merge are separate.
+
 ## 2026-10-31 - align drifted instructions
 
 - **What**: The packaged grill-me skill now skips clarification only when no
