@@ -13,6 +13,13 @@ class PullRequestWorkflowContractTests(unittest.TestCase):
         source = WORKFLOW.read_text(encoding="utf-8")
 
         self.assertRegex(source, r"(?m)^\s*pull_request:\s*$")
+        self.assertRegex(source, r"(?m)^\s*push:\s*$")
+        self.assertRegex(source, r"(?m)^\s*-\s*main\s*$")
+        self.assertIn("github.event_name == 'push'", source)
+        self.assertIn("github.event.before", source)
+        self.assertIn("github.sha", source)
+        self.assertIn("github.event.pull_request.base.sha", source)
+        self.assertIn("github.event.pull_request.head.sha", source)
         self.assertRegex(source, r"(?ms)^permissions:\s*\n\s*contents:\s*read\s*$")
         self.assertIn("fetch-depth: 0", source)
         self.assertIn("python -m unittest discover -s tests -v", source)
