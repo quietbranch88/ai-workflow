@@ -1,5 +1,18 @@
 # Devlog
 
+## 2026-11-01 - publish explicit MIT reuse terms
+
+- **What**: Added a root MIT License naming `quietbranch88` as the 2026
+  copyright holder.
+- **Why**: The public workflow repository invited reuse but did not state legal
+  reuse terms.
+- **Spec/Plan**: [.spec/mit-license-20261101/current.md](.spec/mit-license-20261101/current.md)
+- **ADR**: —
+- **Commits**: prepared on `docs/add-mit-license-20261101`.
+- **Continues**: new.
+- **Notes**: No workflow rules, executable behavior, dependency, installation,
+  deployment, or historical release changed.
+
 ## 2026-10-31 - correct reviewed contradictions and shape ceilings
 
 - **What**: A failing shape or size check is reverted instead of raising the
