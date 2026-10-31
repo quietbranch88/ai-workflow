@@ -18,6 +18,8 @@ required. No speed or cost claim is made.
 
 ## Verification
 
+Revision `15df6ba` contains the contract, mirrors, and living records.
+
 - Targeted contract tests for the new section, builder embedding, verify-done
   mirror, and the 280-line cap: pass.
 - `python3 -m unittest discover -s tests -q`: 75 tests, OK, 3 skipped because

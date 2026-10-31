@@ -10,7 +10,7 @@
   covered control or a delayed screen still fails the user.
 - **Spec/Plan**: [.spec/user-visible-checks-20261031/current.md](.spec/user-visible-checks-20261031/current.md)
 - **ADR**: —
-- **Commits**: this change
+- **Commits**: `15df6ba`
 - **Continues**: new
 - **Notes**: No test-product mandate, analytics requirement, or measured speed
   claim. Machine installation and merge are separate.
