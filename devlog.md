@@ -8,7 +8,7 @@
 - **Why**: A second full copy of a rule drifts, and the two copies disagree.
 - **Spec/Plan**: [.spec/trim-duplicated-rules-20261031/current.md](.spec/trim-duplicated-rules-20261031/current.md)
 - **ADR**: —
-- **Commits**: revision hash recorded in the follow-up note
+- **Commits**: `943737d`
 - **Continues**: evidence contracts in `6426d27`
 - **Notes**: Document contract tests read the files. No browser comparison.
   Machine installation and merge stay separate. No Playwright mandate, mutation

@@ -43,9 +43,8 @@ What this run exercised:
   heading anchors: pass, 61 links. `CLAUDE.md.example` uses install paths, not
   repo-relative links.
 - The README rendered through GitHub's Markdown API.
-- Ship-mode validation of the working tree against the changed paths, with
-  `--project-type personal`: pass, 0 warnings. The committed range is checked
-  after the revision exists.
+- Ship-mode validation of commit `943737d` against `origin/main`: pass, 0
+  warnings. `python3 scripts/check_close_the_loop.py` on that range: pass.
 
 That comparison matches the goal of shortening the duplicate copies. It does
 not open a browser, run a product flow, or compare a user-visible result with
