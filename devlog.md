@@ -14,7 +14,7 @@
   that exited 0 can be recorded as if the original goal had been compared.
 - **Spec/Plan**: [.spec/evidence-and-gates-20261031/current.md](.spec/evidence-and-gates-20261031/current.md)
 - **ADR**: —
-- **Commits**: this change
+- **Commits**: `6426d27`
 - **Continues**: user-visible checks in `23a9fe9`
 - **Notes**: No model mandate, mutation score, named browser product, or measured
   speed claim. The checks for this change read the documents. Machine

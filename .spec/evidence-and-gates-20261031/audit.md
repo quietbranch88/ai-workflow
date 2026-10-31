@@ -48,8 +48,8 @@ What this run exercised:
   `pwsh` and `pre-commit` are not on PATH.
 - `git diff --check`: pass.
 - Relative links in the changed Markdown files resolve: pass.
-- Ship-mode validation of the changed files: recorded after the commit range
-  exists.
+- Ship-mode validation of commit `6426d27` against `origin/main`: pass, 0
+  warnings. `python scripts/check_close_the_loop.py` on that range: pass.
 
 That comparison matches the goal of writing the rules into the documents. It
 does not open a browser, run a product flow, or compare a user-visible result
