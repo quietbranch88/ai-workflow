@@ -90,4 +90,4 @@ def add_item(item, items=None):
 - [ ] `pytest` passes
 - [ ] No `print()` statements in non-script code
 - [ ] No hardcoded secrets / API keys
-- [ ] New deps verified (use `verify-deps` skill)
+- [ ] New deps verified

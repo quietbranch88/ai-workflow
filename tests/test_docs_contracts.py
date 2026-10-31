@@ -147,6 +147,41 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn("including canonical Markdown", mirror)
         self.assertGreaterEqual(version, (0, 5, 0))
 
+    def test_grill_me_skip_rule_matches_the_canonical_guard(self):
+        prompt = read("prompts/grill-me.md")
+        skill = read("claude-code/plugin/skills/grill-me/SKILL.md")
+        guard = "Skip clarification in these cases only if no consequential unknown remains."
+        authorization = (
+            "reproduction or planner checklist does not resolve missing product or authorization"
+        )
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        self.assertIn("Canonical source: prompts/grill-me.md", skill)
+        self.assertIn(guard, prompt)
+        self.assertIn(guard, skill)
+        self.assertIn(authorization, prompt)
+        self.assertIn(authorization, skill)
+        self.assertNotIn("just do X", skill)
+        self.assertGreaterEqual(version, (0, 6, 7))
+
+    def test_portfolio_scan_keeps_its_own_repository_command(self):
+        prompt = read("prompts/portfolio-scan.md")
+
+        self.assertIn("--limit 200", prompt)
+        self.assertIn("isArchived", prompt)
+        self.assertNotIn("short form", prompt)
+        self.assertNotIn("shell/aliases.sh", prompt)
+
+    def test_python_pitfalls_do_not_name_a_missing_dependency_skill(self):
+        pitfalls = read("pitfalls/python.md")
+        skill = read("claude-code/plugin/skills/python-pitfalls/SKILL.md")
+
+        self.assertNotIn("verify-deps", pitfalls)
+        self.assertNotIn("verify-deps", skill)
+        self.assertIn("New deps verified", pitfalls)
+        self.assertIn("New deps verified", skill)
+
     def test_mirror_does_not_retain_superseded_mandates(self):
         mirror = read("claude-code/plugin/skills/six-stage-workflow/SKILL.md")
 

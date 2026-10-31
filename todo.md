@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Align grill-me skip rules with the canonical prompt, keep the portfolio scan
+      command independent of `mine`, and remove the missing `verify-deps` name.
+      Plugin 0.6.7. See `.spec/doc-drift-20261031/`. Machine installation is separate.
+
 - [x] Prepare review convergence guidance and a small independently grounded reviewer evaluation set.
 - [x] Complete pilot scoring, independent review and targeted verification for review-convergence-evals-20261019.
 - [x] Publish reviewed convergence/eval source `878fd47` to main and verify remote SHA readback under explicit approval.
@@ -23,8 +27,8 @@
       `4bbe318` to GitHub main (verified 2026-10-18). Local installation remains
       a separate action.
 
-- [ ] Review the coordinated workflow-enforcement PRs and their hosted checks.
-      Merge remains Zoe's explicit decision.
+- [x] Merge workflow-enforcement after review and hosted checks: PR #18, `2838a8f`,
+      2026-07-15.
 - [ ] Add new language pitfall guides only when repeated failures produce real
       evidence for them.
 
@@ -36,7 +40,7 @@
       and Codex entry: PR #22, `9034daa`.
 - [x] Publish and merge WD-01 approval clarification: PR #23, `e996b12`.
 - [x] Merge the routing gate for the full loop: PR #25, `8e4097c`, 2026-10-15.
-- [ ] Deliver the concise onboarding README with the story first; Zoe authorized
-      merge on 2026-10-04, pending review and checks. Final delivery is recorded in the PR.
+- [x] Deliver the concise onboarding README with the story first: PR #24, `b2e5d66`,
+      2026-10-04.
 - [ ] Compare local installations separately, preserving private overlays and recording
       the installed source revision.
