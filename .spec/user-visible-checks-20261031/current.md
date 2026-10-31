@@ -17,7 +17,9 @@ its own test runner.
   - Verify: `python3 -m unittest tests.test_docs_contracts.AdapterConsistencyContractTests.test_user_visible_checks_use_the_acceptance_case_and_existing_runner tests.test_docs_contracts.AdapterConsistencyContractTests.test_standalone_agents_include_required_contracts_in_the_package tests.test_docs_contracts.AdapterConsistencyContractTests.test_evidence_skill_mirrors_match_canonical_content -v`
 - [x] Observable: the packaged builder contains the same section, verify-done and
   its skill tell UI work to exercise the visible result first, and the plugin
-  version is 0.6.8.
+  version is 0.6.9. A retry is not a pass, a repair may not replace the
+  acceptance result, an agent browser uses an isolated test target, and a browser
+  check is kept for a journey a lower layer cannot observe.
   - Environment: `claude-code/plugin/` and `prompts/verify-done.md`.
   - Verify: the same unittest command, plus JSON parse of `plugin.json`.
 - [x] Observable: `GOTCHAS.md` points at that order, and `workflow.md` stays within
@@ -30,4 +32,5 @@ its own test runner.
 - Require Playwright, Jest, Vitest, analytics, or another external test product.
 - Treat a prompt keyword as a verification method.
 - Claim a speed or cost improvement.
-- Install this revision on a machine, or treat the pull request as a merge.
+- Install this revision on a machine. Merge of this pull request was authorized
+  separately on 2026-10-31.

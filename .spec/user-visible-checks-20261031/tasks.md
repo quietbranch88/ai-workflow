@@ -11,7 +11,7 @@
   - Oracle: docs/rule-distribution.md requires the mirror and version to move with the canonical prompt.
   - Required boundary: existing skill-mirror equality test.
   - Verify: `python3 -m unittest tests.test_docs_contracts.AdapterConsistencyContractTests.test_evidence_skill_mirrors_match_canonical_content -v`
-  - Evidence: local run recorded in audit.md. Plugin version reads 0.6.8.
+  - Evidence: local run recorded in audit.md. Plugin version reads 0.6.9.
 - [x] task-3: Record the change without growing workflow.md.
   - Files: .spec/user-visible-checks-20261031/, devlog.md, todo.md, tests/test_docs_contracts.py
   - Oracle: workflow.md line cap remains 280.

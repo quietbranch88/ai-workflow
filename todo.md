@@ -1,8 +1,9 @@
 # Todo
 
-- [x] Record user-visible UI checks: acceptance or QA case, real browser, then the
-      project's existing UI runner. Plugin 0.6.8. See
-      `.spec/user-visible-checks-20261031/`. Machine installation is separate.
+- [x] Record user-visible UI checks, including stop-on-mismatch, no oracle repair,
+      retry is not a pass, isolated agent browser data, and one browser check per
+      critical journey. Plugin 0.6.9. See `.spec/user-visible-checks-20261031/`.
+      Machine installation is separate. Merge authorized 2026-10-31.
 
 - [x] Align grill-me skip rules with the canonical prompt, keep the portfolio scan
       command independent of `mine`, and remove the missing `verify-deps` name.

@@ -16,6 +16,14 @@ expanded.
 No Playwright, Jest, Vitest, analytics product, or prompt-keyword method is
 required. No speed or cost claim is made.
 
+## Added before merge
+
+The same section now stops a walk that leaves the case's result, forbids
+replacing the acceptance result to make a suite green, treats a later passing
+attempt as unstable evidence, requires an isolated test target and per-attempt
+synthetic records for an agent-driven browser, and keeps one browser check for a
+critical journey a lower layer cannot observe. Plugin version is 0.6.9.
+
 ## Verification
 
 Revision `15df6ba` contains the contract, mirrors, and living records.

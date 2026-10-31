@@ -158,10 +158,16 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn("real browser before encoding", verification)
         self.assertIn("project's existing UI test runner", verification)
         self.assertIn("The acceptance contract remains the requirement", verification)
+        self.assertIn("After each action, record the new visible state.", verification)
+        self.assertIn("A retry is not a pass.", verification)
+        self.assertIn("isolated test target", verification)
+        self.assertIn("contract test cannot observe", verification)
+        self.assertIn("replace the acceptance result with the behavior just observed", verification)
+        self.assertIn("is not a pass", verify_done)
         self.assertIn("exercise the visible result", verify_done)
         self.assertIn("docs/verification.md", gotchas)
         self.assertNotIn("Playwright", verification)
-        self.assertGreaterEqual(version, (0, 6, 8))
+        self.assertGreaterEqual(version, (0, 6, 9))
 
     def test_grill_me_skip_rule_matches_the_canonical_guard(self):
         prompt = read("prompts/grill-me.md")
