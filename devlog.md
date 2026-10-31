@@ -10,7 +10,7 @@
   personal session can record the current behavior as if it were the contract.
 - **Spec/Plan**: [.spec/user-visible-checks-20261031/current.md](.spec/user-visible-checks-20261031/current.md)
 - **ADR**: —
-- **Commits**: this change
+- **Commits**: `05334bd`
 - **Continues**: `15df6ba`
 - **Notes**: No named test product, mutation score, or measured speed claim.
   Machine installation remains separate. Merge of this pull request was
