@@ -1,5 +1,20 @@
 # Devlog
 
+## 2026-10-31 - align drifted instructions
+
+- **What**: The packaged grill-me skill now skips clarification only when no
+  consequential unknown remains. The portfolio scan keeps its own repository
+  command. The Python checklist no longer names a missing dependency skill.
+  Plugin 0.6.7. Two todo items now record merges that were already on main.
+- **Why**: The packaged skip list could waive a product or authorization question,
+  and two checklists pointed at a command or skill this repository does not provide.
+- **Spec/Plan**: [.spec/doc-drift-20261031/current.md](.spec/doc-drift-20261031/current.md)
+- **ADR**: —
+- **Commits**: this change
+- **Continues**: canonical grill-me guard added in `8cc6234` without the packaged skill.
+- **Notes**: Portfolio and system-map skills stay paraphrased mirrors. Machine
+  installation of this revision is not done. No merge is authorized by this record.
+
 ## 2026-10-19 - review convergence and a bounded reviewer pilot
 
 - Add a three-round reassessment checkpoint without automatic approval or waived gates; retain scoped follow-ups and evidence-based finding disposition.

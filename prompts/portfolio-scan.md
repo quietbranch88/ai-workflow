@@ -16,8 +16,6 @@ work on?" comes up. Produces or refreshes `~/.ai-workflow/portfolio.md` from
      --jq 'sort_by(.pushedAt) | reverse'
    ```
 
-   (The `mine` alias in `shell/aliases.sh` is the short form.)
-
 2. **Bucket by recency before reading anything:**
    - pushed < 30 days → candidate `active`
    - pushed 30–180 days → candidate `maintenance` / `paused`

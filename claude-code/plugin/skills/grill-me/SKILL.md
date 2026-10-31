@@ -3,6 +3,9 @@ name: grill-me
 description: Clarify consequential unresolved requirements after checking existing context; ask only necessary questions and continue independent work.
 ---
 
+<!-- Canonical source: prompts/grill-me.md in the maintained ai-workflow repository.
+     Record the installed source revision; preserve private overlays separately. -->
+
 When a request is under-specified, first inspect available context and contracts.
 Ask about consequential gaps without reopening settled decisions or imposing a
 question quota. A vague request alone does not require stopping all useful work.
@@ -53,6 +56,10 @@ Good response:
 
 ## When to skip this skill
 
-- The request is genuinely simple (one-line change)
-- The user has already provided a clear spec
-- The user explicitly says "just do X" with full context
+Skip clarification in these cases only if no consequential unknown remains. A
+reproduction or planner checklist does not resolve missing product or authorization
+decisions by itself.
+
+- Trivial requests ("rename this variable")
+- Bug fixes with clear reproduction (the spec is "make this test pass")
+- Tasks already broken down by a planner
