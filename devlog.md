@@ -10,7 +10,7 @@
   or hid an open item.
 - **Spec/Plan**: [.spec/review-followups-20261101/current.md](.spec/review-followups-20261101/current.md)
 - **ADR**: —
-- **Commits**: pending
+- **Commits**: `aec6125`
 - **Continues**: review fixes in `7d37a4e`, merged as PR #31 `6dd7c30`
 - **Notes**: The merged audit counted 25 Markdown files. The range has 26
   because this audit file was added after that count. Four local timeout tests

@@ -34,7 +34,7 @@ What this run exercised:
 - The nine ship and contract tests named in `tasks.md`: 9 tests, 0 failures.
 - `python3 scripts/validate_workflow_docs.py --mode ship --project-type personal`
   on this working tree: pass, 0 warnings.
-- `git diff --check`: pass.
+- `git diff --check`: pass. Work commit `aec6125`.
 - The Python and Go pitfall skill bodies match `pitfalls/python.md` and
   `pitfalls/go.md`.
 
