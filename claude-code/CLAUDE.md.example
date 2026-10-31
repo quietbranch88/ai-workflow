@@ -28,17 +28,16 @@ contracts. Record the installed source revision (docs/rule-distribution.md).
 - Follow `~/.ai-workflow/docs/verification.md`: independent acceptance oracles,
   required fail-to-pass/mutation evidence, real boundaries, UI interaction results,
   domain gates and scans. TDD is optional unless specifically required.
-- Irreversible behavior requires safe E2E before merge or explicit owner acceptance
-  of the named gap; a waiver remains unverified and grants no production authority.
+- Irreversible behavior and an E2E waiver follow `~/.ai-workflow/docs/verification.md`.
 - Follow `~/.ai-workflow/docs/review.md`: initial/follow-up/claim checks, evidence
   and counterevidence, separate validity/disposition, and authorized record reconciliation.
 
 ## Code Change Approval
 
-- On an isolated worktree or branch, edit freely. Ask the repository owner before: merging into the integration/main branch, migrations on shared/deployed databases, destructive or irreversible operations, and anything touching payments or user data in a deployed environment.
+- On an isolated worktree or branch, edit freely. Shared-database migrations,
+  destructive operations, and authoring versus an isolated test database follow
+  `~/.ai-workflow/workflow.md` under Approval gates.
 - When working directly on a shared branch with no isolation, ask before editing runtime-affecting code.
-- Existing application migrations may run in a confirmed disposable, isolated test
-  database with synthetic data. Authoring migration files follows normal edit rules.
 - Before worktree removal verify paths, registration, dirty/untracked work and linked
   targets. Before applying/dropping a stash identify its hash, diff and destination;
   apply first and verify before dropping. Preserve unrelated work.

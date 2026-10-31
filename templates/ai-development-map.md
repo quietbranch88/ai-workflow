@@ -19,9 +19,8 @@ Keep this block short and current; link to detailed records below.
 
 ### Pending operation (only when applicable)
 
-Follow [operation resumption](../context-management.md#resume-pending-operations).
-Keep references rather than copying sensitive payloads; repeat only for distinct
-pending operations.
+Follow [Resume pending operations](../context-management.md#resume-pending-operations).
+Repeat the fields below only for distinct pending operations.
 
 - Target / operation identity / scope:
 - Authorization evidence reference:

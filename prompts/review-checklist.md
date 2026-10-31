@@ -1,9 +1,9 @@
 # Review Checklist
 
-Select initial, follow-up, or claim-check mode using `code-review.md`. For an initial review, cover every applicable category in priority order, even after finding a blocker. For follow-ups, cover the changed behavior and open findings, expanding to related paths when new evidence or risk warrants it; do not automatically repeat the full initial review.
-If access, time, or another blocker prevents completing the review, report the
-reviewed artifact/revision, covered categories, and unreviewed scope explicitly;
-do not label a partial review complete or approved.
+Select initial, follow-up, or claim-check mode using [`code-review.md`](code-review.md).
+An initial review omits the authoring transcript and the author's defense.
+Mode scope, partial-review labeling, stop conditions, and the three-round
+checkpoint are in [docs/review.md](../docs/review.md).
 
 ## 1. Spec conformance (highest)
 
@@ -63,4 +63,4 @@ do not label a partial review complete or approved.
 - Not reviewed / blockers: ...
 ```
 
-Use the finding evidence and validity/disposition fields in [docs/review.md](../docs/review.md) within the output above. Optional suggestions are non-blocking. Record the reviewed base/target, mode, prior finding outcomes, and any expanded scope. Missing execution evidence remains unverified. Finish when blockers and applicable gates are addressed and delivery claims agree; do not require zero nits.
+Use the finding evidence and validity/disposition fields in [docs/review.md](../docs/review.md) within the output above. Stopping and partial coverage follow that contract.

@@ -6,55 +6,63 @@ description: Clarify consequential unresolved requirements after checking existi
 <!-- Canonical source: prompts/grill-me.md in the maintained ai-workflow repository.
      Record the installed source revision; preserve private overlays separately. -->
 
-When a request is under-specified, first inspect available context and contracts.
-Ask about consequential gaps without reopening settled decisions or imposing a
-question quota. A vague request alone does not require stopping all useful work.
+# Grill Me — interactive requirement clarification
 
-## Process
+Inspired by Matt Pocock's pattern. Resolve consequential unknowns using existing context first, then ask only what remains necessary.
 
-1. Read the request, prior decisions, repository contracts, and relevant task docs.
-2. Identify consequential unknowns that cannot be resolved from those sources.
-3. Ask the minimum necessary questions using the available question tool; do not repeat answers or approvals already given.
-4. Continue independent work while waiting. Defer work that depends on a required answer; elapsed time is not an answer or approval.
-5. If no consequential unknown remains, proceed. Use established contracts for routine choices and state material assumptions; do not invent product or data-loss guarantees.
+## How to use
 
-## What makes a good clarifying question
+Read the request, prior decisions, repository contracts, and relevant task docs before asking. Use the dimensions below to identify consequential gaps, not as a mandatory questionnaire. Ask the minimum needed questions; continue independent work while waiting and defer only work that depends on a required answer.
 
-- It has at least 2 plausible answers
-- Each answer would lead to different code
-- It's not asking the user to do your design work for you
+### Dimensions to consider (skip irrelevant or already resolved items)
 
-## Question categories to consider
+1. **Scope boundary**
+   - What is in scope vs. out of scope?
+   - What's the smallest version that delivers value?
 
-- **Scale**: How many users / requests / records? p99 latency budget?
-- **Failure modes**: What happens when upstream fails? Partial data?
-- **Boundaries**: Who calls this? Who can call this? Auth model?
-- **Lifecycle**: How is data created / updated / deleted / archived?
-- **Concurrency**: Multiple writers? What conflict resolution?
-- **Constraints**: Existing tech you must use? Things you must NOT use?
-- **Definition of done**: What does "working" mean to you?
+2. **Inputs & validation**
+   - What inputs are accepted? Format, size, character set?
+   - Empty input behavior?
+   - Oversized input behavior?
+   - Malformed input behavior?
 
-## Example
+3. **Outputs & failure modes**
+   - Success response shape?
+   - Error response shape? Which error codes?
+   - What does the caller see when downstream fails?
 
-User: "I want to add notifications"
+4. **State & persistence**
+   - Stateless or stateful?
+   - If stateful: where, retention policy, consistency requirements?
 
-Bad response: "I'll add a notification system using websockets."
+5. **Concurrency**
+   - Is this called concurrently? From how many sources?
+   - Idempotent on retry?
+   - Rate limit considerations?
 
-Good response:
+6. **Auth & authorization**
+   - Who can call this? How are they authenticated?
+   - Are there permission checks beyond authentication?
 
-> Before I build this, a few things will change the design a lot:
->
-> 1. **What triggers a notification?** Specific events (order placed)
->    or arbitrary admin push?
-> 2. **Where should it land?** In-app only, or also email / SMS / push?
-> 3. **Latency requirement?** Within seconds (websocket), or "next time
->    they open the app" is fine (poll)?
-> 4. **Volume?** 10/day per user or 10k/day?
-> 5. **Read state?** Does "read vs unread" matter, or fire-and-forget?
->
-> Once I know these, I can propose something concrete.
+7. **Observability**
+   - What should be logged? At what level?
+   - What metrics should this emit?
+   - What alerts should fire on failure?
 
-## When to skip this skill
+8. **Downstream dependencies**
+   - What external services / DBs does this hit?
+   - What are their SLAs and failure modes?
+   - Circuit breaker / retry strategy?
+
+## Rules
+
+- ONE question per dimension — don't sprawl
+- Phrase as "Do you want X or Y?" when possible, not open-ended
+- For routine implementation choices, use existing contracts and state any material assumption. Do not guess consequential product, authorization, or data-loss decisions.
+- Summarize resolved decisions when useful; do not add a mandatory confirmation round or repeat an approval already given.
+- If no consequential unknown remains, proceed. There is no question quota or mandatory interview phase.
+
+## When NOT to grill
 
 Skip clarification in these cases only if no consequential unknown remains. A
 reproduction or planner checklist does not resolve missing product or authorization

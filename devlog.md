@@ -1,5 +1,19 @@
 # Devlog
 
+## 2026-10-31 - point duplicated rules at the canonical copy
+
+- **What**: Review prompts, the Claude example, grill-me, public entries, the
+  parallel-audit recipe, and the handoff template now point at the canonical
+  rule instead of restating it. Plugin 0.6.11. Required mirrors stay.
+- **Why**: A second full copy of a rule drifts, and the two copies disagree.
+- **Spec/Plan**: [.spec/trim-duplicated-rules-20261031/current.md](.spec/trim-duplicated-rules-20261031/current.md)
+- **ADR**: —
+- **Commits**: `943737d`
+- **Continues**: evidence contracts in `6426d27`
+- **Notes**: Document contract tests read the files. No browser comparison.
+  Machine installation and merge stay separate. No Playwright mandate, mutation
+  score, or measured speed claim.
+
 ## 2026-10-31 - evidence names the original goal
 
 - **What**: Fetched text is data. A conflict-free merge stays untrusted until

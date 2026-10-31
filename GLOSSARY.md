@@ -31,13 +31,13 @@ more durable than naming a model version that will soon change.
 
 ## Close the loop
 
-The Ship-stage discipline of updating current task state, handoff documents,
-project history, and affected maps in the same change as the implementation.
+The Ship-stage update of living records before a pull request. See
+[Close the loop](workflow.md#close-the-loop-before-opening-a-pr).
 
 ## Evidence block
 
-A completion report containing exact criteria, commands, results, file
-references, and unverified boundaries. It replaces "I think this is done."
+A completion report for what was checked and what was not. See
+[Evidence record](docs/verification.md#evidence-record).
 
 ## Historical tier
 
@@ -51,9 +51,8 @@ checklist, development log, and work queue.
 
 ## Model routing
 
-Choosing a capability profile from task risk and uncertainty. Routing changes
-task size, permissions, and escalation; it never lowers acceptance criteria or
-evidence requirements.
+Choosing a capability profile from task risk and uncertainty. See
+[model routing](workflow.md#model-routing-one-workflow-different-autonomy).
 
 ## Pitfall / gotcha
 
