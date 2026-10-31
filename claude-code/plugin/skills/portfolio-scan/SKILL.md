@@ -3,8 +3,9 @@ name: portfolio-scan
 description: Use monthly, before starting a new project, or when the user asks "what should I work on" / "what are all my projects doing". Scans the user's own GitHub repos via gh CLI and regenerates a portfolio.md status table.
 ---
 
-<!-- Canonical source: ~/.ai-workflow/prompts/portfolio-scan.md — if that file exists on
-     this machine, read it instead; it may be newer than this embedded copy. -->
+<!-- Canonical source: ~/.ai-workflow/prompts/portfolio-scan.md. Compare this copy
+     with that file and record the installed revision. A local file does not
+     replace this copy only because it might be newer. Keep a private overlay separate. -->
 
 Produces or refreshes `portfolio.md` (default `~/.ai-workflow/portfolio.md`) — a
 cross-project STATUS table. The repo list comes from whoever is logged into `gh` on this

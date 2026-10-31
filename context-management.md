@@ -52,6 +52,14 @@ readback and an already-authorized next step need no repeated approval.
 For a running worker or job, preserve its ID and scope, then check whether it is
 still running before cancellation or redispatch; record any resulting state.
 
+After a crash, compaction, or a new session, the working tree and a destination
+readback are the applied work. A summary may carry the goal, settled decisions,
+and open questions. Re-read every file it claims changed. Before creating a
+branch, commit, pull request, or other write, look up that artifact and reuse it
+when it already exists. If the saved decision, the files, and the remote receipt
+disagree, stop at `unknown`. A restored conversation does not undo a shell or
+remote write.
+
 ## Reusable lessons
 
 Keep one-off observations in the task record. When a failure is reproducible or

@@ -3,8 +3,9 @@ name: go-pitfalls
 description: Use before writing or reviewing Go code. Pre-write checklist of traps AI repeatedly hits — context propagation, goroutine ownership, error wrapping, HTTP timeouts, data races.
 ---
 
-<!-- Canonical source: ~/.ai-workflow/pitfalls/go.md — if that file exists on this machine,
-     read it instead; it may be newer than this embedded copy. -->
+<!-- Canonical source: ~/.ai-workflow/pitfalls/go.md. Compare this copy with that
+     file and record the installed revision. A local file does not replace this
+     copy only because it might be newer. Keep a private overlay separate. -->
 
 Treat this as a pre-write checklist. Re-read before generating Go code touching these areas.
 

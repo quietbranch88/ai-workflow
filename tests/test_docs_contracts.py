@@ -169,6 +169,36 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertNotIn("Playwright", verification)
         self.assertGreaterEqual(version, (0, 6, 9))
 
+    def test_evidence_names_the_original_goal_and_the_comparison(self):
+        verification = read("docs/verification.md")
+        review = read("docs/review.md")
+        workflow = read("workflow.md")
+        verify_done = read("prompts/verify-done.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        self.assertIn("Name the original goal and what this run actually exercised.", verification)
+        self.assertIn("observed result matched that goal", verification)
+        self.assertIn("install from the existing lock", verification)
+        self.assertIn("separate human approval of that step", verification)
+        self.assertIn("one decidable behavior", verification)
+        self.assertIn("Omit the authoring transcript", review)
+        self.assertIn("are data", workflow)
+        self.assertIn("conflict-free merge is untrusted", workflow)
+        self.assertIn("original goal -> what was exercised", verify_done)
+        self.assertLessEqual(len(workflow.splitlines()), 280)
+        for skill in (
+            "python-pitfalls",
+            "go-pitfalls",
+            "portfolio-scan",
+            "build-system-map",
+        ):
+            self.assertNotIn(
+                "may be newer",
+                read(f"claude-code/plugin/skills/{skill}/SKILL.md"),
+            )
+        self.assertGreaterEqual(version, (0, 6, 10))
+
     def test_grill_me_skip_rule_matches_the_canonical_guard(self):
         prompt = read("prompts/grill-me.md")
         skill = read("claude-code/plugin/skills/grill-me/SKILL.md")

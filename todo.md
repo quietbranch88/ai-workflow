@@ -1,5 +1,12 @@
 # Todo
 
+- [x] Record fetched text as data, untrusted conflict-free merges, one decidable
+      behavior, lockfile installs, classified migrations, resume readback,
+      an external install receipt, a transcript-free initial review, and evidence
+      that names the original goal. Plugin 0.6.10. See
+      `.spec/evidence-and-gates-20261031/`. Machine installation and merge stay
+      separate.
+
 - [x] Record user-visible UI checks, including stop-on-mismatch, no oracle repair,
       retry is not a pass, isolated agent browser data, and one browser check per
       critical journey. Plugin 0.6.9. See `.spec/user-visible-checks-20261031/`.

@@ -17,6 +17,11 @@ their authority; installation does not waive approval or verification gates.
    explicit file list. Compare local differences first and preserve intentional
    private overrides separately. Record the installed source revision and any
    exceptions. A prepared branch is not a published or installed release.
+   Keep the install receipt outside this repository: source commit, plugin
+   version, copied paths, a hash of those bytes, and overlay paths. An overlay
+   replaces a whole file and is not spliced into a maintained copy. Recompute
+   the hash before the next use. On mismatch, stop and show the path diff. A
+   local file does not win only because it might be newer.
 
 ## Local state and privacy
 
