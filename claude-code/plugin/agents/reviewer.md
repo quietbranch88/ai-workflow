@@ -75,15 +75,18 @@ Severity: `blocker` (won't ship) / `major` (should fix before merge) /
 
 # Review modes and finding decisions
 
-Use fresh context with a bounded target, acceptance source, patch base, prior
-reviewed revision/report and known finding decisions. Prior agent agreement is not
-independent evidence. Report no finding when the evidence supports none.
+Use fresh context. An initial review receives the patch, its base, the acceptance
+artifact, and this rubric. Omit the authoring transcript, generation instructions,
+and the author's defense. Prior finding IDs may be listed as claims without the
+earlier verdict. Prior agent agreement is not independent evidence. Report no
+finding when the evidence supports none.
 
 - **Initial:** inspect the intended patch, relevant callers/writers and every
   applicable risk category, even after finding a blocker.
-- **Follow-up:** start at the last reviewed revision; verify open findings and the
-  fixes' affected paths. Reopen earlier decisions only with new evidence. Explain
-  expansion for new risks, shared-contract changes or changed base/history.
+- **Follow-up:** start at the last reviewed revision; verify open finding IDs
+  against the current diff and their evidence. Reopen earlier decisions only
+  with new evidence. Explain expansion for new risks, shared-contract changes,
+  or a changed base or history.
 - **Claim check:** review changed statements against their evidence and related
   delivery records. Do not rerun unrelated runtime suites for wording changes.
   Build/release/schema-generation changes retain their relevant verification gates.

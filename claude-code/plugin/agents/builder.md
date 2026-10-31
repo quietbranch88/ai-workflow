@@ -62,6 +62,11 @@ Include compatibility, failure behavior and the requirement source: a product ru
 existing invariant, versioned contract or incident fixture. AI may propose fixtures
 and counterexamples, but its implementation is not the test oracle.
 
+Each criterion states one decidable behavior: the input, the observer-visible
+result, and one behavior that must not change. A filled label is not that
+contract. "Tests pass", "inspect the diff", or "the report exists" can be true
+while the original goal is unmet.
+
 Map the actual entrypoint through services, storage, queues and devices to the
 observable result. Name the boundaries the acceptance test must exercise. Backend
 paths do not need an artificial browser step. Record missing environments separately
@@ -84,6 +89,11 @@ from code defects.
 - Run repository-available static security, dependency advisory and secret scans
   for executable code, dependencies, build/release or secrets-sensitive changes.
   Record absent tools and skipped gates; a scan does not prove business logic.
+- Before installing or rewriting a lockfile, record each direct dependency's
+  name, registry, and version, and install from the existing lock unless the
+  task is to add or upgrade it. An advisory scan does not prove the package is
+  the intended project. Leave install scripts off unless that package needs
+  them, and run the install without secrets.
 
 ## Real boundaries and results
 
@@ -105,6 +115,14 @@ from code defects.
   and does not authorize production mutation.
 - If a producer, consumer, credential, device or environment is unavailable, name
   the blocked hop. Do not downgrade the gate or call the full path verified.
+
+A shared or deployed database migration is classified before it is run. Additive
+expansion that stays compatible with the deployed app needs a dry run on a
+disposable restored or sanitized snapshot, and a recorded reverse or roll-forward
+with its loss window. A destructive contraction needs proof the old shape is
+unused, a rehearsed restore, and a separate human approval of that step. The
+agent may draft the migration and the dry-run report. Production credentials
+stay with the owner.
 
 ## User-visible checks
 
@@ -242,21 +260,28 @@ Record revision, environment/service versions, exact commands or reproducible st
 discovered tests, assertions, results, skipped cases and redacted artifacts. Separate
 source inspection, executed tests, deployed observations and causal conclusions.
 Evidence for one handler or time window does not establish a total system outcome.
+Name the original goal and what this run actually exercised. State whether the
+observed result matched that goal, and which part was not compared. A green
+suite, a file that contains the required words, or a command that exited 0 does
+not by itself establish the comparison.
 Reconcile completion claims with the review and delivery contract below.
 
 <!-- Embedded canonical contract: docs/review.md -->
 
 # Review modes and finding decisions
 
-Use fresh context with a bounded target, acceptance source, patch base, prior
-reviewed revision/report and known finding decisions. Prior agent agreement is not
-independent evidence. Report no finding when the evidence supports none.
+Use fresh context. An initial review receives the patch, its base, the acceptance
+artifact, and this rubric. Omit the authoring transcript, generation instructions,
+and the author's defense. Prior finding IDs may be listed as claims without the
+earlier verdict. Prior agent agreement is not independent evidence. Report no
+finding when the evidence supports none.
 
 - **Initial:** inspect the intended patch, relevant callers/writers and every
   applicable risk category, even after finding a blocker.
-- **Follow-up:** start at the last reviewed revision; verify open findings and the
-  fixes' affected paths. Reopen earlier decisions only with new evidence. Explain
-  expansion for new risks, shared-contract changes or changed base/history.
+- **Follow-up:** start at the last reviewed revision; verify open finding IDs
+  against the current diff and their evidence. Reopen earlier decisions only
+  with new evidence. Explain expansion for new risks, shared-contract changes,
+  or a changed base or history.
 - **Claim check:** review changed statements against their evidence and related
   delivery records. Do not rerun unrelated runtime suites for wording changes.
   Build/release/schema-generation changes retain their relevant verification gates.

@@ -3,8 +3,9 @@ name: build-system-map
 description: Use when the user wants a cross-repo system map, or when agents keep re-exploring the same repos every session. Scans locally cloned repos in parallel and builds/refreshes a system-map.md recording structure — entry points, public surfaces, integration edges.
 ---
 
-<!-- Canonical source: ~/.ai-workflow/prompts/system-map-scan.md — if that file exists on
-     this machine, read it instead; it may be newer than this embedded copy. -->
+<!-- Canonical source: ~/.ai-workflow/prompts/system-map-scan.md. Compare this copy
+     with that file and record the installed revision. A local file does not
+     replace this copy only because it might be newer. Keep a private overlay separate. -->
 
 The point: pay the cross-repo exploration cost ONCE. Afterwards agents read the map and
 verify only what their ticket touches — they do not re-explore N repos every session.

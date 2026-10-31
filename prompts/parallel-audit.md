@@ -54,6 +54,8 @@ for pending operations. The coordinator owns reconciliation and may finish with 
 honest partial report when the budget expires; it need not wait forever for all workers.
 For builder work, one integration owner checks the assembled revision before
 claiming combined behavior verified; individually passing reports are insufficient.
+A conflict-free merge stays untrusted until those checks pass on the assembled
+tree, including a shared contract one side changed and behavior both sides implemented.
 
 ## Template prompt
 

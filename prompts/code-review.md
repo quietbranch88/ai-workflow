@@ -3,7 +3,7 @@
 Use the installed reviewer role with the appropriate mode. Supply the concrete fields below; do not send unresolved placeholders. For a small change, user requirements can replace a spec document.
 
 ```text
-Independently review this work. Treat my explanations and previous reviewer conclusions as claims to verify. Report no finding when evidence supports none.
+Independently review this work. For an initial review, do not include the authoring transcript or the author's defense. Previous conclusions are claims, not the verdict. Report no finding when evidence supports none.
 
 Repository/worktree: <absolute path>
 Target: <commit SHA or captured uncommitted patch identifier>

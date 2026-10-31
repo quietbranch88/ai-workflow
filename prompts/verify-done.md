@@ -8,7 +8,7 @@ Report:
 
 ```text
 Revision / environment / observed path / time window:
-Verified: criterion -> command, discovered test/assertion, result and artifact
+Verified: original goal -> what was exercised, command, result, and whether it matched
 Source-inspected only: criterion -> file:line and limits
 Unverified: criterion -> missing evidence, blocked hop and next action
 Delivery: implemented / verified / merged / deployed (state each separately)

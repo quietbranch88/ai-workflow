@@ -3,8 +3,9 @@ name: python-pitfalls
 description: Use before writing or reviewing Python or Django code. Traps AI repeatedly hits — mutable defaults, async/await mistakes, Django ORM N+1 and signal bypasses, Celery idempotency, secret logging.
 ---
 
-<!-- Canonical source: ~/.ai-workflow/pitfalls/python.md — if that file exists on this
-     machine, read it instead; it may be newer than this embedded copy. -->
+<!-- Canonical source: ~/.ai-workflow/pitfalls/python.md. Compare this copy with
+     that file and record the installed revision. A local file does not replace
+     this copy only because it might be newer. Keep a private overlay separate. -->
 
 ## Mutable default arguments
 

@@ -1,5 +1,25 @@
 # Devlog
 
+## 2026-10-31 - evidence names the original goal
+
+- **What**: Fetched text is data. A conflict-free merge stays untrusted until
+  checks run on the assembled tree. Acceptance names one decidable behavior.
+  Dependency installs record name, registry, and version and use the existing
+  lock. Shared migrations are classified. A resume summary is not the files or
+  the remote receipt. An install receipt and its hash stay outside the
+  repository. An initial review omits the authoring transcript. Evidence names
+  the original goal, what was exercised, and whether the result matched. Plugin
+  0.6.10.
+- **Why**: A green suite, a file that contains the required words, or a command
+  that exited 0 can be recorded as if the original goal had been compared.
+- **Spec/Plan**: [.spec/evidence-and-gates-20261031/current.md](.spec/evidence-and-gates-20261031/current.md)
+- **ADR**: —
+- **Commits**: `6426d27`
+- **Continues**: user-visible checks in `23a9fe9`
+- **Notes**: No model mandate, mutation score, named browser product, or measured
+  speed claim. The checks for this change read the documents. Machine
+  installation and merge stay separate.
+
 ## 2026-10-31 - tighten user-visible checks before merge
 
 - **What**: Stop a walk that leaves the case's result. A repair may not replace
