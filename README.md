@@ -149,7 +149,8 @@ Python checks need Python 3.10 or newer. The
 These tools are not bundled.
 
 This repository's [GitHub workflow](.github/workflows/validate.yml) runs the
-tests, the Ship-mode record check, and both Claude adapter validators:
+tests, the Ship-mode record check, and both Claude adapter validators on a
+pull request and on a push to the default branch:
 
 ```bash
 python -m unittest discover -s tests -v
