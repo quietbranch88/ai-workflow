@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """Pre-push guard for tracked or explicitly local-only living-tier docs.
 
-Enforces workflow.md's close-the-loop rule mechanically: if the commits being
-pushed change code but touch neither `.spec/**` nor `devlog.md` / `todo.md`,
-the push is rejected with a reminder.
+Enforces workflow.md's close-the-loop rule mechanically. A code push that does
+not touch `.spec/**/current.md` or `.spec/**/tasks.md` is rejected.
+`devlog.md` and `todo.md` do not replace that ticket document. The hook
+validates WIP mode only.
 
 Default tracked-policy scope rules:
 - Only enforces in repos that follow the discipline (a `.spec/` dir exists).
 - Doc-only pushes always pass.
 - Only `.spec/**/current.md`, `.spec/**/tasks.md`, `devlog.md`, and `todo.md`
   count as living-tier evidence; historical audit/ADR files do not.
+- Evidence is not enough by itself: a code change still needs `current.md` or
+  `tasks.md` in the push. `devlog.md` or `todo.md` alone does not pass.
 - An unresolved comparison range fails visibly instead of silently passing.
 - Escape hatches: `git push --no-verify`, or `CLOSE_THE_LOOP=skip git push`.
 

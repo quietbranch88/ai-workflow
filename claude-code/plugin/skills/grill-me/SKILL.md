@@ -69,5 +69,5 @@ reproduction or planner checklist does not resolve missing product or authorizat
 decisions by itself.
 
 - Trivial requests ("rename this variable")
-- Bug fixes with clear reproduction (the spec is "make this test pass")
+- Bug fixes with a clear reproduction. The reproduction is not the acceptance contract; name the original goal. "Tests pass" can be true while that goal is unmet.
 - Tasks already broken down by a planner

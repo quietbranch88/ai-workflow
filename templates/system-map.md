@@ -3,8 +3,8 @@
 > Living tier. The live copy belongs at `~/.ai-workflow/system-map.md`.
 > Purpose: agents READ THIS instead of re-exploring every repo at the start of every
 > session. Generated once by `prompts/system-map-scan.md`; PATCHED at close-the-loop
-> whenever a change alters anything recorded here. A stale map is a bug — fix it in
-> the same PR that made it stale.
+> whenever a change alters anything recorded here. A stale map is a bug — fix the
+> local copy. Do not put this private file in a PR.
 > Last full scan: YYYY-MM-DD
 > Validate locally: `python scripts/validate_system_map.py --map ~/.ai-workflow/system-map.md`
 > Optional map: append `--if-present`; the private map is never sent to CI.

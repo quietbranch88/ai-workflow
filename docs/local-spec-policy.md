@@ -16,7 +16,9 @@ files or relax an existing repository rule. This repository retains tracked poli
    below. Do not use the pre-commit adapter for local-only privacy: it exposes only
    one ref pair and can miss another branch in the same push. Set `WORKFLOW_TICKET`
    to the task's relative slug, or pass `--ticket topic/name`. The hook checks WIP structure.
-4. Before delivery, run Ship validation locally, using the actual code comparison:
+4. Before delivery, run Ship validation locally. `--base` and `--head` are
+   required so a failed diff aborts. Local-only mode does not use that file
+   list to decide whether the ticket was updated for the patch:
 
 ```sh
 python /path/to/ai-workflow/scripts/validate_workflow_docs.py --root . \

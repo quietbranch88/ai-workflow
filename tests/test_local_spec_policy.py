@@ -82,7 +82,7 @@ class LocalSpecPolicyTests(unittest.TestCase):
     def test_explicit_local_policy_cannot_read_outside_spec(self):
         for ticket in ("../fixture", "../../outside", "C:/private", "/private", "a/../fixture"):
             with self.subTest(ticket=ticket):
-                self.assert_result(self.validate(ticket=ticket), False, "ticket")
+                self.assert_result(self.validate(ticket=ticket), False, "safe relative")
 
     def test_force_staged_private_file_is_rejected_even_if_not_a_living_doc(self):
         private = self.root / ".spec/fixture/audit.md"

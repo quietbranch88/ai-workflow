@@ -30,7 +30,10 @@ and `todo.md`, follow [Close the loop](workflow.md#close-the-loop-before-opening
 Follow [Close the loop](workflow.md#close-the-loop-before-opening-a-pr). Run:
 
 - `git diff --check`
-- `python scripts/check_close_the_loop.py`
+- `python scripts/check_close_the_loop.py` for the WIP pre-push guard. It does
+  not run Ship mode.
+- Ship mode, before a pull request:
+  `python scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base "$BASE_SHA" --head "$HEAD_SHA"`
 - Validate changed Markdown links and render the README through GitHub's
   Markdown API before changing its public structure.
 

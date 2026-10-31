@@ -382,7 +382,7 @@ function Ensure-Worktree {
     }
 
     Write-Host "Worktree created: $worktreePath"
-    Write-Host "Verify the test baseline is GREEN there before building (workflow.md, Workspace isolation)."
+    Write-Host "Verify the test baseline is GREEN there before building (workflow.md, Proportional workspace isolation)."
     return $worktreePath
 }
 

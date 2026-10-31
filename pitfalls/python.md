@@ -19,7 +19,8 @@ def add_item(item, items=None):
 ## `==` vs `is`
 
 - `is` checks identity (same object in memory).
-- Use `is` only for `None`, `True`, `False`, and singletons.
+- Use `is` only for `None` and other real singletons.
+- Do not write `x is True` or `x is False`. Use `if x:` / `if not x:`.
 - Everything else uses `==`.
 
 ## Type hints actually help — use them
@@ -32,14 +33,14 @@ def add_item(item, items=None):
 
 - `await` inside non-async function → `SyntaxError`.
 - Forgetting `await` on a coroutine → "coroutine was never awaited" warning, silently broken.
-- Mixing sync and async DB calls (Django ORM is sync — use `sync_to_async`).
+- Mixing a sync ORM call into async code needs `sync_to_async`. QuerySet also has async methods such as `aget` and `acreate`; wrapping the sync call is not that path.
 
 ## Django ORM
 
 - **`.get()` raises `DoesNotExist`.** Use `.filter().first()` or `try/except`.
 - **N+1 queries** — always use `select_related` / `prefetch_related` for FK / M2M when iterating.
 - `Model.save()` triggers signals; bulk operations bypass them.
-- `bulk_create` and `bulk_update` don't call `save()` — no signals, no auto timestamps.
+- `bulk_create` and `bulk_update` do not call `save()` and do not send signals. `bulk_create` still runs `field.pre_save` on insert, so `auto_now_add` is set. `bulk_update` does not run `pre_save`, so `auto_now` stays unchanged.
 - Migrations are NOT free: adding a NOT NULL column on a big table can lock writes. Always do it in two steps (nullable + backfill, then NOT NULL).
 - **Never trust user input through to a `.raw()` SQL** — parameterize.
 
@@ -48,7 +49,7 @@ def add_item(item, items=None):
 - `DEBUG = True` in production is a security disaster.
 - `SECRET_KEY` from env, never committed.
 - `ALLOWED_HOSTS` must be set in production.
-- Database connection pooling: Django doesn't pool by default — use `CONN_MAX_AGE` or pgbouncer.
+- Django does not pool connections by default. `CONN_MAX_AGE` keeps one persistent connection for a thread; it is not a pool. Use a real pool such as pgbouncer, and set `CONN_MAX_AGE` to `0` when the pool owns connection lifetime.
 
 ## Celery
 

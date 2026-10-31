@@ -68,8 +68,9 @@ and resume without re-explaining everything.
 If the AI drifts, forgets, or gets something wrong:
 1. Fix the immediate issue
 2. Ask: is this a one-off, or a recurring pattern?
-3. If recurring → add a rule to the project's `AGENTS.md` (or the thin
-   tool-specific shim that points to it) or to a project-level `gotchas.md`.
+3. If recurring → add a reusable trap to `pitfalls/`, a repository-specific
+   rule to that project's `AGENTS.md`, a ticket-only lesson to
+   `.spec/<ticket>/ai-development-map.md`, or a process change to `workflow.md`.
    Don't let the same mistake bite twice.
 
 This is how the agent-instruction layer grows over time. It is not written in

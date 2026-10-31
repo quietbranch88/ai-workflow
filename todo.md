@@ -1,8 +1,12 @@
 # Todo
 
+- [x] Correct the reviewed contradictions and record that a failing shape check
+      is reverted, not relaxed. Plugin 0.6.12. See
+      `.spec/review-fixes-20261031/`.
+
 - [x] Point duplicated rules at the canonical copy and keep required mirrors.
-      Plugin 0.6.11. See `.spec/trim-duplicated-rules-20261031/`. Machine
-      installation and merge stay separate.
+      Plugin 0.6.11. See `.spec/trim-duplicated-rules-20261031/`. Merged as
+      PR #30, `ecef65d`.
 
 - [x] Record fetched text as data, untrusted conflict-free merges, one decidable
       behavior, lockfile installs, classified migrations, resume readback,

@@ -202,6 +202,25 @@ synthetic session do not establish agent quality, reliability or adoption.
 For a bounded reviewer-specific pilot, see `evals/reviewer/README.md` in the workflow
 source. Its adjudicated metrics do not replace patch acceptance or human authorization.
 
+## Shape checks and ceilings
+
+A project's shape or size check fails because the change grew the structure:
+another path, a longer capped file, or a higher limit. Revert the step that
+grew it. Do not raise the ceiling, add a public URL, a fake-success route, or
+a release-check file so the command passes. Lower the ceiling in the same pull
+request only after an extra path was actually removed. Raising a ceiling stops
+for the owner's decision.
+
+The live instruction is the current section the project names. Dated sections
+are history. One pull request removes one extra path. For that removal, write a
+failing test, then one named small refactoring that makes it pass. Visible
+behavior stays until the last step deletes the path. If that step is red,
+revert only that step. A closed switch stays off the production path. Do not
+change production configuration or split a module this task did not name. Put
+the code and one status line in the current section in the same pull request.
+A personal project also includes `devlog.md` and `todo.md`. A team project
+follows its own convention for those two files.
+
 ## Evidence record
 
 Record revision, environment/service versions, exact commands or reproducible steps,
