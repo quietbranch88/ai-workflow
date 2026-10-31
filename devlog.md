@@ -8,7 +8,7 @@
 - **Why**: A direct push to the default branch did not run those checks.
 - **Spec/Plan**: [.spec/push-main-checks-20261101/current.md](.spec/push-main-checks-20261101/current.md)
 - **ADR**: —
-- **Commits**: this change
+- **Commits**: `3055057`
 - **Continues**: new
 - **Notes**: Empty acceptance fields still warn. The validator still does not
   judge whether a filled label matches the original goal. This record does not

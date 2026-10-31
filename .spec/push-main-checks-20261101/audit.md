@@ -19,7 +19,8 @@ What this run exercised:
   reads the workflow file.
 - `git diff --check`: pass.
 - `workflow.md` line count: 280.
-- Ship-mode validation against `origin/main`: recorded after the commit exists.
+- Ship-mode validation of `3055057` against `origin/main`: pass, 0 warnings.
+  `check_close_the_loop.py` on that range: pass.
 
 That comparison checks the workflow text. It does not push to `main`, and it
 does not prove GitHub has already run the new job.
