@@ -118,13 +118,9 @@ flowchart TD
 | **Review** | Independent findings and how they were resolved |
 | **Ship** | The change and evidence prepared for an authorized handoff |
 
-Failed tests and confirmed findings return to Build. Missing required evidence
-leaves the task unverified. Ship does not grant permission to merge or deploy.
-
-Scale checks to the change: review text and links for a wording correction;
-use targeted tests for a behavior change; exercise affected real services for
-a cross-service change. TDD and parallel agents are optional unless your project
-requires them. See [`workflow.md`](workflow.md) for the full process.
+Return edges, missing evidence, and the Ship boundary are in
+[`workflow.md`](workflow.md). Scale checks to the change. TDD and parallel
+agents are optional unless the project requires them.
 
 ## Optional setup
 
@@ -148,27 +144,24 @@ not configured. Optional shell helpers: [`shell/aliases.sh`](shell/aliases.sh).
 <details>
 <summary>Optional checks and this repository's CI</summary>
 
-Python checks need Python 3.10 or newer. Installing the
+Python checks need Python 3.10 or newer. The
 [pre-push template](templates/pre-commit.template.yaml) also needs `pre-commit`.
-These tools are not bundled. The installed hook uses **WIP mode**: draft task
-checkboxes may remain open, but records must be structurally valid. This is a
-local safeguard, not server-side enforcement.
+These tools are not bundled.
 
-**This repository's** [GitHub workflow](.github/workflows/validate.yml) runs tests,
-both strict Claude adapter validators, and **Ship mode**. Under the tracked
-policy, every change outside the living documents requires completed task
-records, plus `devlog.md` and `todo.md` for personal projects. This includes small
-Markdown corrections: the validator checks paths, not change size or meaning.
-Keep records brief and factual.
+This repository's [GitHub workflow](.github/workflows/validate.yml) runs the
+tests, the Ship-mode record check, and both Claude adapter validators:
 
-CI pins `--project-type personal`, so editing the AGENTS marker alone does not
-change that check. Workflow and validator changes still need review. Other
-projects must configure their own checks; cloning this repo installs none.
+```bash
+python -m unittest discover -s tests -v
+python scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base "$BASE_SHA" --head "$HEAD_SHA"
+claude plugin validate --strict .
+claude plugin validate --strict claude-code/plugin
+```
 
-These checks validate record structure, not whether claims are true. Acceptance
-wording missing an observable result, environment, or verification step produces
-a warning. Use [local-only validation](docs/local-spec-policy.md) for private
-records; do not upload them to satisfy a tracked-record convention.
+What the record check requires is in
+[Close the loop](workflow.md#close-the-loop-before-opening-a-pr).
+Other projects configure their own checks; cloning this repo installs none.
+Private records use [local-only validation](docs/local-spec-policy.md).
 
 </details>
 

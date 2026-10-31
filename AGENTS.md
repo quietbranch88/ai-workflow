@@ -21,10 +21,13 @@ Claude Code plugin adapters; it is not an application runtime.
 
 ## Workflow
 
-For non-trivial work, use `.spec/<ticket>/` for acceptance criteria, audit
-evidence, and handoff state. Update `devlog.md` and `todo.md` before shipping.
+For non-trivial work, keep acceptance, audit, and handoff state in
+`.spec/<ticket>/`. Personal-project living documents, including `devlog.md`
+and `todo.md`, follow [Close the loop](workflow.md#close-the-loop-before-opening-a-pr).
 
 ## Verification
+
+Follow [Close the loop](workflow.md#close-the-loop-before-opening-a-pr). Run:
 
 - `git diff --check`
 - `python scripts/check_close_the_loop.py`

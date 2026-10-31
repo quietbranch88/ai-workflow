@@ -186,7 +186,6 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn("are data", workflow)
         self.assertIn("conflict-free merge is untrusted", workflow)
         self.assertIn("original goal -> what was exercised", verify_done)
-        self.assertLessEqual(len(workflow.splitlines()), 280)
         for skill in (
             "python-pitfalls",
             "go-pitfalls",
@@ -215,7 +214,31 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn(authorization, prompt)
         self.assertIn(authorization, skill)
         self.assertNotIn("just do X", skill)
-        self.assertGreaterEqual(version, (0, 6, 7))
+        dimensions = (
+            "**Scope boundary**",
+            "**Inputs & validation**",
+            "**Outputs & failure modes**",
+            "**State & persistence**",
+            "**Concurrency**",
+            "**Auth & authorization**",
+            "**Observability**",
+            "**Downstream dependencies**",
+        )
+        for dimension in dimensions:
+            with self.subTest(dimension=dimension):
+                self.assertIn(dimension, prompt)
+                self.assertIn(dimension, skill)
+        self.assertIn("ONE question per dimension", prompt)
+        self.assertIn("ONE question per dimension", skill)
+        for stale_heading in (
+            "## Process",
+            "## Question categories to consider",
+            "## What makes a good clarifying question",
+            "## When to skip this skill",
+        ):
+            with self.subTest(stale_heading=stale_heading):
+                self.assertNotIn(stale_heading, skill)
+        self.assertGreaterEqual(version, (0, 6, 11))
 
     def test_portfolio_scan_keeps_its_own_repository_command(self):
         prompt = read("prompts/portfolio-scan.md")

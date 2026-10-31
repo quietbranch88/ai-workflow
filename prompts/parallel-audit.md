@@ -21,16 +21,16 @@ For implementation use isolated builders under [workflow.md](../workflow.md#para
 4. Give each worker a self-contained question, acceptance source, fixed revision
    or artifact, allowed reads/commands, evidence format and a short report limit
    (usually 200 words). Record the returned worker ID immediately.
-5. Continue independent work, then spot-check load-bearing claims and synthesize
-   evidence and missing coverage into the existing audit. Do not repeat the whole
-   delegated search or treat agent agreement as independent proof.
+5. Synthesize evidence and missing coverage into the existing audit. The
+   spot-check rule is in [workflow.md](../workflow.md#parallel-agents).
 
-A requested read-only role is an instruction, not enforced filesystem or tool
-isolation. Record actual permissions; use enforced restrictions when available.
-Do not call a shared writable checkout sandboxed merely because the prompt says
-“do not edit.” Name owners for any mutable test resources, accounts, ports or
-artifact paths; isolate them or serialize contested use. A read-only audit must
-not acquire mutation authority through this resource checklist.
+Whether a requested read-only role is isolation is defined in
+[workflow.md](../workflow.md#parallel-agents). Record actual permissions; use
+enforced restrictions when available. Do not call a shared writable checkout
+sandboxed merely because the prompt says “do not edit.” Name owners for any
+mutable test resources, accounts, ports or artifact paths; isolate them or
+serialize contested use. A read-only audit must not acquire mutation authority
+through this resource checklist.
 
 ## Bounded lifecycle
 
@@ -42,20 +42,15 @@ as observed; a deadline is not proof that a worker stopped.
 - On explicit failure, preserve partial results and identify uncovered scope.
   Retry only within the assigned budget, after confirming the worker stopped and
   reconciling its resource ownership; otherwise report partial coverage.
-- On timeout or interruption, inspect status using the known ID before cancellation
-  or replacement. If still running, choose a bounded wait or authorized cancellation.
-  Verify cancellation/stoppage before replacing the same scope or releasing resources.
-- If status cannot be established, retain `unknown` with the next readback step;
-  do not launch a duplicate or claim complete coverage. Preserve useful workers,
-  partial evidence and owned resources for resumption instead of blind cleanup.
+- On timeout, unknown status, or a possible duplicate, follow
+  [Resume pending operations](../context-management.md#resume-pending-operations).
+  For this audit, do not claim complete coverage of an unresolved worker, and
+  keep that worker's partial evidence with its recorded ID.
 
-Follow [operation resumption](../context-management.md#resume-pending-operations)
-for pending operations. The coordinator owns reconciliation and may finish with an
-honest partial report when the budget expires; it need not wait forever for all workers.
-For builder work, one integration owner checks the assembled revision before
-claiming combined behavior verified; individually passing reports are insufficient.
-A conflict-free merge stays untrusted until those checks pass on the assembled
-tree, including a shared contract one side changed and behavior both sides implemented.
+The coordinator owns reconciliation and may finish with an honest partial report
+when the budget expires; it need not wait forever for all workers.
+Combined verification after a conflict-free merge is in
+[workflow.md](../workflow.md#parallel-agents).
 
 ## Template prompt
 

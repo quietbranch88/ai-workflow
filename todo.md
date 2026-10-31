@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Point duplicated rules at the canonical copy and keep required mirrors.
+      Plugin 0.6.11. See `.spec/trim-duplicated-rules-20261031/`. Machine
+      installation and merge stay separate.
+
 - [x] Record fetched text as data, untrusted conflict-free merges, one decidable
       behavior, lockfile installs, classified migrations, resume readback,
       an external install receipt, a transcript-free initial review, and evidence
