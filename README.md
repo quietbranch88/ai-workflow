@@ -168,9 +168,10 @@ Private records use [local-only validation](docs/local-spec-policy.md).
 <details>
 <summary>Model choice and parallel agents</summary>
 
-Start with a general coding model for a bounded task. Use faster models for
-search and deterministic checks; escalate ambiguous, high-risk or repeatedly
-failing tasks to stronger reasoning. Every model keeps the same acceptance and
+Start with a general coding model for a bounded task. Use a faster model for
+search, or to classify or summarize exact tool output. Prefer deterministic
+tools for Verify. Escalate ambiguous, high-risk or repeatedly failing tasks
+to stronger reasoning. Every model keeps the same acceptance and
 evidence gates. See [model routing](workflow.md#model-routing-one-workflow-different-autonomy).
 Parallel agents are optional; they do not replace verification.
 

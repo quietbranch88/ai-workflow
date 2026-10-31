@@ -1,5 +1,8 @@
 # Todo
 
+- [x] Close the post-merge review gaps. Plugin 0.6.13. See
+      `.spec/review-followups-20261101/`.
+
 - [x] Correct the reviewed contradictions and record that a failing shape check
       is reverted, not relaxed. Plugin 0.6.12. See
       `.spec/review-fixes-20261031/`.

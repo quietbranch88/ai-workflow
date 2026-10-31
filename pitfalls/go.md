@@ -52,7 +52,7 @@ Treat this as a pre-write checklist. Re-read before generating Go code touching 
 
 ## HTTP servers
 
-- Always set timeouts: `ReadHeaderTimeout`, `ReadTimeout`, `WriteTimeout`, `IdleTimeout`. Zero = unlimited = slowloris.
+- Always set `ReadHeaderTimeout`, `ReadTimeout`, `WriteTimeout`, and `IdleTimeout`. `ReadTimeout` or `WriteTimeout` of 0 means no deadline. `ReadHeaderTimeout` or `IdleTimeout` of 0 inherits `ReadTimeout`, and is unlimited only when that is also 0. Slowloris is slow headers.
 - `http.DefaultClient` has no timeout. NEVER use it in production.
 - Close response bodies: `defer resp.Body.Close()` immediately after the error check.
 - Drain before close to reuse connection: `io.Copy(io.Discard, resp.Body)`.

@@ -557,6 +557,10 @@ class WorkflowDocumentValidatorTests(unittest.TestCase):
             "\n````\n- [ ] still open\n```\n",
             "\n```\n- [ ] still open\n```python\n",
             "\n<!-- - [ ] hidden\n-->\n",
+            "\n``<!-- x -->`\n- [ ] still open\n```\n",
+            "\n~~<!-- x -->~\n- [ ] still open\n~~~\n",
+            "\n``<!-- x -->`\n<TBD>\n```\n",
+            "\n<!-- x -->```\n- [ ] still open\n```\n",
         )
         for fragment in fragments:
             with self.subTest(fragment=fragment), tempfile.TemporaryDirectory(

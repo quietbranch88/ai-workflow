@@ -55,4 +55,5 @@ machine; nothing is hardcoded.
 - A `paused` row without a wake-up condition is a lie — write the condition or call it
   `archive-candidate`.
 - The scan flags archive candidates; it NEVER archives. Archiving is a human decision.
-- Regenerate, don't hand-edit — hand-edited generated files drift.
+- Portfolio rows are generated. Rerun the scan instead of hand-editing them.
+  A curated map is compared with a dry run and is not overwritten.

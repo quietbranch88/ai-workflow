@@ -14,8 +14,12 @@ Unverified: criterion -> missing evidence, blocked hop and next action
 Delivery: implemented / verified / merged / deployed (state each separately)
 ```
 
-- Use independent acceptance oracles and required fail-to-pass or controlled-mutation
-  evidence; never infer these from coverage or a green suite. TDD is optional unless required.
+- Use an acceptance oracle independent of the proposed code. Documentation and
+  behavior-neutral edits use claim review; do not invent runtime tests. For a bug
+  or regression, show a failing baseline, a historical defective revision, or a
+  safe controlled mutation. For another behavior change, use a meaningful mutation
+  unless existing fail-to-pass evidence detects the same defect. Never infer that
+  evidence from coverage or a green suite. TDD is optional unless required.
 - Tests pass only when actually run after the relevant edit. Confirm discovery and
   assertions. Record relevant scans and absent tools separately from failures.
 - Kafka / DB-transaction / auth work requires real integration evidence. Cross-service
