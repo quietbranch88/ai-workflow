@@ -30,6 +30,8 @@ skill. The `mine` alias is unchanged. This record does not install or merge.
 
 ## Verification
 
+Revision `0cdb659` contains the wording, contract tests, and living records.
+
 - `python3 -m unittest discover -s tests -q`: 74 tests, OK, 3 skipped
   (`pwsh` task-bootstrap tests and the pre-commit hook test). No red run was
   executed; the new tests forbid the previous sentences directly.

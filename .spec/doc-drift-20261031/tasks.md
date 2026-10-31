@@ -23,7 +23,7 @@
   - Oracle: PR #18 merge 2838a8f and PR #24 merge b2e5d66 are ancestors of main.
   - Required boundary: living-document ship check for this personal project.
   - Verify: `python3 scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base origin/main --head HEAD`
-  - Evidence: recorded in audit.md after the command runs on this revision.
+  - Evidence: `0cdb659` holds the wording and contract tests. The ship check for the branch range is in audit.md.
 
 ## Acceptance
 

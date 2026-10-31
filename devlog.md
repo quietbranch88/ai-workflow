@@ -10,7 +10,7 @@
   and two checklists pointed at a command or skill this repository does not provide.
 - **Spec/Plan**: [.spec/doc-drift-20261031/current.md](.spec/doc-drift-20261031/current.md)
 - **ADR**: —
-- **Commits**: this change
+- **Commits**: `0cdb659`
 - **Continues**: canonical grill-me guard added in `8cc6234` without the packaged skill.
 - **Notes**: Portfolio and system-map skills stay paraphrased mirrors. Machine
   installation of this revision is not done. No merge is authorized by this record.
