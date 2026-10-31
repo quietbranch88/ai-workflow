@@ -92,16 +92,46 @@ def has_heading(text: str, heading: str) -> bool:
 
 
 def without_fenced_code(text: str) -> str:
+    def visible_comment(match: re.Match[str]) -> str:
+        body = match.group(0)
+        if not (re.search(r"- \[ \]", body) or PLACEHOLDER.search(body)):
+            return ""
+        kept = [
+            line.replace("<!--", "").replace("-->", "").strip()
+            for line in body.splitlines()
+            if re.search(r"- \[ \]", line) or PLACEHOLDER.search(line)
+        ]
+        return "\n" + "\n".join(kept) + "\n"
+
+    text = re.sub(r"<!--.*?-->", visible_comment, text, flags=re.DOTALL)
     outside: list[str] = []
-    in_fence = False
+    held: list[str] = []
+    opener: tuple[str, int] | None = None
+    fence_line = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
     for line in text.splitlines():
-        if re.match(r"^\s*(?:```|~~~)", line):
-            in_fence = not in_fence
-            continue
-        if not in_fence:
+        marker = fence_line.match(line)
+        if marker:
+            chars = marker.group(1)
+            rest = marker.group(2).strip()
+            if opener is None:
+                opener = (chars[0], len(chars))
+                continue
+            if chars[0] == opener[0] and len(chars) >= opener[1] and rest == "":
+                opener = None
+                held.clear()
+                continue
+        if opener:
+            held.append(line)
+        else:
             outside.append(line)
-    prose = "\n".join(outside)
-    return re.sub(r"<!--.*?-->", "", prose, flags=re.DOTALL)
+    if opener:
+        outside.extend(held)
+    exposed = []
+    for line in outside:
+        if "- [ ]" in line:
+            line = line.replace("<!--", "").replace("-->", "")
+        exposed.append(line)
+    return "\n".join(exposed)
 
 
 def contains_living_placeholder(text: str) -> bool:

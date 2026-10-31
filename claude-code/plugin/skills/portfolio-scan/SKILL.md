@@ -7,8 +7,7 @@ description: Use monthly, before starting a new project, or when the user asks "
      with that file and record the installed revision. A local file does not
      replace this copy only because it might be newer. Keep a private overlay separate. -->
 
-Produces or refreshes `portfolio.md` (default `~/.ai-workflow/portfolio.md`) — a
-cross-project STATUS table. The repo list comes from whoever is logged into `gh` on this
+Produces or refreshes `~/.ai-workflow/portfolio.md` from `templates/portfolio.md`. The repo list comes from whoever is logged into `gh` on this
 machine; nothing is hardcoded.
 
 ## Procedure
@@ -29,7 +28,7 @@ machine; nothing is hardcoded.
 
 3. **Deep-read ONLY the active bucket** (metadata suffices for the rest): README first
    paragraph → "what it does"; last 5 commit subjects + open PR titles → "current focus";
-   devlog.md / todo.md top entries if present → "next milestone". For many repos, fan out
+   if the repo follows this workflow, devlog.md / todo.md top entries → "next milestone". For many repos, fan out
    parallel read-only agents, one per repo, < 100 words each.
 
 4. **Diff against the existing portfolio.md** before overwriting: report rows added,
@@ -51,7 +50,8 @@ machine; nothing is hardcoded.
 
 ## Rules
 
-- Status vocabulary: `active` / `maintenance` / `paused` / `archive-candidate`.
+- Metadata first. Reading every repo's code on every scan is how the scan stops happening.
+- Status vocabulary from `templates/portfolio.md`: `active` is being worked on this month; `maintenance` is no new features planned, fixes only; `paused` is intentionally parked and must have a wake-up condition; `archive-candidate` is no push in 180+ days and no wake-up condition, flagged for the human.
 - A `paused` row without a wake-up condition is a lie — write the condition or call it
   `archive-candidate`.
 - The scan flags archive candidates; it NEVER archives. Archiving is a human decision.

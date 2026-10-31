@@ -92,9 +92,9 @@ Do not explore unrelated repositories or include the private map in a PR; commit
    [local-only spec policy](docs/local-spec-policy.md) where task records are private.
 5. Reconcile audit, tasks and authorized PR/tracker claims using [docs/review.md](docs/review.md).
 
-Under the default **tracked** policy, `scripts/check_close_the_loop.py` can be wired at pre-push through `templates/pre-commit.template.yaml`. In **WIP mode**, it rejects code without a
+Under the default **tracked** policy, `scripts/check_close_the_loop.py` can be wired at pre-push through `templates/pre-commit.template.yaml`. That hook runs **WIP mode** only: it rejects code without a
 touched ticket document and checks the ticket pair, required headings, and placeholders;
-unchecked work remains valid. In **Ship mode**, any change outside the living tier,
+unchecked work remains valid. **Ship mode** is `scripts/validate_workflow_docs.py --mode ship`. Any change outside the living tier,
 including canonical Markdown, requires changed `current.md` and `tasks.md` from the same
 ticket, no unchecked items, and personal-project `devlog.md` plus `todo.md`. This repository's
 CI passes `--project-type personal`; changing the AGENTS marker alone does not change that check.

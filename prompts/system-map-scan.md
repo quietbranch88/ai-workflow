@@ -37,14 +37,16 @@ and verify only what their ticket touches — they do not re-explore N repos eve
 - Only spot-verify what the ticket touches: the specific entry points and edges you're
   about to change (paths still exist, signatures still match). Do NOT re-explore repos
   the ticket doesn't touch.
-- Map contradicts reality → the map is stale: fix the map line in the same PR, and note
-  it in the devlog. Don't silently work around it — that's how caches rot.
+- Map contradicts reality → the map is stale: fix the local map line, and note
+  it in the repository devlog. Don't silently work around it — that's how caches rot.
+  Do not commit the private map.
 
 ## Patch rule (close-the-loop)
 
 Before opening a PR, if the change added/removed/renamed anything the map records —
 an entry point, a public endpoint, an event, an integration edge, a shared lib — patch
-`system-map.md` in the SAME PR. Same discipline as `current.md`.
+the local `~/.ai-workflow/system-map.md`. Do not put that private file in the PR.
+Commit only shareable repository docs.
 
 ## Scope
 

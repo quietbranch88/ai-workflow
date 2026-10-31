@@ -505,6 +505,81 @@ class WorkflowDocumentValidatorTests(unittest.TestCase):
 
         self.assertEqual(0, result.returncode, result.stderr)
 
+    def test_ship_sees_items_after_an_unclosed_fence(self):
+        with tempfile.TemporaryDirectory(prefix="workflow-unclosed-fence-") as fixture:
+            root = Path(fixture)
+            create_docs(root, complete=True)
+            current_path = root / ".spec" / "fixture" / "current.md"
+            current = current_path.read_text(encoding="utf-8")
+            write(current_path, current + "\n```\n- [ ] still open\n")
+
+            result = run_validator(
+                root,
+                "ship",
+                [
+                    "app.py",
+                    ".spec/fixture/current.md",
+                    ".spec/fixture/tasks.md",
+                    "devlog.md",
+                    "todo.md",
+                ],
+            )
+
+        self.assertNotEqual(0, result.returncode, result.stderr)
+        self.assertIn("unchecked", result.stderr.lower())
+
+    def test_ship_sees_a_checkbox_or_placeholder_hidden_in_a_comment(self):
+        with tempfile.TemporaryDirectory(prefix="workflow-hidden-comment-") as fixture:
+            root = Path(fixture)
+            create_docs(root, complete=True)
+            current_path = root / ".spec" / "fixture" / "current.md"
+            current = current_path.read_text(encoding="utf-8")
+            write(current_path, current + "\n<!--\n- [ ] hidden\n<TBD>\n-->\n")
+
+            result = run_validator(
+                root,
+                "ship",
+                [
+                    "app.py",
+                    ".spec/fixture/current.md",
+                    ".spec/fixture/tasks.md",
+                    "devlog.md",
+                    "todo.md",
+                ],
+            )
+
+        self.assertNotEqual(0, result.returncode, result.stderr)
+
+    def test_ship_sees_boxes_hidden_by_comment_fences_or_mismatched_closers(self):
+        fragments = (
+            "\n<!--\n```\n- [ ] hidden\n```\n-->\n",
+            "\n```\n- [ ] still open\n~~~\n",
+            "\n````\n- [ ] still open\n```\n",
+            "\n```\n- [ ] still open\n```python\n",
+            "\n<!-- - [ ] hidden\n-->\n",
+        )
+        for fragment in fragments:
+            with self.subTest(fragment=fragment), tempfile.TemporaryDirectory(
+                prefix="workflow-ship-bypass-"
+            ) as fixture:
+                root = Path(fixture)
+                create_docs(root, complete=True)
+                current_path = root / ".spec" / "fixture" / "current.md"
+                current = current_path.read_text(encoding="utf-8")
+                write(current_path, current + fragment)
+                result = run_validator(
+                    root,
+                    "ship",
+                    [
+                        "app.py",
+                        ".spec/fixture/current.md",
+                        ".spec/fixture/tasks.md",
+                        "devlog.md",
+                        "todo.md",
+                    ],
+                )
+                self.assertNotEqual(0, result.returncode, result.stderr)
+
     def test_ship_rejects_an_acceptance_heading_without_checklist_criteria(self):
         with tempfile.TemporaryDirectory(prefix="workflow-empty-acceptance-") as fixture:
             root = Path(fixture)

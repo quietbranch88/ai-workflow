@@ -6,7 +6,8 @@
 
 repos:
   # ---- Close the loop (workflow.md) — runs at push time ----
-  # Rejects pushes that change code but touch neither .spec/** nor devlog/todo.
+  # WIP pre-push only. A code push must touch .spec/**/current.md or
+  # .spec/**/tasks.md. devlog.md or todo.md alone does not satisfy that.
   # Only active in repos that have a .spec/ directory.
   - repo: local
     hooks:

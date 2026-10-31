@@ -36,7 +36,7 @@ def resolve_local_path(value: str) -> Path:
 def contains_template_placeholder(text: str) -> bool:
     for line in text.splitlines():
         stripped = line.strip()
-        if "TBD" in stripped.upper():
+        if re.search(r"\bTBD\b", stripped, re.IGNORECASE):
             return True
         if any(
             pattern.search(stripped)

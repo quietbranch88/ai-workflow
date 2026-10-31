@@ -126,7 +126,8 @@ Generators are drift detectors and initializers, not replacement tools:
 - Existing plain map: generate in dry-run mode and compare.
 - Curated map: never overwrite; patch only the stale entries.
 - When reality contradicts a map, reality wins. Correct the affected line in
-  the same PR when it is inside the authorized change surface.
+  the same change when it is inside the authorized change surface. A private
+  map such as `~/.ai-workflow/system-map.md` stays local.
 
 The validator checks declared local paths, Git roots, entrypoint paths, and
 template placeholders. It never uploads the map and cannot prove integration

@@ -85,6 +85,25 @@ class SystemMapValidatorTests(unittest.TestCase):
 
         self.assertEqual(0, result.returncode, result.stderr)
 
+    def test_tbd_matches_a_word_and_allows_tbdata(self):
+        with tempfile.TemporaryDirectory(prefix="system-map-tbdata-") as fixture:
+            root = Path(fixture)
+            repo = root / "repo"
+            (repo / "src").mkdir(parents=True)
+            (repo / "src" / "tbdata.py").write_text("print('ok')\n", encoding="utf-8")
+            subprocess.run(["git", "init", "-b", "main"], cwd=repo, check=True, capture_output=True)
+            map_path = root / "system-map.md"
+            write_map(map_path, repo, "src/tbdata.py")
+
+            allowed = run_validator(map_path)
+            source = map_path.read_text(encoding="utf-8")
+            map_path.write_text(source.replace("Python", "TBD"), encoding="utf-8")
+            rejected = run_validator(map_path)
+
+        self.assertEqual(0, allowed.returncode, allowed.stderr)
+        self.assertNotEqual(0, rejected.returncode)
+        self.assertIn("placeholder", (rejected.stdout + rejected.stderr).lower())
+
     def test_rejects_unbackticked_entrypoints_instead_of_silently_skipping_them(self):
         with tempfile.TemporaryDirectory(prefix="system-map-unbackticked-") as fixture:
             root = Path(fixture)

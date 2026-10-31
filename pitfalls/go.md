@@ -18,7 +18,7 @@ Treat this as a pre-write checklist. Re-read before generating Go code touching 
 - Use `errgroup.WithContext` instead of bare `sync.WaitGroup` + manual error channel.
 - `defer wg.Done()` MUST be the FIRST line inside the goroutine.
 - Channels without a reader leak the writer. Always bound your producer or use `select` with `ctx.Done()`.
-- Avoid `go func() { ... }()` at the end of an HTTP handler — request `ctx` is canceled when the response is sent.
+- Avoid `go func() { ... }()` at the end of an HTTP handler. The request `ctx` is canceled when the client disconnects, the request is canceled, or `ServeHTTP` returns — not when the response bytes are written.
 
 ## Interfaces
 

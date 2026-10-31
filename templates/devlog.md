@@ -1,7 +1,7 @@
 # Devlog
 
 > Project-level. One rolling file spanning ALL tickets. **Newest entry on top.**
-> Historical tier: append-only, never rewrite past entries.
+> Living tier. Newest entry on top. Do not rewrite past entries.
 > Updated at close-the-loop (before each PR). Personal projects: mandatory.
 >
 > Purpose:縱向歷史 — answer "what shipped when, why, and which decision it ties to",

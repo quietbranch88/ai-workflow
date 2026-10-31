@@ -1,5 +1,24 @@
 # Devlog
 
+## 2026-10-31 - correct reviewed contradictions and shape ceilings
+
+- **What**: A failing shape or size check is reverted instead of raising the
+  ceiling. Private system maps stay local. The pre-push hook is WIP only; Ship
+  mode is `validate_workflow_docs.py`. Pitfall, prompt, and heading mismatches
+  found in the `ecef65d` review are aligned with the canonical text. Plugin 0.6.12.
+- **Why**: Agents were following a second copy, or widening a limit so a check
+  would pass.
+- **Spec/Plan**: [.spec/review-fixes-20261031/current.md](.spec/review-fixes-20261031/current.md)
+- **ADR**: —
+- **Commits**: `7d37a4e`
+- **Continues**: duplicated-rule trim in `943737d`, merged as PR #30 `ecef65d`
+- **Notes**: Ship mode still sees an open checklist item after an unclosed
+  fence, a mismatched fence closer, or an HTML comment, including a fence
+  wrapped in that comment. `TBD` in a system map is a whole word, so `tbdata`
+  is allowed. Four unit tests that time out on this machine (`pwsh` bootstrap
+  and the local-only hook) were not changed. Product-specific provider and
+  screen rules stay in the project that owns them.
+
 ## 2026-10-31 - point duplicated rules at the canonical copy
 
 - **What**: Review prompts, the Claude example, grill-me, public entries, the

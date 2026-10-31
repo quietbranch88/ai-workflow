@@ -80,6 +80,14 @@ trust.
 indexes; preserve curated maps; keep current truth in living documents and
 decisions in append-only historical documents.
 
+## A failing shape check is not permission to grow
+
+Raising a ceiling or adding a public URL makes the check pass while the
+architecture gets larger. Stuffing several structural removals into one branch
+breaks the one-path rule.
+
+**Do instead:** follow [Shape checks and ceilings](docs/verification.md#shape-checks-and-ceilings).
+
 ## Where a new gotcha belongs
 
 | Scope | Home |

@@ -257,6 +257,20 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         self.assertIn("New deps verified", pitfalls)
         self.assertIn("New deps verified", skill)
 
+    def test_shape_check_failure_does_not_raise_the_ceiling(self):
+        verification = read("docs/verification.md")
+        gotchas = read("GOTCHAS.md")
+        builder = read("claude-code/plugin/agents/builder.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        self.assertIn("## Shape checks and ceilings", verification)
+        self.assertIn("Do not raise the ceiling", verification)
+        self.assertIn("Dated sections\nare history.", verification)
+        self.assertIn("docs/verification.md#shape-checks-and-ceilings", gotchas)
+        self.assertIn("## Shape checks and ceilings", builder)
+        self.assertGreaterEqual(version, (0, 6, 12))
+
     def test_mirror_does_not_retain_superseded_mandates(self):
         mirror = read("claude-code/plugin/skills/six-stage-workflow/SKILL.md")
 

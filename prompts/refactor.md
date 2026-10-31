@@ -8,7 +8,8 @@ Use when you want to clean up code without changing behavior.
 Refactor the code in <path> with these rules:
 
 1. **Behavior must not change.** If existing tests pass before, they
-   pass after. If no tests exist, write characterization tests first.
+   pass after. If no tests exist, do not invent runtime tests for a
+   behavior-neutral edit; record that the check is claim review.
 
 2. **No new features.** No "while I'm here" additions.
 
