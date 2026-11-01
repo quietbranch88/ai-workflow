@@ -62,7 +62,7 @@ def add_item(item, items=None):
 
 ## Celery
 
-- Tasks must be idempotent. They WILL retry.
+- Tasks must be idempotent. A task runs once unless it calls `self.retry()`, sets `autoretry_for`, or the broker redelivers it.
 - Don't pass large objects (querysets, files) as task args — pass IDs.
 - `bind=True` if you need `self.retry()`.
 - Result backend has TTL — don't rely on results being there forever.

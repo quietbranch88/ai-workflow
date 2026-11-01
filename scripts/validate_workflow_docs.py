@@ -92,24 +92,29 @@ def has_heading(text: str, heading: str) -> bool:
 
 
 def without_fenced_code(text: str) -> str:
-    def visible_comment(match: re.Match[str]) -> str:
-        body = match.group(0)
-        if not (re.search(r"- \[ \]", body) or PLACEHOLDER.search(body)):
-            return ""
-        kept = [
-            line.replace("<!--", "").replace("-->", "").strip()
-            for line in body.splitlines()
-            if re.search(r"- \[ \]", line) or PLACEHOLDER.search(line)
-        ]
-        return "\n" + "\n".join(kept) + "\n"
+    forced: list[str] = []
 
-    text = re.sub(r"<!--.*?-->", visible_comment, text, flags=re.DOTALL)
+    def mask_comment(match: re.Match[str]) -> str:
+        body = match.group(0)
+        if re.search(r"- \[ \]", body) or PLACEHOLDER.search(body):
+            for line in body.splitlines():
+                if re.search(r"- \[ \]", line) or PLACEHOLDER.search(line):
+                    forced.append(line.replace("<!--", "").replace("-->", "").strip())
+        return "".join(char if char in "\n\r" else " " for char in body)
+
+    masked = re.sub(r"<!--.*?-->", mask_comment, text, flags=re.DOTALL)
+    original_lines = text.splitlines()
+    masked_lines = masked.splitlines()
+    if len(masked_lines) < len(original_lines):
+        masked_lines.extend([""] * (len(original_lines) - len(masked_lines)))
     outside: list[str] = []
     held: list[str] = []
     opener: tuple[str, int] | None = None
     fence_line = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
-    for line in text.splitlines():
-        marker = fence_line.match(line)
+    for index, line in enumerate(original_lines):
+        masked_line = masked_lines[index] if index < len(masked_lines) else ""
+        # A comment must not create a fence, and a fence inside a comment must not hide text.
+        marker = fence_line.match(line) if fence_line.match(masked_line) else None
         if marker:
             chars = marker.group(1)
             rest = marker.group(2).strip()
@@ -123,9 +128,10 @@ def without_fenced_code(text: str) -> str:
         if opener:
             held.append(line)
         else:
-            outside.append(line)
+            outside.append(masked_line)
     if opener:
         outside.extend(held)
+    outside.extend(forced)
     exposed = []
     for line in outside:
         if "- [ ]" in line:

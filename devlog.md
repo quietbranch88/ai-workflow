@@ -1,5 +1,21 @@
 # Devlog
 
+## 2026-11-01 - close the post-merge review gaps
+
+- **What**: README sends Verify to deterministic tools. Portfolio and verify-done
+  follow the map and evidence rules. Go timeout zeros and Celery retry match
+  the runtimes. Ship mode still sees an item hidden by a comment between fence
+  markers. Plugin 0.6.13.
+- **Why**: The merged review text still sent a later agent to the wrong check,
+  or hid an open item.
+- **Spec/Plan**: [.spec/review-followups-20261101/current.md](.spec/review-followups-20261101/current.md)
+- **ADR**: —
+- **Commits**: `aec6125`
+- **Continues**: review fixes in `7d37a4e`, merged as PR #31 `6dd7c30`
+- **Notes**: The merged audit counted 25 Markdown files. The range has 26
+  because this audit file was added after that count. Four local timeout tests
+  were not changed.
+
 ## 2026-11-01 - run checks on a push to the default branch
 
 - **What**: The GitHub workflow runs the same tests, Ship check, and Claude

@@ -28,8 +28,9 @@ What this run exercised:
   because `pre-commit` is not on PATH. The run included
   `AdapterConsistencyContractTests` and `CanonicalWorkflowContractTests`.
 - `git diff --check`: pass.
-- Relative links in the 25 changed Markdown files: 40 links, 3 template
-  placeholders only (`templates/devlog.md`).
+- Relative links in the 25 Markdown files checked before this audit existed:
+  40 links, 3 template placeholders only (`templates/devlog.md`). The merged
+  range has 26 Markdown files; this audit is the extra one.
 - Ship-mode validation of this branch against `origin/main`: pass, 0 warnings,
   after the ticket criteria were written as checklist items. Work commit
   `7d37a4e`.

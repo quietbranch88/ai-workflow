@@ -44,4 +44,6 @@ work on?" comes up. Produces or refreshes `~/.ai-workflow/portfolio.md` from
 - The scan flags archive candidates; it NEVER archives. Archiving is a human decision.
 - A `paused` row without a wake-up condition is a lie — either write the condition or
   call it `archive-candidate`.
-- Same anti-drift rule as spec-map: regenerate, don't hand-edit.
+- Portfolio rows are generated. Rerun the scan instead of hand-editing them.
+  A curated map follows the [anti-drift rule](../context-management.md#anti-drift-rule):
+  dry-run, compare, and do not overwrite it.

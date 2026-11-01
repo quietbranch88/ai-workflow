@@ -1,5 +1,8 @@
 # Todo
 
+- [x] Close the post-merge review gaps. Plugin 0.6.13. See
+      `.spec/review-followups-20261101/`.
+
 - [x] Run the repository checks on a push to the default branch, using that push
       as the Ship range. See `.spec/push-main-checks-20261101/`. Merge stays
       separate.
