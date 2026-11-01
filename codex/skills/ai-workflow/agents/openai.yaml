@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Workflow"
+  short_description: "Use the shared development and verification workflow"
+  default_prompt: "Use $ai-workflow to complete this task with the relevant verification evidence."
