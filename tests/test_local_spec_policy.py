@@ -179,6 +179,66 @@ class LocalSpecPolicyTests(unittest.TestCase):
         self.assertNotIn("refs/heads/private", remote)
         self.assertIn(f"{self.base}\trefs/heads/main", remote)
 
+    def test_native_hook_rejects_private_tip_hidden_by_commit_replacement(self):
+        self.prepare_native_remote()
+        clean = self.head
+        private = self.root / ".spec/fixture/audit.md"
+        private.write_text("SYNTHETIC_PRIVATE_MARKER", encoding="utf-8")
+        self.git("add", "-f", str(private))
+        self.commit("private tip")
+        hidden = self.git("rev-parse", "HEAD").stdout.strip()
+        self.git("rm", "--cached", str(private))
+        self.git("replace", hidden, clean)
+        self.assert_result(self.push("HEAD:refs/heads/private"), False, "outgoing commit")
+        remote = self.git("ls-remote", "--heads", "origin").stdout
+        self.assertNotIn("refs/heads/private", remote)
+        self.assertIn(f"{self.base}\trefs/heads/main", remote)
+
+    def test_native_hook_rejects_private_ancestor_hidden_by_replacement(self):
+        self.prepare_native_remote()
+        clean = self.head
+        private = self.root / ".spec/fixture/audit.md"
+        private.write_text("SYNTHETIC_PRIVATE_MARKER", encoding="utf-8")
+        self.git("add", "-f", str(private))
+        self.commit("private ancestor")
+        hidden = self.git("rev-parse", "HEAD").stdout.strip()
+        self.git("rm", "--cached", str(private))
+        self.commit("clean outgoing tip")
+        self.git("replace", hidden, clean)
+        self.assert_result(self.push("HEAD:refs/heads/private"), False, "outgoing commit")
+        self.assertNotIn("refs/heads/private", self.git("ls-remote", "--heads", "origin").stdout)
+
+    def test_native_hook_rejects_private_tip_hidden_by_tree_replacement(self):
+        self.prepare_native_remote()
+        clean_tree = self.git("rev-parse", "HEAD^{tree}").stdout.strip()
+        private = self.root / ".spec/fixture/audit.md"
+        private.write_text("SYNTHETIC_PRIVATE_MARKER", encoding="utf-8")
+        self.git("add", "-f", str(private))
+        self.commit("private tree")
+        hidden_tree = self.git("rev-parse", "HEAD^{tree}").stdout.strip()
+        self.git("rm", "--cached", str(private))
+        self.git("replace", hidden_tree, clean_tree)
+        self.assert_result(self.push("HEAD:refs/heads/private"), False, "outgoing commit")
+        self.assertNotIn("refs/heads/private", self.git("ls-remote", "--heads", "origin").stdout)
+
+    def test_native_hook_allows_clean_raw_history_despite_private_replacement(self):
+        remote = self.prepare_native_remote()
+        self.git("checkout", "-b", "replacement-source", self.base)
+        private = self.root / ".spec/fixture/audit.md"
+        private.write_text("SYNTHETIC_PRIVATE_MARKER", encoding="utf-8")
+        self.git("add", "-f", str(private))
+        self.commit("replacement only private tree")
+        replacement = self.git("rev-parse", "HEAD").stdout.strip()
+        self.git("checkout", "main")
+        self.git("replace", self.head, replacement)
+        self.assert_result(self.push("HEAD:refs/heads/clean"), True)
+        received = subprocess.run(
+            ["git", "--no-replace-objects", "--git-dir", str(remote), "ls-tree", "-r",
+             "--name-only", "refs/heads/clean", "--", ".spec"],
+            capture_output=True, text=True, check=True,
+        )
+        self.assertEqual("", received.stdout)
+
     def test_local_only_refuses_pre_commit_single_range_adapter(self):
         result = subprocess.run(
             [sys.executable, str(CLOSE_LOOP), "--spec-policy", "local-only", "--ticket", "fixture"],

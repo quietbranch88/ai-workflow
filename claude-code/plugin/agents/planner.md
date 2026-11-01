@@ -36,17 +36,21 @@ stop asking and move on.
 
 ### Phase 2: Write the spec
 
+Use the canonical [spec template](https://github.com/quietbranch88/ai-workflow/blob/main/templates/spec.md).
+Keep its required headings and one evidence block per criterion. Minimal
 `.spec/<ticket>/current.md` structure:
 
 ```markdown
 # <Feature name>
 
-## Why
+## Goal
 <2-3 sentences. The problem this solves, not the solution.>
 
 ## Acceptance criteria
-- [ ] <Concrete, testable, atomic>
-- [ ] <Concrete, testable, atomic>
+- [ ] Observable: <concrete, testable result>
+  - Environment: <isolated target where it is checked>
+  - Verify: <exact command or reproducible steps>
+  - Oracle: <independent requirement or invariant>
 
 ## Non-goals
 <What this explicitly does NOT do. Equally important.>
@@ -60,18 +64,22 @@ stop asking and move on.
 
 ### Phase 3: Break into tasks
 
-`.spec/<ticket>/tasks.md` structure:
+Use the canonical [tasks template](https://github.com/quietbranch88/ai-workflow/blob/main/templates/tasks.md).
+Preserve its task and Acceptance checklists. Minimal `.spec/<ticket>/tasks.md` structure:
 
 ```markdown
-# Tasks for <feature>
+# Tasks
 
-## Task 1: <atomic action>
-- **Output**: <file or behavior change>
-- **Verify**: <how to know it's done>
-- **Blocks**: <task IDs that depend on this>
+- [ ] task-1: <atomic action>
+  - Files: <exact change paths>
+  - Oracle: <independent requirement or invariant>
+  - Required boundary: <actual entrypoint to observable result>
+  - Verify: <exact command or reproducible steps>
 
-## Task 2: <atomic action>
-...
+## Acceptance
+
+- [ ] Each acceptance criterion has independent verification evidence
+- [ ] Required boundaries, defect detection and remaining gaps are recorded
 ```
 
 Rules for atomic tasks:

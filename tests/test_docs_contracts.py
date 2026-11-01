@@ -10,6 +10,8 @@ from contextlib import redirect_stderr
 from pathlib import Path
 from unittest import mock
 
+from test_workflow_enforcement import run_bootstrap
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -342,22 +344,7 @@ class LocalWorkflowToolContractTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
-            result = subprocess.run(
-                [
-                    "pwsh",
-                    "-NoProfile",
-                    "-File",
-                    str(ROOT / "scripts/start-task.ps1"),
-                    "-RepoPath",
-                    fixture,
-                    "-Ticket",
-                    "smoke/task",
-                ],
-                input="\n".join(answers) + "\n",
-                capture_output=True,
-                text=True,
-                timeout=30,
-            )
+            result = run_bootstrap(Path(fixture), "smoke/task", answers)
 
             self.assertEqual(0, result.returncode, result.stderr)
             branch = subprocess.run(
@@ -411,22 +398,7 @@ class LocalWorkflowToolContractTests(unittest.TestCase):
                 text=True,
             )
 
-            result = subprocess.run(
-                [
-                    "pwsh",
-                    "-NoProfile",
-                    "-File",
-                    str(ROOT / "scripts/start-task.ps1"),
-                    "-RepoPath",
-                    str(fixture),
-                    "-Ticket",
-                    "smoke/worktree",
-                ],
-                input="\n".join(answers) + "\n",
-                capture_output=True,
-                text=True,
-                timeout=30,
-            )
+            result = run_bootstrap(fixture, "smoke/worktree", answers)
 
             worktree = Path(root, "repo-smoke-worktree")
             self.assertEqual(0, result.returncode, result.stderr)

@@ -49,7 +49,8 @@ The local validator rejects `.spec` files in the index. The pre-push caller also
 checks every ref update and its outgoing commits for `.spec` files, including a file
 added and later removed within the push. New refs use freshly advertised remote
 tips rather than cached origin refs; unknown remote objects cause conservative
-history checking. It fails on malformed input or unreadable history/remotes. The legacy
+history checking. Object/tree/history checks ignore replacement refs so they inspect
+the original objects Git transfers. It fails on malformed input or unreadable history/remotes. The legacy
 `CLOSE_THE_LOOP=skip` escape hatch does not disable local-only checks. Git hooks
 can still be bypassed; these are local safeguards, not server-side enforcement.
 

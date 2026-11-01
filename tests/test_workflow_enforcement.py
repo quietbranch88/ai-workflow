@@ -63,6 +63,23 @@ def create_docs(root: Path, ticket: str = "fixture", complete: bool = False) -> 
     write(root / "app.py", "print('fixture')\n")
 
 
+def run_bootstrap(root: Path, ticket: str, answers: list[str]) -> subprocess.CompletedProcess:
+    """Run the actual intake; clipboard delivery is outside these fixture contracts."""
+    with tempfile.TemporaryDirectory(prefix="workflow-bootstrap-runner-") as directory:
+        wrapper = Path(directory) / "invoke.ps1"
+        wrapper.write_text(
+            "param($TaskScript, $RepoPath, $Ticket)\n"
+            "function Set-Clipboard { param([Parameter(ValueFromPipeline=$true)]$Value) }\n"
+            "& $TaskScript -RepoPath $RepoPath -Ticket $Ticket\n",
+            encoding="utf-8",
+        )
+        return subprocess.run(
+            ["pwsh", "-NoProfile", "-File", str(wrapper),
+             str(ROOT / "scripts/start-task.ps1"), str(root), ticket],
+            input="\n".join(answers) + "\n", capture_output=True, text=True, timeout=30,
+        )
+
+
 def run_validator(
     root: Path,
     mode: str,

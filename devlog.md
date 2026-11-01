@@ -1,5 +1,20 @@
 # Devlog
 
+## 2026-11-01 — Correct six audited workflow defects
+
+- Bind tracked range/hook validation to the outgoing commit, preserve NUL-delimited
+  Git filenames, and recognize Markdown task-list markers consistently.
+- Inspect raw outgoing Git objects for local-only privacy; reject shared branches
+  as bootstrap destinations; align the packaged planner with canonical records.
+- Plugin 0.6.14. All six defects have failing-baseline regression evidence.
+- One fresh review found two remaining edge cases; corrected fenced HTML-comment
+  handling and authoritative default-branch detection, then reran the full suite:
+  95 tests, 94 passed, one unavailable-pre-commit skip. Details are recorded in
+  `.spec/six-audit-fixes-20261101/`. Merge and installation remain separate.
+- Isolate bootstrap fixture clipboard delivery without changing its branch,
+  worktree or record assertions. Preserve earlier timeout evidence.
+
+
 ## 2026-11-01 - close the post-merge review gaps
 
 - **What**: README sends Verify to deterministic tools. Portfolio and verify-done

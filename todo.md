@@ -1,5 +1,8 @@
 # Todo
 
+- [x] Fix all six audit defects, complete one fresh review and verify its corrections;
+      see `.spec/six-audit-fixes-20261101/`. No merge or installation update yet.
+
 - [x] Close the post-merge review gaps. Plugin 0.6.13. See
       `.spec/review-followups-20261101/`.
 

@@ -130,6 +130,9 @@ agents are optional unless the project requires them.
 The guided intake can create task records and an isolated workspace. It needs
 PowerShell 7 (`pwsh`). Run inside the target repository:
 
+When `origin` is configured, bootstrap needs access to identify its default branch.
+If that cannot be established, it stops before writing task files.
+
 ```powershell
 pwsh ~/.ai-workflow/scripts/start-task.ps1
 ```

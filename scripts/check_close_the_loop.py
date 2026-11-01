@@ -33,16 +33,17 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
-from validate_workflow_docs import emit_report, validate_workflow_documents  # noqa: E402
+from validate_workflow_docs import emit_report, resolve_revision, validate_workflow_documents  # noqa: E402
 
 ZEROS = "0" * 40
 PROJECT_LIVING_PATHS = {"devlog.md", "todo.md"}
 SPEC_LIVING_BASENAMES = {"current.md", "tasks.md"}
 
 
-def git(*args, input=None):
+def git(*args, input=None, raw_objects=False):
     return subprocess.run(
-        ["git", *args], input=input, capture_output=True, text=True
+        ["git", *(["--no-replace-objects"] if raw_objects else []), *args],
+        input=input, capture_output=True, text=True,
     )
 
 
@@ -54,7 +55,7 @@ def resolve_range():
     if not from_ref or from_ref == ZEROS:
         # New branch: compare against the default branch if we can find one.
         for candidate in ("origin/HEAD", "origin/main", "origin/master"):
-            base = git("merge-base", candidate, to_ref)
+            base = git("merge-base", candidate, to_ref, raw_objects=True)
             if base.returncode == 0 and base.stdout.strip():
                 return base.stdout.strip(), to_ref
         return None  # caller reports the unresolved range and refuses the push
@@ -63,10 +64,10 @@ def resolve_range():
 
 
 def changed_files(from_ref, to_ref):
-    diff = git("diff", "--name-only", f"{from_ref}..{to_ref}")
+    diff = git("diff", "--name-only", "-z", f"{from_ref}..{to_ref}", raw_objects=True)
     if diff.returncode != 0:
         return None
-    return [line.strip() for line in diff.stdout.splitlines() if line.strip()]
+    return [path for path in diff.stdout.split("\0") if path]
 
 
 def is_living_doc(path):
@@ -84,12 +85,12 @@ def is_doc(path):
 
 def validate_private_history(revisions):
     """Reject private records even when a later outgoing commit removes them."""
-    commits = git("rev-list", "--stdin", input="\n".join(revisions) + "\n")
+    commits = git("rev-list", "--stdin", input="\n".join(revisions) + "\n", raw_objects=True)
     if commits.returncode:
         sys.stderr.write("close-the-loop: unable to inspect outgoing commits\n")
         return False
     for commit in commits.stdout.splitlines():
-        tree = git("ls-tree", "-r", "--name-only", commit, "--", ".spec")
+        tree = git("ls-tree", "-r", "--name-only", commit, "--", ".spec", raw_objects=True)
         if tree.returncode or tree.stdout:
             sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
             return False
@@ -126,13 +127,13 @@ def native_push_revisions(remote, stream):
             if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", sha):
                 sys.stderr.write("close-the-loop: invalid remote object ID\n")
                 return None
-            if git("cat-file", "-e", f"{sha}^{{commit}}").returncode == 0:
+            if git("cat-file", "-e", f"{sha}^{{commit}}", raw_objects=True).returncode == 0:
                 remote_tips.append(sha)
 
     ranges = []
     for local_sha, remote_sha in updates:
         # Check the tip even when the same object is already advertised elsewhere.
-        tree = git("ls-tree", "-r", "--name-only", local_sha, "--", ".spec")
+        tree = git("ls-tree", "-r", "--name-only", local_sha, "--", ".spec", raw_objects=True)
         if tree.returncode or tree.stdout:
             sys.stderr.write("close-the-loop: private records in an outgoing commit or unreadable tree\n")
             return None
@@ -157,7 +158,10 @@ def main(spec_policy="tracked", ticket=None, native=False, remote=None):
         return 0 if report.ok else 1
     if os.environ.get("CLOSE_THE_LOOP", "").lower() == "skip":
         return 0
-    if not os.path.isdir(".spec"):
+    target = os.environ.get("PRE_COMMIT_TO_REF") or "HEAD"
+    if not os.path.isdir(".spec") and git(
+        "cat-file", "-e", f"{target}:.spec", raw_objects=True,
+    ).returncode:
         return 0
 
     resolved = resolve_range()
@@ -169,7 +173,11 @@ def main(spec_policy="tracked", ticket=None, native=False, remote=None):
             "then retry. Intentional exception: CLOSE_THE_LOOP=skip git push\n"
         )
         return 1
-    files = changed_files(*resolved)
+    revision = resolve_revision(Path.cwd(), resolved[1])
+    if revision is None:
+        sys.stderr.write("close-the-loop: unable to resolve the outgoing target revision\n")
+        return 1
+    files = changed_files(resolved[0], revision)
     if files is None:
         sys.stderr.write(
             "close-the-loop: git diff failed for the outgoing comparison "
@@ -194,7 +202,7 @@ def main(spec_policy="tracked", ticket=None, native=False, remote=None):
         )
         return 1
 
-    report = validate_workflow_documents(os.getcwd(), files, "wip")
+    report = validate_workflow_documents(os.getcwd(), files, "wip", revision=revision)
     emit_report(report)
     if not report.ok:
         sys.stderr.write(

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Validate living workflow documents without claiming semantic correctness."""
+"""Validate living workflow documents without claiming semantic correctness.
+
+Git ranges inspect tracked bytes at the target commit. Explicit --changed-file
+inputs inspect working files; local-only evidence always remains local.
+"""
 
 from __future__ import annotations
 
@@ -13,8 +17,10 @@ from pathlib import Path
 
 
 SPEC_PATH = re.compile(r"^\.spec/(.+)/(current|tasks)\.md$", re.IGNORECASE)
-CHECKBOX = re.compile(r"(?m)^\s*- \[([ xX])\]")
-TASK_CHECKBOX = re.compile(r"(?mi)^\s*-\s+\[[ x]\]\s+task-\d+\s*:")
+LIST_MARKER = r"(?:[-*+]|\d+[.)])"
+CHECKBOX = re.compile(rf"(?m)^[ \t]*{LIST_MARKER}[ \t]+\[([ xX])\](?=[ \t]|$)")
+TASK_CHECKBOX = re.compile(rf"(?mi)^[ \t]*{LIST_MARKER}[ \t]+\[[ x]\][ \t]+task-\d+[ \t]*:")
+OPEN_CHECKBOX = re.compile(rf"{LIST_MARKER}[ \t]+\[ \]")
 PLACEHOLDER = re.compile(r"<\s*(?:TBD|TODO|\.\.\.)\s*>|\bTBD\b", re.IGNORECASE)
 REQUIRED_CURRENT_HEADINGS = ("## Goal", "## Acceptance criteria")
 REQUIRED_TASK_HEADINGS = ("# Tasks", "## Acceptance")
@@ -66,14 +72,35 @@ def ticket_docs(changed_files: list[str]) -> tuple[set[str], set[str]]:
     return current, tasks
 
 
-def is_personal_project(root: Path) -> bool:
-    agents = root / "AGENTS.md"
-    if not agents.exists():
+def read_document(root: Path, relative: str, revision: str | None = None) -> str | None:
+    if revision is None:
+        path = root / relative
+        return path.read_text(encoding="utf-8") if path.is_file() else None
+    result = subprocess.run(
+        ["git", "--no-replace-objects", "-C", str(root),
+         "cat-file", "blob", f"{revision}:{relative}"],
+        capture_output=True, text=True,
+    )
+    return result.stdout if result.returncode == 0 else None
+
+
+def resolve_revision(root: Path, revision: str) -> str | None:
+    result = subprocess.run(
+        ["git", "--no-replace-objects", "-C", str(root),
+         "rev-parse", "--verify", f"{revision}^{{commit}}"],
+        capture_output=True, text=True,
+    )
+    return result.stdout.strip() if result.returncode == 0 else None
+
+
+def is_personal_project(root: Path, revision: str | None = None) -> bool:
+    agents = read_document(root, "AGENTS.md", revision)
+    if agents is None:
         return False
     return bool(
         re.search(
             r"Project type:\s*personal",
-            agents.read_text(encoding="utf-8"),
+            agents,
             re.IGNORECASE,
         )
     )
@@ -92,14 +119,17 @@ def has_heading(text: str, heading: str) -> bool:
 
 
 def without_fenced_code(text: str) -> str:
-    forced: list[str] = []
+    forced: dict[int, list[str]] = {}
 
     def mask_comment(match: re.Match[str]) -> str:
         body = match.group(0)
-        if re.search(r"- \[ \]", body) or PLACEHOLDER.search(body):
-            for line in body.splitlines():
-                if re.search(r"- \[ \]", line) or PLACEHOLDER.search(line):
-                    forced.append(line.replace("<!--", "").replace("-->", "").strip())
+        if OPEN_CHECKBOX.search(body) or PLACEHOLDER.search(body):
+            first_line = text.count("\n", 0, match.start())
+            for offset, line in enumerate(body.splitlines()):
+                if OPEN_CHECKBOX.search(line) or PLACEHOLDER.search(line):
+                    forced.setdefault(first_line + offset, []).append(
+                        line.replace("<!--", "").replace("-->", "").strip()
+                    )
         return "".join(char if char in "\n\r" else " " for char in body)
 
     masked = re.sub(r"<!--.*?-->", mask_comment, text, flags=re.DOTALL)
@@ -108,13 +138,13 @@ def without_fenced_code(text: str) -> str:
     if len(masked_lines) < len(original_lines):
         masked_lines.extend([""] * (len(original_lines) - len(masked_lines)))
     outside: list[str] = []
-    held: list[str] = []
+    held: list[tuple[int, str]] = []
     opener: tuple[str, int] | None = None
     fence_line = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
     for index, line in enumerate(original_lines):
         masked_line = masked_lines[index] if index < len(masked_lines) else ""
-        # A comment must not create a fence, and a fence inside a comment must not hide text.
-        marker = fence_line.match(line) if fence_line.match(masked_line) else None
+        # Outside comments cannot create fences; inside a real fence comments are literal.
+        marker = fence_line.match(line) if opener or fence_line.match(masked_line) else None
         if marker:
             chars = marker.group(1)
             rest = marker.group(2).strip()
@@ -126,15 +156,17 @@ def without_fenced_code(text: str) -> str:
                 held.clear()
                 continue
         if opener:
-            held.append(line)
+            held.append((index, line))
         else:
             outside.append(masked_line)
+            outside.extend(forced.get(index, []))
     if opener:
-        outside.extend(held)
-    outside.extend(forced)
+        for index, line in held:
+            outside.append(line)
+            outside.extend(forced.get(index, []))
     exposed = []
     for line in outside:
-        if "- [ ]" in line:
+        if OPEN_CHECKBOX.search(line):
             line = line.replace("<!--", "").replace("-->", "")
         exposed.append(line)
     return "\n".join(exposed)
@@ -150,12 +182,12 @@ def contains_living_placeholder(text: str) -> bool:
         r"^TODO(?:\s*:.*)?$",
         rf"^#{{1,6}}\s+{angle}\s*$",
         rf"^{angle}\s*$",
-        rf"^-\s+{angle}(?:\s+→.*)?$",
-        rf"^-\s+(?:\[[ xX]\]\s+)?{field_names}:\s*{angle}\s*$",
-        rf"^-\s+(?:\[[ xX]\]\s+)?(?:{field_names}|task-\d+):\s*TODO(?:\s*:.*)?$",
-        r"^-\s+\[[ xX]\]\s+TODO(?:\s*:.*)?$",
-        rf"^-\s+\[[ xX]\]\s+task-\d+\s*:\s*(?:{angle}|\.\.\.)\s*$",
-        r"^-\s*\.\.\.\s*$",
+        rf"^{LIST_MARKER}\s+{angle}(?:\s+→.*)?$",
+        rf"^{LIST_MARKER}\s+(?:\[[ xX]\]\s+)?{field_names}:\s*{angle}\s*$",
+        rf"^{LIST_MARKER}\s+(?:\[[ xX]\]\s+)?(?:{field_names}|task-\d+):\s*TODO(?:\s*:.*)?$",
+        rf"^{LIST_MARKER}\s+\[[ xX]\]\s+TODO(?:\s*:.*)?$",
+        rf"^{LIST_MARKER}\s+\[[ xX]\]\s+task-\d+\s*:\s*(?:{angle}|\.\.\.)\s*$",
+        rf"^{LIST_MARKER}\s*\.\.\.\s*$",
     )
     return any(
         re.match(pattern, line.strip(), re.IGNORECASE)
@@ -166,7 +198,7 @@ def contains_living_placeholder(text: str) -> bool:
 
 def acceptance_blocks(text: str) -> list[str]:
     body = section(text, "## Acceptance criteria")
-    starts = list(re.finditer(r"(?m)^\s*- \[[ xX]\]\s+", body))
+    starts = list(CHECKBOX.finditer(body))
     blocks: list[str] = []
     for index, start in enumerate(starts):
         end = starts[index + 1].start() if index + 1 < len(starts) else len(body)
@@ -174,12 +206,15 @@ def acceptance_blocks(text: str) -> list[str]:
     return blocks
 
 
-def validate_file_structure(report: Report, path: Path, relative: str, kind: str, mode: str) -> None:
-    if not path.exists():
-        report.errors.append(Finding(relative, f"required {kind}.md does not exist"))
+def validate_file_structure(
+    report: Report, path: Path, relative: str, kind: str, mode: str, *,
+    root: Path | None = None, revision: str | None = None,
+) -> None:
+    text = read_document(root if root is not None else path.parent,
+                         relative if root is not None else path.name, revision)
+    if text is None:
+        report.errors.append(Finding(relative, f"required {kind}.md does not exist or is unreadable"))
         return
-
-    text = path.read_text(encoding="utf-8")
     prose = without_fenced_code(text)
     headings = REQUIRED_CURRENT_HEADINGS if kind == "current" else REQUIRED_TASK_HEADINGS
     for heading in headings:
@@ -206,7 +241,7 @@ def validate_file_structure(report: Report, path: Path, relative: str, kind: str
             missing = [
                 field for field in QUALITY_FIELDS
                 if not re.search(
-                    rf"(?mi)^[ \t]*(?:-[ \t]+(?:\[[ xX]\][ \t]+)?)?"
+                    rf"(?mi)^[ \t]*(?:{LIST_MARKER}[ \t]+(?:\[[ xX]\][ \t]+)?)?"
                     rf"{re.escape(field)}[ \t]*\S[^\r\n]*$",
                     block,
                 )
@@ -239,6 +274,7 @@ def validate_workflow_documents(
     project_type: str = "auto",
     spec_policy: str = "tracked",
     ticket: str | None = None,
+    revision: str | None = None,
 ) -> Report:
     root = Path(root).resolve()
     changed = [normalize(path) for path in changed_files]
@@ -270,7 +306,7 @@ def validate_workflow_documents(
                 )
             )
         personal_project = project_type == "personal" or (
-            project_type == "auto" and is_personal_project(root)
+            project_type == "auto" and is_personal_project(root, revision)
         )
         if personal_project:
             for required in ("devlog.md", "todo.md"):
@@ -287,6 +323,7 @@ def validate_workflow_documents(
             f".spec/{ticket}/current.md",
             "current",
             mode,
+            root=root, revision=revision,
         )
         validate_file_structure(
             report,
@@ -294,6 +331,7 @@ def validate_workflow_documents(
             f".spec/{ticket}/tasks.md",
             "tasks",
             mode,
+            root=root, revision=revision,
         )
 
     return report
@@ -330,14 +368,15 @@ def validate_local_records(root: Path, mode: str, ticket: str | None) -> Report:
 
 def changed_from_git(root: Path, base: str, head: str) -> list[str] | None:
     result = subprocess.run(
-        ["git", "-C", str(root), "diff", "--name-only", f"{base}...{head}"],
+        ["git", "--no-replace-objects", "-C", str(root),
+         "diff", "--name-only", "-z", f"{base}...{head}"],
         capture_output=True,
         text=True,
     )
     if result.returncode != 0:
         sys.stderr.write(result.stderr)
         return None
-    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    return [path for path in result.stdout.split("\0") if path]
 
 
 def emit_report(report: Report) -> None:
@@ -377,11 +416,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     changed_files = args.changed_file
+    revision = None
     if not changed_files:
         if not args.base or not args.head:
             sys.stderr.write("workflow-docs: provide --changed-file or both --base and --head\n")
             return 2
-        changed_files = changed_from_git(args.root, args.base, args.head)
+        revision = resolve_revision(args.root, args.head)
+        if revision is None:
+            sys.stderr.write("workflow-docs: unable to resolve the target revision\n")
+            return 2
+        changed_files = changed_from_git(args.root, args.base, revision)
         if changed_files is None:
             return 2
 
@@ -392,6 +436,7 @@ def main() -> int:
         project_type=args.project_type,
         spec_policy=args.spec_policy,
         ticket=args.ticket,
+        revision=revision,
     )
     emit_report(report)
     return 0 if report.ok else 1

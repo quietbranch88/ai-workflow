@@ -246,6 +246,36 @@ function Get-GitRoot {
     return [System.IO.Path]::GetFullPath($root.Trim())
 }
 
+function Get-SharedBranches {
+    param([string]$RepoPath)
+
+    $sharedBranches = @("main", "master", "dev")
+    $origin = git -C $RepoPath remote get-url origin 2>$null
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($origin)) {
+        # Cached origin/HEAD can be absent or stale after an initial push or rename.
+        $advertised = @(git -C $RepoPath ls-remote --symref origin HEAD 2>$null)
+        if ($LASTEXITCODE -ne 0) {
+            throw "Cannot verify origin's shared default branch. No task files were written."
+        }
+        $defaultBranches = @($advertised | ForEach-Object {
+            if ($_ -match '^ref:\s+refs/heads/(.+)\s+HEAD$') {
+                $Matches[1].Trim()
+            }
+        })
+        if ($defaultBranches.Count -ne 1) {
+            throw "Cannot identify origin's shared default branch. No task files were written."
+        }
+        $sharedBranches += $defaultBranches[0]
+    }
+    else {
+        $cached = git -C $RepoPath symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>$null
+        if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($cached)) {
+            $sharedBranches += ($cached.Trim() -replace '^origin/', '')
+        }
+    }
+    return $sharedBranches
+}
+
 function Ensure-FeatureBranch {
     param(
         [string]$RepoPath,
@@ -257,21 +287,13 @@ function Ensure-FeatureBranch {
         throw "Cannot start a tracked task from a detached HEAD: $RepoPath"
     }
 
+    $sharedBranches = @(Get-SharedBranches -RepoPath $RepoPath)
+
+    if ($Ticket -in $sharedBranches) {
+        throw "Ticket '$Ticket' names a shared branch. Choose a feature branch name."
+    }
     if ($currentBranch -eq $Ticket) {
         return $RepoPath
-    }
-
-    $originDefault = git -C $RepoPath symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>$null
-    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($originDefault)) {
-        $originDefault = $originDefault.Trim() -replace '^origin/', ''
-    }
-    else {
-        $originDefault = ""
-    }
-
-    $sharedBranches = @("main", "master", "dev")
-    if ($originDefault) {
-        $sharedBranches += $originDefault
     }
 
     if ($currentBranch -notin $sharedBranches) {
@@ -313,17 +335,9 @@ function Ensure-Worktree {
         throw "Cannot create a ticket worktree from a detached HEAD: $RepoPath"
     }
 
-    $originDefault = git -C $RepoPath symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>$null
-    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($originDefault)) {
-        $originDefault = $originDefault.Trim() -replace '^origin/', ''
-    }
-    else {
-        $originDefault = ""
-    }
-
-    $sharedBranches = @("main", "master", "dev")
-    if ($originDefault) {
-        $sharedBranches += $originDefault
+    $sharedBranches = @(Get-SharedBranches -RepoPath $RepoPath)
+    if ($Ticket -in $sharedBranches) {
+        throw "Ticket '$Ticket' names a shared branch. Choose a feature branch name."
     }
     if ($currentBranch -notin $sharedBranches) {
         throw "Cannot create worktree '$Ticket' from feature branch '$currentBranch'. Switch to the default or integration branch first."
