@@ -4,7 +4,7 @@
 
 This repository is the tool-agnostic source of truth for the repository owner's AI-development
 workflow. It contains documentation, reusable prompts, templates, scripts, and
-Claude Code plugin adapters; it is not an application runtime.
+thin Codex and Claude Code adapters; it is not an application runtime.
 
 ## Canonical sources
 

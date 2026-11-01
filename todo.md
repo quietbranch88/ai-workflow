@@ -1,8 +1,13 @@
 # Todo
 
+- [x] Prepare the portable Codex skill, setup guidance and verification for the
+      authorized feature-branch sync; see `.spec/codex-skill-sync-20261101/`.
+      Branch publication is confirmed; main integration is authorized and its
+      final state is recorded in [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35).
+
 - [x] Fix all six audit defects, complete one fresh review and verify its corrections;
-      see `.spec/six-audit-fixes-20261101/`. Merged locally; GitHub publication and
-      separate Claude plugin installation remain unperformed.
+      see `.spec/six-audit-fixes-20261101/`. Source `5ef4de7` is published on main;
+      the separate Claude plugin installation is enabled at 0.6.14.
 
 - [x] Close the post-merge review gaps. Plugin 0.6.13. See
       `.spec/review-followups-20261101/`.

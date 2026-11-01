@@ -1,7 +1,7 @@
 # Use AI Workflow with Codex
 
-Codex uses the shared Markdown workflow in this repository. This directory is
-its setup entry point; it does not contain a separate set of rules or an installer.
+Codex uses the shared Markdown workflow in this repository. This directory provides
+setup guidance and an optional native skill that points to those shared sources.
 
 ## Set up a project
 
@@ -35,6 +35,26 @@ Codex discovers project `AGENTS.md` instructions as described in the
 [official guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 Other shared files are supplied by the project instructions or your task prompt;
 cloning the repo alone does not register every prompt as a Codex skill.
+
+## Optional native skill
+
+The [ai-workflow skill](skills/ai-workflow/SKILL.md) provides a direct Codex
+entrypoint while keeping the process in the canonical Markdown files.
+
+Copy `SKILL.md` and `agents/openai.yaml` from `codex/skills/ai-workflow/` into
+an `ai-workflow` folder in one user skill root. The [official skill guide](https://learn.chatgpt.com/docs/build-skills)
+documents `~/.agents/skills`. An existing installation using `~/.codex/skills`
+can keep that root when its Codex version discovers it. Install in only one root
+to avoid duplicate names. Compare existing files before replacing them, preserve
+private overrides, and keep the source revision and file hashes in an external
+install receipt as described in [rule distribution](../docs/rule-distribution.md).
+
+The skill needs the shared checkout on the same machine. It defaults to
+`~/.ai-workflow`; declare another location in the project instructions when needed.
+It preserves applicable global and project rules and reads only relevant prompts.
+Invoke it with `$ai-workflow` followed by your task. If the newly installed skill
+does not appear, restart Codex. Loading the skill does not grant merge, deployment
+or other external-action permission, and does not prove agent compliance.
 
 ## Optional helpers
 

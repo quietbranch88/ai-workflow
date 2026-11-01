@@ -14,7 +14,7 @@
   - Verify: immutable review target and final verification evidence.
 - [x] task-7: Merge the reviewed changes into local main under the user's subsequent authorization.
   - Evidence: main fast-forwarded to 1e2c379; post-merge suite discovered 95 tests, 94 passed and one skipped in 78.533s; WIP and Ship passed with zero warnings.
-  - Boundary: no GitHub push, separate plugin installation or deployment.
+  - Initial boundary: no GitHub push, separate plugin installation or deployment at that local-merge handoff. Subsequent authorized publication is confirmed at remote main `5ef4de7`, and the separate user-scope Claude plugin is enabled at 0.6.14. See the dated correction in `.spec/codex-skill-sync-20261101/audit.md`; deployment remains unclaimed.
 
 ## Acceptance
 

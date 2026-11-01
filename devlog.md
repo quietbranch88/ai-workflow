@@ -1,5 +1,19 @@
 # Devlog
 
+## 2026-11-01 — Add a portable native Codex skill
+
+- Add an optional native `ai-workflow` skill that routes to the shared checkout;
+  document installation and invocation without publishing personal configuration.
+- Package validation and real user-root discovery passed; all 95 repository tests
+  and both strict Claude package validations passed. Plugin 0.6.15. See
+  `.spec/codex-skill-sync-20261101/` for the temporary-storage failure and retry.
+- Implementation `d8bf259` is published on the remote feature branch. The user
+  subsequently authorized main integration; [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35)
+  records its final merge and hosted-check state, separately from local evidence.
+- Dated correction to the earlier six-fix delivery note below: source `5ef4de7`
+  is published on remote main, and the separate Claude plugin installation is
+  enabled at 0.6.14. The portable 0.6.15 source is not an installed Claude upgrade.
+
 ## 2026-11-01 — Correct six audited workflow defects
 
 - Bind tracked range/hook validation to the outgoing commit, preserve NUL-delimited

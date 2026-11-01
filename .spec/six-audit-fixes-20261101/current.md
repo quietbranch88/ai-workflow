@@ -6,7 +6,11 @@ Make the workflow's actual checks enforce the six existing contracts identified 
 base 3c507efaa86a33ec9091fd6ecac9a4c40e8a8f05. User authorized fixes, tests and one
 fresh review. The user subsequently authorized merging the reviewed changes into
 local main. GitHub publication, separate plugin installation and deployment remain
-outside the requested action.
+outside that original merge action. Subsequent authorized publication is now
+confirmed: remote main advertises `5ef4de7092ca7b849f34b8820803417907bfcc2a`, and
+the separate user-scope Claude plugin is installed and enabled at 0.6.14. See the
+dated correction in `.spec/codex-skill-sync-20261101/audit.md`. This follow-up does
+not change the six-fix acceptance evidence or claim deployment.
 
 ## Acceptance criteria
 
