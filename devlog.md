@@ -10,7 +10,9 @@
 - One fresh review found two remaining edge cases; corrected fenced HTML-comment
   handling and authoritative default-branch detection, then reran the full suite:
   95 tests, 94 passed, one unavailable-pre-commit skip. Details are recorded in
-  `.spec/six-audit-fixes-20261101/`. Merge and installation remain separate.
+  `.spec/six-audit-fixes-20261101/`. Subsequently merged into local main under
+  explicit authorization; 95 post-merge tests ran, 94 passed and one skipped.
+  GitHub publication and separate Claude plugin installation remain unperformed.
 - Isolate bootstrap fixture clipboard delivery without changing its branch,
   worktree or record assertions. Preserve earlier timeout evidence.
 

@@ -12,6 +12,9 @@
   - Verify: record exact commands, results and unavailable tools.
 - [x] task-6: Complete one fresh review, resolve confirmed findings and reconcile records.
   - Verify: immutable review target and final verification evidence.
+- [x] task-7: Merge the reviewed changes into local main under the user's subsequent authorization.
+  - Evidence: main fast-forwarded to 1e2c379; post-merge suite discovered 95 tests, 94 passed and one skipped in 78.533s; WIP and Ship passed with zero warnings.
+  - Boundary: no GitHub push, separate plugin installation or deployment.
 
 ## Acceptance
 

@@ -126,3 +126,23 @@ adherence. Unavailable tools and substituted clipboard boundary remain explicit.
 
 Delivery: implemented and locally verified in an isolated feature branch; not
 merged, externally pushed, deployed or copied over the active workflow installation.
+
+## 2026-11-01 — Authorized local merge
+
+The user subsequently requested merge. The original local main and GitHub main
+were both 3c507ef; the reviewed branch was 1e2c379. No PR existed for that branch.
+The authorized action was completed locally with a fast-forward to 1e2c379; no
+GitHub publication was inferred. Seventeen changed tracked paths were checked for
+hidden flags and local conflicts before merge. The private system map and separate
+global policy retain their pre-merge hashes.
+
+Post-merge validation ran in the actual workflow checkout: 95 discovered tests,
+94 passed and one unavailable-pre-commit skip, 78.533s. WIP and Ship each passed
+with zero warnings; git diff --check passed. This supersedes the earlier local
+delivery state without altering its historical evidence. These delivery-only
+record updates do not change the tested runtime, tests or package contents.
+
+Current delivery: locally merged and active source checkout at plugin 0.6.14.
+GitHub main remains at 3c507ef; no push, separate Claude plugin installation or
+deployment was performed. The external merge receipt identifies the final local
+revision, installed-path hashes and preserved overlays.

@@ -4,7 +4,9 @@
 
 Make the workflow's actual checks enforce the six existing contracts identified at
 base 3c507efaa86a33ec9091fd6ecac9a4c40e8a8f05. User authorized fixes, tests and one
-fresh review. No merge, publication, installation update or deployment is requested.
+fresh review. The user subsequently authorized merging the reviewed changes into
+local main. GitHub publication, separate plugin installation and deployment remain
+outside the requested action.
 
 ## Acceptance criteria
 
