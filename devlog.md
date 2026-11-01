@@ -16,6 +16,33 @@
   because this audit file was added after that count. Four local timeout tests
   were not changed.
 
+## 2026-11-01 - run checks on a push to the default branch
+
+- **What**: The GitHub workflow runs the same tests, Ship check, and Claude
+  plugin validation on a push to `main` as on a pull request. A push compares
+  `github.event.before` with `github.sha`.
+- **Why**: A direct push to the default branch did not run those checks.
+- **Spec/Plan**: [.spec/push-main-checks-20261101/current.md](.spec/push-main-checks-20261101/current.md)
+- **ADR**: —
+- **Commits**: `3055057`
+- **Continues**: new
+- **Notes**: Empty acceptance fields still warn. The validator still does not
+  judge whether a filled label matches the original goal. This record does not
+  update the user's computer and does not authorize a merge.
+
+## 2026-11-01 - publish explicit MIT reuse terms
+
+- **What**: Added a root MIT License naming `quietbranch88` as the 2026
+  copyright holder.
+- **Why**: The public workflow repository invited reuse but did not state legal
+  reuse terms.
+- **Spec/Plan**: [.spec/mit-license-20261101/current.md](.spec/mit-license-20261101/current.md)
+- **ADR**: —
+- **Commits**: prepared on `docs/add-mit-license-20261101`.
+- **Continues**: new.
+- **Notes**: No workflow rules, executable behavior, dependency, installation,
+  deployment, or historical release changed.
+
 ## 2026-10-31 - correct reviewed contradictions and shape ceilings
 
 - **What**: A failing shape or size check is reverted instead of raising the

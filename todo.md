@@ -3,6 +3,13 @@
 - [x] Close the post-merge review gaps. Plugin 0.6.13. See
       `.spec/review-followups-20261101/`.
 
+- [x] Run the repository checks on a push to the default branch, using that push
+      as the Ship range. See `.spec/push-main-checks-20261101/`. Merge stays
+      separate.
+
+- [x] Publish explicit MIT reuse terms; see
+      `.spec/mit-license-20261101/`.
+
 - [x] Correct the reviewed contradictions and record that a failing shape check
       is reverted, not relaxed. Plugin 0.6.12. See
       `.spec/review-fixes-20261031/`.
@@ -30,7 +37,9 @@
 - [x] Prepare review convergence guidance and a small independently grounded reviewer evaluation set.
 - [x] Complete pilot scoring, independent review and targeted verification for review-convergence-evals-20261019.
 - [x] Publish reviewed convergence/eval source `878fd47` to main and verify remote SHA readback under explicit approval.
-- [ ] Synchronize the reviewed convergence/eval update to the machine installation within authorized scope; main-only delivery did not update it.
+- [ ] Synchronize the reviewed convergence/eval update to the user's computer.
+      The cloud environment install is recorded outside this repository and is
+      not that computer.
 
 - [x] Prepare proportional worker lifecycle and compact handoff documentation;
       see `.spec/workflow-context-slimming-20261018/`.
@@ -65,5 +74,6 @@
 - [x] Merge the routing gate for the full loop: PR #25, `8e4097c`, 2026-10-15.
 - [x] Deliver the concise onboarding README with the story first: PR #24, `b2e5d66`,
       2026-10-04.
-- [ ] Compare local installations separately, preserving private overlays and recording
-      the installed source revision.
+- [ ] Compare the user's own installation separately, preserving private overlays
+      and recording the installed source revision. This cloud environment is not
+      that computer.
