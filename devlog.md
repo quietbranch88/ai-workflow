@@ -7,8 +7,9 @@
 - Package validation and real user-root discovery passed; all 95 repository tests
   and both strict Claude package validations passed. Plugin 0.6.15. See
   `.spec/codex-skill-sync-20261101/` for the temporary-storage failure and retry.
-- Prepared for the authorized remote feature-branch sync. Main integration and
-  hosted CI for this change are separate from the local evidence.
+- Implementation `d8bf259` is published on the remote feature branch. The user
+  subsequently authorized main integration; [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35)
+  records its final merge and hosted-check state, separately from local evidence.
 - Dated correction to the earlier six-fix delivery note below: source `5ef4de7`
   is published on remote main, and the separate Claude plugin installation is
   enabled at 0.6.14. The portable 0.6.15 source is not an installed Claude upgrade.

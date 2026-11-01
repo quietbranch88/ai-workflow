@@ -2,7 +2,8 @@
 
 - [x] Prepare the portable Codex skill, setup guidance and verification for the
       authorized feature-branch sync; see `.spec/codex-skill-sync-20261101/`.
-      Main integration remains separate.
+      Branch publication is confirmed; main integration is authorized and its
+      final state is recorded in [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35).
 
 - [x] Fix all six audit defects, complete one fresh review and verify its corrections;
       see `.spec/six-audit-fixes-20261101/`. Source `5ef4de7` is published on main;

@@ -21,11 +21,13 @@ without publishing personal paths, global policies or installation receipts.
 
 Add a thin Codex adapter and setup guidance, update the release version and living
 records. No executable runtime, dependency, global policy or hook changes. Remote
-publication is authorized by the user's sync request; main integration remains a
-separate action under the existing approval policy.
+publication was authorized by the user's sync request. The user subsequently
+authorized integration into main on 2026-11-01.
 
 ## Delivery state
 
-Prepared for the authorized `codex/codex-skill-sync-20261101` branch publication.
-An external receipt records the exact outgoing SHA and subsequent remote readback;
-this source record does not claim an unperformed main merge or hosted CI run.
+Implementation `d8bf259` was published to `codex/codex-skill-sync-20261101` and
+confirmed by exact remote SHA readback. [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35)
+is the authoritative record for subsequent integration and hosted-check state.
+External receipts retain exact operation identities and readback evidence.
+Local installation and model-based compliance evaluation remain separate.

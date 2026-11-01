@@ -60,3 +60,17 @@ symbolic HEAD/SHA readback. The installed Claude plugin list reports enabled
 user-scope version 0.6.14. Earlier devlog/task text saying these actions remained
 unperformed described the preceding handoff; current living records are corrected
 without rewriting that historical evidence.
+
+## 2026-11-01 — Authorized main integration
+
+- Exact remote branch readback confirmed implementation `d8bf259`. The user then
+  explicitly requested the merge. Remote main still matched base `5ef4de7`.
+- Opened [PR #35](https://github.com/quietbranch88/ai-workflow/pull/35) after checking
+  for an existing PR for the exact branch. It records the approved head/base,
+  local evidence and the final hosted-check and merge state.
+- This follow-up only reconciles delivery records. The skill, metadata, release
+  manifest and test code are unchanged from the tested implementation. Recheck
+  the committed Ship range and let PR CI validate the final assembled target.
+- Preserve the original local skill overlay and its install receipt. Main source
+  synchronization does not imply an installed Claude plugin upgrade or a new
+  model-based compliance evaluation.
