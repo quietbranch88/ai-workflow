@@ -206,5 +206,5 @@ Codex uses the shared Markdown files without this plugin.
 
 - **Principles and common mistakes:** [`PHILOSOPHY.md`](PHILOSOPHY.md), [`GOTCHAS.md`](GOTCHAS.md), [`GLOSSARY.md`](GLOSSARY.md)
 - **Task prompts:** [clarify a request](prompts/grill-me.md), [verify completion](prompts/verify-done.md), [review changes](prompts/review-checklist.md)
-- **Detailed contracts:** [verification](docs/verification.md), [review](docs/review.md), [cross-project context](context-management.md)
+- **Detailed contracts:** [verification](docs/verification.md), [review](docs/review.md), [agent skill trust](docs/skill-trust.md), [cross-project context](context-management.md)
 - **Reusable project files:** [`templates/`](templates), [`scripts/`](scripts), [`pitfalls/`](pitfalls)

@@ -95,6 +95,73 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
         self.assertLessEqual(len(workflow.splitlines()), 280)
         self.assertIn("[context-management.md](context-management.md)", workflow)
 
+    def test_task_alignment_is_proportional_and_decision_bounded(self):
+        workflow = read("workflow.md")
+        prompt = read("prompts/grill-me.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        for document in (workflow, prompt):
+            with self.subTest(document=document[:40]):
+                self.assertIn("Direct execution", document)
+                self.assertIn("Compact alignment card", document)
+                self.assertIn("**Goal**", document)
+                self.assertIn("**Done / evidence**", document)
+                self.assertIn("**Scope / non-goals**", document)
+                self.assertIn("**Approach**", document)
+                self.assertIn("**Agent assumptions**", document)
+                self.assertIn("**User decisions**", document)
+                self.assertIn("at most two", document)
+                self.assertIn("no mandatory confirmation", document)
+
+        self.assertIn("clear, bounded, and reversible", workflow)
+        self.assertIn("safe read-only inspection", workflow)
+        self.assertIn("plan-first", workflow)
+        self.assertIn("CabLate's pre-action request card", workflow)
+        self.assertGreaterEqual(version, (0, 6, 16))
+
+    def test_third_party_skill_trust_gate_is_discoverable_and_blocks_high_findings(self):
+        workflow = read("workflow.md")
+        readme = read("README.md")
+        codex_skill = read("codex/skills/ai-workflow/SKILL.md")
+        policy = read("docs/skill-trust.md")
+        policy_lower = policy.lower()
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        for entrypoint in (workflow, readme, codex_skill):
+            with self.subTest(entrypoint=entrypoint[:40]):
+                self.assertIn("docs/skill-trust.md", entrypoint)
+
+        for phrase in (
+            "new or updated third-party agent skill",
+            "immutable revision",
+            "security scanning",
+            "effectiveness evaluation",
+            "artifact integrity",
+            "prompt injection",
+            "data exfiltration",
+            "excessive agency",
+            "MCP tool poisoning",
+            "description-behavior mismatch",
+            "agent-native scan",
+            "Critical",
+            "High",
+            "blocked",
+            "risk-accepted",
+            "decision-maker",
+            "dated",
+            "scope",
+            "review condition",
+            "docs-only",
+            "manual review",
+            "Do not install a scanner automatically",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.lower(), policy_lower)
+
+        self.assertGreaterEqual(version, (0, 6, 17))
+
 
 class AdapterConsistencyContractTests(unittest.TestCase):
     def test_standalone_agents_include_required_contracts_in_the_package(self):
@@ -112,6 +179,7 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         for skill, source in (
             ("six-stage-workflow", "workflow.md"),
             ("verify-done", "prompts/verify-done.md"),
+            ("grill-me", "prompts/grill-me.md"),
         ):
             with self.subTest(skill=skill):
                 canonical = read(source)

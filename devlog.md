@@ -1,5 +1,25 @@
 # Devlog
 
+## 2026-11-04 — Add a third-party agent skill trust gate
+
+- Require source plus immutable revision, pre-execution inspection, and actual
+  capability mapping before enabling a new or updated third-party skill.
+- Keep security scanning, effectiveness evaluation, and artifact integrity as
+  separate evidence; Critical and High findings block by default.
+- Add proportional handling for docs-only local skills, preserve separate scanner
+  installation authority, and expose the policy from shared entrypoints. Plugin
+  0.6.17; local evidence is tracked in `.spec/skill-trust-gate-20261104/`.
+
+## 2026-11-03 — Add proportional request-card intake
+
+- Route clear, bounded and reversible work directly; use a compact six-field
+  alignment card only for consequential ambiguity or explicit plan-first work.
+- Bound user decisions to two, keep routine assumptions visible, and preserve the
+  existing rule that only dependent work waits for a required answer.
+- Update the canonical workflow, grill-me prompt, required Claude mirrors and
+  plugin version 0.6.16. Local verification and delivery state are tracked in
+  `.spec/proportional-request-card-20261103/`; no merge or installation is implied.
+
 ## 2026-11-01 — Add a portable native Codex skill
 
 - Add an optional native `ai-workflow` skill that routes to the shared checkout;

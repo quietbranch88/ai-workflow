@@ -8,39 +8,38 @@ description: Run substantial development through proportional isolation, indepen
 
 # The 6-stage workflow
 
-Influenced by [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills),
-then adapted around evidence, proportional controls, and durable handoffs.
-Role contracts and fresh-context refutation also draw on the MIT-licensed
-[pilotfish design](https://github.com/Nanako0129/pilotfish/blob/main/docs/design.md).
+Influenced by [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills), then adapted around evidence, proportional controls, and durable handoffs. The proportional alignment card adapts [CabLate's pre-action request card](https://cablate.com/articles/ai-request-card-before-acting/); role contracts and fresh-context refutation also draw on the MIT-licensed [pilotfish design](https://github.com/Nanako0129/pilotfish/blob/main/docs/design.md).
 
 ## When to use the full loop
 
-Use it for substantial multi-file work, coordinated cross-repository changes, or
-high-risk behavior (auth, data, money, messaging, privacy, deployment); risk wins
-over size. Questions, read-only audits, routine test runs, and small low-risk fixes
-skip the stages, not the record checks; an audit that finds a defect enters at Define.
+Use it for substantial multi-file work, coordinated cross-repository changes, or high-risk behavior (auth, data, money, messaging, privacy, deployment); risk wins over size. Questions, read-only audits, routine test runs, and small low-risk fixes skip the stages, not the record checks; an audit that finds a defect enters at Define. Installing or updating a third-party skill always applies the focused [agent skill trust gate](https://github.com/quietbranch88/ai-workflow/blob/main/docs/skill-trust.md), even when the full loop is otherwise skipped.
+
+## Proportional task alignment
+
+At intake, check existing context and use safe read-only inspection before asking. Choose the smallest path:
+
+- **Direct execution** — when the request is clear, bounded, and reversible, and its target and verification are known. State material routine assumptions and proceed without a card.
+- **Compact alignment card** — when plausible interpretations would materially change the outcome, scope, risk, authorization, or acceptance, or when the user asks for plan-first work. Do not trigger it merely because a chat or follow-up is new.
+
+Keep the card to one screen and propose specifics instead of returning open-ended homework:
+
+- **Goal** — who needs what outcome or decision.
+- **Done / evidence** — observable result and how it will be checked.
+- **Scope / non-goals** — included boundaries and deliberate exclusions.
+- **Approach** — the smallest useful method, including a relevant borrowed practice when it adds value.
+- **Agent assumptions** — reversible choices the agent proposes to make.
+- **User decisions** — at most two consequential unresolved choices, each with a recommendation; write `None` when there are none.
+
+Stop only when a decision can change the result, authorization, or data-loss boundary, or when the user explicitly requested plan-first work. Otherwise state assumptions and proceed; there is no mandatory confirmation round or required literal `start`. Before alignment, read-only context gathering does not authorize source edits or external writes.
 
 ## Stages
 
-1. **Define** — Turn the request into scope, constraints, non-goals, and
-   acceptance criteria in `.spec/<ticket>/current.md`. Each criterion should
-   name an **Observable** result, **Environment**, and exact **Verify** command
-   or manual step. Ask only questions that change the result or authorization.
-2. **Plan** — Break the accepted spec into atomic, dependency-ordered tasks in
-   `.spec/<ticket>/tasks.md`. Each task names its change surface and verification.
-3. **Build** — Implement one accepted slice at a time on a feature branch. Use
-   test-first development when required or useful; TDD is otherwise optional.
-   Follow [verification contracts](https://github.com/quietbranch88/ai-workflow/blob/main/docs/verification.md), including independent
-   oracles and applicable defect-detection evidence.
-4. **Verify** — Run the relevant checks and record exact commands, output, and
-   environment and exercised boundaries. A local pass is local evidence; it is
-   not production-derived proof. Missing required gates remain unverified.
-5. **Review** — Use fresh context to check spec conformance, correctness, and the
-   risks the diff actually introduces. Fix and reverify findings, or record the
-   human decision that explicitly accepts them.
-6. **Ship** — Close the loop, create a cohesive commit and PR, and report what was
-   and was not verified. Ship prepares integration; it does not authorize merge,
-   migration, deployment, or another external state change.
+1. **Define** — Turn the aligned request into scope, constraints, non-goals, and acceptance criteria in `.spec/<ticket>/current.md`. Each criterion should name an **Observable** result, **Environment**, and exact **Verify** command or manual step. Ask only questions that change the result or authorization.
+2. **Plan** — Break the accepted spec into atomic, dependency-ordered tasks in `.spec/<ticket>/tasks.md`. Each task names its change surface and verification.
+3. **Build** — Implement one accepted slice at a time on a feature branch. Use test-first development when required or useful; TDD is otherwise optional. Follow [verification contracts](https://github.com/quietbranch88/ai-workflow/blob/main/docs/verification.md), including independent oracles and applicable defect-detection evidence.
+4. **Verify** — Run the relevant checks and record exact commands, output, environment and exercised boundaries. A local pass is local evidence; it is not production-derived proof. Missing required gates remain unverified.
+5. **Review** — Use fresh context to check spec conformance, correctness, and the risks the diff actually introduces. Fix and reverify findings, or record the human decision that explicitly accepts them.
+6. **Ship** — Close the loop, create a cohesive commit and PR, and report what was and was not verified. Ship prepares integration; it does not authorize merge, migration, deployment, or another external state change.
 
 ## Proportional workspace isolation
 
