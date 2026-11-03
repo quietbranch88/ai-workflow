@@ -120,6 +120,48 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
         self.assertIn("CabLate's pre-action request card", workflow)
         self.assertGreaterEqual(version, (0, 6, 16))
 
+    def test_third_party_skill_trust_gate_is_discoverable_and_blocks_high_findings(self):
+        workflow = read("workflow.md")
+        readme = read("README.md")
+        codex_skill = read("codex/skills/ai-workflow/SKILL.md")
+        policy = read("docs/skill-trust.md")
+        policy_lower = policy.lower()
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        for entrypoint in (workflow, readme, codex_skill):
+            with self.subTest(entrypoint=entrypoint[:40]):
+                self.assertIn("docs/skill-trust.md", entrypoint)
+
+        for phrase in (
+            "new or updated third-party agent skill",
+            "immutable revision",
+            "security scanning",
+            "effectiveness evaluation",
+            "artifact integrity",
+            "prompt injection",
+            "data exfiltration",
+            "excessive agency",
+            "MCP tool poisoning",
+            "description-behavior mismatch",
+            "agent-native scan",
+            "Critical",
+            "High",
+            "blocked",
+            "risk-accepted",
+            "decision-maker",
+            "dated",
+            "scope",
+            "review condition",
+            "docs-only",
+            "manual review",
+            "Do not install a scanner automatically",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.lower(), policy_lower)
+
+        self.assertGreaterEqual(version, (0, 6, 17))
+
 
 class AdapterConsistencyContractTests(unittest.TestCase):
     def test_standalone_agents_include_required_contracts_in_the_package(self):

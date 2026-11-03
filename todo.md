@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Complete local verification and delivery reconciliation for the third-party
+      agent skill trust gate; keep push, merge, scanner installation and activation
+      separate. See `.spec/skill-trust-gate-20261104/`.
+
 - [x] Prepare and locally verify proportional request-card intake; keep merge,
       publication and plugin installation separate. See
       `.spec/proportional-request-card-20261103/`.

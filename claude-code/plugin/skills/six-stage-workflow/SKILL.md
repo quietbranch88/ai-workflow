@@ -12,7 +12,7 @@ Influenced by [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-s
 
 ## When to use the full loop
 
-Use it for substantial multi-file work, coordinated cross-repository changes, or high-risk behavior (auth, data, money, messaging, privacy, deployment); risk wins over size. Questions, read-only audits, routine test runs, and small low-risk fixes skip the stages, not the record checks; an audit that finds a defect enters at Define.
+Use it for substantial multi-file work, coordinated cross-repository changes, or high-risk behavior (auth, data, money, messaging, privacy, deployment); risk wins over size. Questions, read-only audits, routine test runs, and small low-risk fixes skip the stages, not the record checks; an audit that finds a defect enters at Define. Installing or updating a third-party skill always applies the focused [agent skill trust gate](https://github.com/quietbranch88/ai-workflow/blob/main/docs/skill-trust.md), even when the full loop is otherwise skipped.
 
 ## Proportional task alignment
 

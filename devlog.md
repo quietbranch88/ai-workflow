@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-11-04 — Add a third-party agent skill trust gate
+
+- Require source plus immutable revision, pre-execution inspection, and actual
+  capability mapping before enabling a new or updated third-party skill.
+- Keep security scanning, effectiveness evaluation, and artifact integrity as
+  separate evidence; Critical and High findings block by default.
+- Add proportional handling for docs-only local skills, preserve separate scanner
+  installation authority, and expose the policy from shared entrypoints. Plugin
+  0.6.17; local evidence is tracked in `.spec/skill-trust-gate-20261104/`.
+
 ## 2026-11-03 — Add proportional request-card intake
 
 - Route clear, bounded and reversible work directly; use a compact six-field
