@@ -53,4 +53,3 @@ to every clear, reversible task.
 - Too many cards slow routine work -> direct-execution route and consequential-gap trigger.
 - Agent assumptions hide decisions -> dedicated assumptions and user-decisions fields.
 - Canonical and packaged text drift -> exact mirror contract test.
-

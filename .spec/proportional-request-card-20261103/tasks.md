@@ -33,6 +33,5 @@
 - [x] Applicable acceptance criteria have independent evidence; assertions were not weakened.
 - [x] Fail-to-pass evidence exists for the new documentation contract.
 - [x] No runtime, UI, security-sensitive or external-write boundary changed.
-- [x] Canonical/mirror checks and full tests pass; Ship validation is the immediate post-commit gate and reopens this item on failure.
+- [x] Canonical/mirror checks, full tests and Ship validation against local commit `468407b` pass.
 - [x] Merge, publication and plugin installation remain separate and unperformed.
-

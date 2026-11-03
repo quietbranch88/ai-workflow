@@ -41,11 +41,9 @@
 - `python3 scripts/validate_workflow_docs.py --root . --mode wip --project-type personal --base origin/main --head HEAD`: passed with zero warnings.
 - `git diff --check`: passed.
 - Direct source-link check returned HTTP 200 for the CabLate article.
-- The post-commit Ship gate remains the final local range check; a failure reopens
-  the corresponding task and acceptance item.
+- `python3 scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base origin/main --head HEAD`: passed with zero warnings against local commit `468407b`.
 
 ## Delivery state
 
 - Implemented locally on `docs/proportional-request-card-20261103`.
 - Not published, merged, released or installed as a Claude plugin.
-
