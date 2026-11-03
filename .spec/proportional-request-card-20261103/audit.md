@@ -41,7 +41,7 @@
 - `python3 scripts/validate_workflow_docs.py --root . --mode wip --project-type personal --base origin/main --head HEAD`: passed with zero warnings.
 - `git diff --check`: passed.
 - Direct source-link check returned HTTP 200 for the CabLate article.
-- `python3 scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base origin/main --head HEAD`: passed with zero warnings against local commit `468407b`.
+- `python3 scripts/validate_workflow_docs.py --root . --mode ship --project-type personal --base origin/main --head HEAD`: passed with zero warnings against the complete local branch range, including the record-only follow-up commit.
 
 ## Delivery state
 
