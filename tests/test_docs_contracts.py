@@ -95,6 +95,31 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
         self.assertLessEqual(len(workflow.splitlines()), 280)
         self.assertIn("[context-management.md](context-management.md)", workflow)
 
+    def test_task_alignment_is_proportional_and_decision_bounded(self):
+        workflow = read("workflow.md")
+        prompt = read("prompts/grill-me.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        for document in (workflow, prompt):
+            with self.subTest(document=document[:40]):
+                self.assertIn("Direct execution", document)
+                self.assertIn("Compact alignment card", document)
+                self.assertIn("**Goal**", document)
+                self.assertIn("**Done / evidence**", document)
+                self.assertIn("**Scope / non-goals**", document)
+                self.assertIn("**Approach**", document)
+                self.assertIn("**Agent assumptions**", document)
+                self.assertIn("**User decisions**", document)
+                self.assertIn("at most two", document)
+                self.assertIn("no mandatory confirmation", document)
+
+        self.assertIn("clear, bounded, and reversible", workflow)
+        self.assertIn("safe read-only inspection", workflow)
+        self.assertIn("plan-first", workflow)
+        self.assertIn("CabLate's pre-action request card", workflow)
+        self.assertGreaterEqual(version, (0, 6, 16))
+
 
 class AdapterConsistencyContractTests(unittest.TestCase):
     def test_standalone_agents_include_required_contracts_in_the_package(self):
@@ -112,6 +137,7 @@ class AdapterConsistencyContractTests(unittest.TestCase):
         for skill, source in (
             ("six-stage-workflow", "workflow.md"),
             ("verify-done", "prompts/verify-done.md"),
+            ("grill-me", "prompts/grill-me.md"),
         ):
             with self.subTest(skill=skill):
                 canonical = read(source)

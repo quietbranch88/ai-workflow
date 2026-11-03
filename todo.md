@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Prepare and locally verify proportional request-card intake; keep merge,
+      publication and plugin installation separate. See
+      `.spec/proportional-request-card-20261103/`.
+
 - [x] Prepare the portable Codex skill, setup guidance and verification for the
       authorized feature-branch sync; see `.spec/codex-skill-sync-20261101/`.
       Branch publication is confirmed; main integration is authorized and its

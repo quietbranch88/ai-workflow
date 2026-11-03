@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-11-03 — Add proportional request-card intake
+
+- Route clear, bounded and reversible work directly; use a compact six-field
+  alignment card only for consequential ambiguity or explicit plan-first work.
+- Bound user decisions to two, keep routine assumptions visible, and preserve the
+  existing rule that only dependent work waits for a required answer.
+- Update the canonical workflow, grill-me prompt, required Claude mirrors and
+  plugin version 0.6.16. Local verification and delivery state are tracked in
+  `.spec/proportional-request-card-20261103/`; no merge or installation is implied.
+
 ## 2026-11-01 — Add a portable native Codex skill
 
 - Add an optional native `ai-workflow` skill that routes to the shared checkout;

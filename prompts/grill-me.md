@@ -4,7 +4,23 @@ Inspired by Matt Pocock's pattern. Resolve consequential unknowns using existing
 
 ## How to use
 
-Read the request, prior decisions, repository contracts, and relevant task docs before asking. Use the dimensions below to identify consequential gaps, not as a mandatory questionnaire. Ask the minimum needed questions; continue independent work while waiting and defer only work that depends on a required answer.
+Read the request, prior decisions, repository contracts, and relevant task docs before asking. Use safe read-only inspection to resolve what the available evidence can answer. Use the dimensions below to identify consequential gaps, not as a mandatory questionnaire. Continue independent work while waiting and defer only work that depends on a required answer.
+
+## Proportional response
+
+- **Direct execution** — when the request is clear, bounded, and reversible, and its target and verification are known. State material routine assumptions and proceed without a card.
+- **Compact alignment card** — when plausible interpretations would materially change the outcome, scope, risk, authorization, or acceptance, or when the user asks for plan-first work. Do not trigger it merely because a chat or follow-up is new.
+
+Keep the card to one screen and propose specifics instead of returning open-ended homework:
+
+- **Goal** — who needs what outcome or decision.
+- **Done / evidence** — observable result and how it will be checked.
+- **Scope / non-goals** — included boundaries and deliberate exclusions.
+- **Approach** — the smallest useful method, including a relevant borrowed practice when it adds value.
+- **Agent assumptions** — reversible choices the agent proposes to make.
+- **User decisions** — at most two consequential unresolved choices, each with a recommendation; write `None` when there are none.
+
+Stop only when a decision can change the result, authorization, or data-loss boundary, or when the user explicitly requested plan-first work. Otherwise state assumptions and proceed; there is no mandatory confirmation round or required literal `start`.
 
 ### Dimensions to consider (skip irrelevant or already resolved items)
 
@@ -48,10 +64,10 @@ Read the request, prior decisions, repository contracts, and relevant task docs 
 
 ## Rules
 
-- ONE question per dimension — don't sprawl
+- Ask at most two unresolved questions total in a card and no more than ONE question per dimension — don't sprawl
 - Phrase as "Do you want X or Y?" when possible, not open-ended
 - For routine implementation choices, use existing contracts and state any material assumption. Do not guess consequential product, authorization, or data-loss decisions.
-- Summarize resolved decisions when useful; do not add a mandatory confirmation round or repeat an approval already given.
+- Summarize resolved decisions when useful; do not repeat an approval already given.
 - If no consequential unknown remains, proceed. There is no question quota or mandatory interview phase.
 
 ## When NOT to grill
