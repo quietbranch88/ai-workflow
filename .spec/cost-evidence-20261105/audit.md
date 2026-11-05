@@ -36,3 +36,14 @@ The coordinator verified the new canonical clause and builder copy.
 - `git diff --check`: passed.
 - No new tests were added for this documentation-only change. No runtime
   experiment or measured savings is implied by these checks.
+
+## Final local disposition
+
+- Implementation revision: acb7d29. COST-R1-01 and COST-R1-02 are now
+  confirmed/fixed for the documentation scope; this does not validate an actual
+  cost experiment.
+- Ship validation against origin/main...acb7d29 passed with zero warnings.
+- Desktop create_worktree did not return a receipt; the waiting tool cell was
+  terminated. Git readback showed only the original checkout, now on the feature
+  branch. The app operation's outcome is unknown; reconcile before retrying it.
+- Final source is local only. No push, merge or plugin installation occurred.
