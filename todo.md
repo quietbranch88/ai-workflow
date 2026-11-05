@@ -1,5 +1,8 @@
 # Todo
 
+- [x] Prepare and verify the reviewed cost-evidence contract and builder mirror.
+      See `.spec/cost-evidence-20261105/`; no pilot or installation is implied.
+
 - [x] Publish and verify the approved repository guardrail, including the hosted
       PR check and authoritative GitHub branch-protection readback. See
       `.spec/repository-guardrails-20261105/`.

@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-11-05 — Define evidence for agent cost comparisons
+
+- Distinguish billed cost, price estimates and token proxies, including cache
+  writes, optimizer calls, failed attempts and missing-usage coverage.
+- Require paired controlled A/B trials, explicit quality criteria and uncertainty;
+  a small pilot alone cannot justify expansion.
+- Synchronize the builder's verification contract; plugin source version 0.6.19.
+  Local verification and proposal review: `.spec/cost-evidence-20261105/`.
+- Published in [PR #38](https://github.com/quietbranch88/ai-workflow/pull/38).
+  Merge after CI is authorized; the PR records the final hosted-check/merge state.
+
 ## 2026-11-05 — Add server-side repository guardrails
 
 - Distinguish feature-branch guidance and local hooks from server-side default-
