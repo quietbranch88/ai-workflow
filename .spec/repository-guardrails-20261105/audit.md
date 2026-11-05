@@ -22,6 +22,12 @@
 - `git diff --check`: passed.
 - Fresh author self-review found no actionable documentation or configuration
   mismatch. This was not an independent second review.
+- The first feature-branch push was blocked before network dispatch because the
+  installed pre-commit hook resolved `.git/ai-workflow/pre-commit.yaml` relative
+  to a linked worktree, where `.git` is a file. The expected WIP validator and
+  range diff check were rerun manually and passed. The next attempt uses the
+  hook's documented one-shot `PRE_COMMIT_ALLOW_NO_CONFIG=1` fallback; this is an
+  environment workaround, not evidence that the hook executed.
 
 ## GitHub configuration readback
 

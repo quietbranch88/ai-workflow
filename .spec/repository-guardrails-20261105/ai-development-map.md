@@ -10,6 +10,9 @@
   WIP validation, and GitHub branch-protection readback passed.
 - Open boundaries: no PR, merge, deployment, or installation has been claimed;
   hosted PR evidence is still pending.
+- Push environment note: the installed pre-commit hook's relative config path
+  does not resolve from a linked worktree; WIP and range checks were run manually
+  before the documented one-shot no-config retry.
 
 ## Read order and canonical records
 
