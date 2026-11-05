@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-11-05 — Add server-side repository guardrails
+
+- Distinguish feature-branch guidance and local hooks from server-side default-
+  branch enforcement.
+- Recommend a required pull request, observed hosted checks, administrator
+  enforcement, and blocked force pushes/deletion; allow zero approvals for a
+  solo repository.
+- Add authoritative configuration readback and safe negative-test boundaries.
+  Plugin 0.6.18; evidence is tracked in
+  `.spec/repository-guardrails-20261105/`.
+
 ## 2026-11-04 — Add a third-party agent skill trust gate
 
 - Require source plus immutable revision, pre-execution inspection, and actual
