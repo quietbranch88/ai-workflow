@@ -254,6 +254,30 @@ synthetic session do not establish agent quality, reliability or adoption.
 For a bounded reviewer-specific pilot, see `evals/reviewer/README.md` in the workflow
 source. Its adjudicated metrics do not replace patch acceptance or human authorization.
 
+### Cost comparisons
+
+Distinguish billed currency, price-based estimates, and token proxies; a token
+reduction alone does not establish a lower bill or subscription charge. Record
+the billed model, usage source, price source/date and currency. Where charged,
+include uncached input, cache reads, cache writes and output, including cache
+rebuilding after tool/configuration changes. Count optimizer/judge calls, retries,
+failures and unfinished attempts in both arms. Report usage coverage and unknown
+prices or missing usage explicitly, never as zero or silently excluded savings.
+Report human setup, review and recovery time separately.
+
+Pair A/B trials on the same task and starting revision with fixed model,
+configuration and budgets except the tested change; interleave the trial order.
+Apply the isolation and repeated-trial rules above, controlling cache conditions
+and keeping learned history separate from held-out evaluation tasks. Predeclare
+the cost metric, quality checks, acceptable regression margin and trial budget.
+Report paired differences and uncertainty, including failures. A small pilot
+(such as ten tasks) establishes feasibility only; if the evidence cannot support
+both savings and the quality criterion, report `inconclusive` before expansion.
+
+Use existing authorized usage records and task notes for a bounded pilot. This
+contract does not require new transcript collection, background model judges,
+automatic tool pruning or loop intervention.
+
 ## Shape checks and ceilings
 
 A project's shape or size check fails because the change grew the structure:
