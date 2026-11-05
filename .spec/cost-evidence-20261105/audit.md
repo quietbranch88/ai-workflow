@@ -54,3 +54,8 @@ The coordinator verified the new canonical clause and builder copy.
 and merging after CI passes. This supersedes the earlier local-only handoff for
 publication and integration, not plugin installation. Required checks and exact
 merge state must be verified from GitHub before reporting completion.
+
+Feature branch publication was read back at 62f8df4 and PR #38 was created:
+https://github.com/quietbranch88/ai-workflow/pull/38. The PR is the authoritative
+receipt for subsequent hosted checks and merge; this checkpoint does not
+preclaim either outcome.

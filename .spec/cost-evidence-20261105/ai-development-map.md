@@ -10,10 +10,11 @@
 - Roles: Zoe approved the narrowed proposal; independent agent reviewed it;
   coordinator authors the patch and verifies the final document.
 - Zoe authorized push, pull-request creation, and merge after CI passes on
-  2026-11-05. Publication/merge state: not-attempted at this checkpoint.
+  2026-11-05. Publication state: confirmed; merge pending required CI.
   Target: quietbranch88/ai-workflow, main; head: codex/cost-evidence-20261105.
-  Next: publish, record the PR receipt, verify required checks, merge, and read
-  back the merge commit plus post-merge CI. Installation remains out of scope.
+  Receipt: https://github.com/quietbranch88/ai-workflow/pull/38.
+  Next: verify required checks, merge, and read back the merge commit plus
+  post-merge CI. The PR records the final remote result; installation is out of scope.
 - Desktop worktree creation returned no receipt; its waiting cell was terminated.
   State: unknown. Git readback showed no new worktree. Reconcile the app operation
   before retrying; the completed patch is on the original checkout's feature branch.
