@@ -47,3 +47,10 @@ The coordinator verified the new canonical clause and builder copy.
   terminated. Git readback showed only the original checkout, now on the feature
   branch. The app operation's outcome is unknown; reconcile before retrying it.
 - Final source is local only. No push, merge or plugin installation occurred.
+
+## Authorized delivery
+
+2026-11-05: Zoe explicitly authorized pushing this branch, opening a pull request
+and merging after CI passes. This supersedes the earlier local-only handoff for
+publication and integration, not plugin installation. Required checks and exact
+merge state must be verified from GitHub before reporting completion.
