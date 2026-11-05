@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Publish and verify the approved repository guardrail, including the hosted
+      PR check and authoritative GitHub branch-protection readback. See
+      `.spec/repository-guardrails-20261105/`.
+
 - [x] Complete local verification and delivery reconciliation for the third-party
       agent skill trust gate; keep push, merge, scanner installation and activation
       separate. See `.spec/skill-trust-gate-20261104/`.

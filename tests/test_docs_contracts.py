@@ -162,6 +162,33 @@ class CanonicalWorkflowContractTests(unittest.TestCase):
 
         self.assertGreaterEqual(version, (0, 6, 17))
 
+    def test_repository_guardrails_are_discoverable_and_server_enforced(self):
+        workflow = read("workflow.md")
+        readme = read("README.md")
+        policy = read("docs/repository-guardrails.md")
+        manifest = json.loads(read("claude-code/plugin/.claude-plugin/plugin.json"))
+        version = tuple(int(part) for part in manifest["version"].split("."))
+
+        for entrypoint in (workflow, readme):
+            with self.subTest(entrypoint=entrypoint[:40]):
+                self.assertIn("docs/repository-guardrails.md", entrypoint)
+
+        for phrase in (
+            "server-side",
+            "Require a pull request",
+            "required status checks",
+            "zero approving reviews",
+            "administrators",
+            "force pushes",
+            "deletion",
+            "explicit human authorization",
+            "authoritative API readback",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, policy)
+
+        self.assertGreaterEqual(version, (0, 6, 18))
+
 
 class AdapterConsistencyContractTests(unittest.TestCase):
     def test_standalone_agents_include_required_contracts_in_the_package(self):

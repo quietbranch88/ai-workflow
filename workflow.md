@@ -35,8 +35,9 @@ Stop only when a decision can change the result, authorization, or data-loss bou
 
 ## Proportional workspace isolation
 
-Every write belongs on a feature branch. Add a dedicated worktree when the task
-is non-trivial, parallel work is active, or the shared checkout must stay stable:
+Every write belongs on a feature branch; protected default branches follow the
+[repository guardrails](docs/repository-guardrails.md). Add a dedicated worktree
+when the task is non-trivial, parallel work is active, or the shared checkout must stay stable:
 
 ```bash
 git worktree add ../<repo>-<ticket> -b <ticket>    # or: wt <ticket> (shell/aliases.sh)

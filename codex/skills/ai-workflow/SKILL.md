@@ -25,6 +25,7 @@ Read additional guidance from the checkout only when the task needs it:
 - Requirement gaps: `prompts/grill-me.md`.
 - Verification contracts: `docs/verification.md`.
 - Review and finding disposition: `docs/review.md`.
+- Protected default branches: `docs/repository-guardrails.md`.
 - New or updated third-party skills: `docs/skill-trust.md`.
 - Private task records: `docs/local-spec-policy.md`.
 
