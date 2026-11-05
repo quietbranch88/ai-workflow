@@ -1,6 +1,6 @@
 # Todo
 
-- [ ] Publish and verify the approved repository guardrail, including the hosted
+- [x] Publish and verify the approved repository guardrail, including the hosted
       PR check and authoritative GitHub branch-protection readback. See
       `.spec/repository-guardrails-20261105/`.
 

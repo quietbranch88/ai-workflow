@@ -40,8 +40,17 @@
 - Force pushes and deletion: disabled.
 - Hosted pull-request evidence is pending the feature-branch publication.
 
+## Hosted pull-request evidence
+
+- PR #37 launched `Workflow contracts` on source `0513ba4`, proving that the
+  required check is attached to the pull-request path.
+- The first hosted run failed only at the Ship record gate: one unchecked item
+  in `current.md` and three in `tasks.md`. Repository tests had passed before
+  that step. This final record update resolves those known items; the next run's
+  conclusion is a GitHub delivery receipt, not preclaimed local evidence.
+
 ## Delivery state
 
 - Prepared and locally verified in an isolated feature worktree.
-- The approved `main` protection setting is applied and read back. PR
-  publication, merge, deployment, and plugin installation are not yet claimed.
+- The approved `main` protection setting is applied and read back, and PR #37 is
+  published. Merge, deployment, and plugin installation are not yet claimed.

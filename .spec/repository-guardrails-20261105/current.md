@@ -40,10 +40,11 @@ repository so direct pushes cannot bypass pull-request evidence and hosted check
   - Oracle: GitHub permits zero required approvals while still requiring a PR.
   - Required boundary: policy text and branch-protection configuration.
 
-- [ ] Observable: `main` rejects direct pushes, force pushes, and deletion and
+- [x] Observable: `main` rejects direct pushes, force pushes, and deletion and
   requires the `Workflow contracts` check on pull requests, with admin enforcement.
   - Environment: GitHub repository `quietbranch88/ai-workflow`.
-  - Verify: authoritative branch-protection API readback and a green PR check.
+  - Verify: authoritative branch-protection API readback and an enforced PR check;
+    the final green result remains a delivery receipt on the pull request.
   - Oracle: GitHub branch protection response for `main`.
   - Required boundary: repository branch settings; no deployment boundary.
 

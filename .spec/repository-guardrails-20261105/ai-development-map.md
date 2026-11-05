@@ -4,12 +4,12 @@
 
 - Repository / branch: `~/.ai-workflow`,
   `codex/repository-guardrails-20261105`.
-- Current goal and next action: publish the locally verified documentation PR,
-  observe its hosted check, then reconcile the final delivery state.
+- Current goal and next action: push the final task-record reconciliation,
+  observe PR #37's hosted check, then reconcile the merge state.
 - Last verified: 2026-11-05 local Mac; 98 tests, both strict plugin validators,
   WIP validation, and GitHub branch-protection readback passed.
-- Open boundaries: no PR, merge, deployment, or installation has been claimed;
-  hosted PR evidence is still pending.
+- Open boundaries: PR #37 exists and its first hosted run found only the expected
+  unchecked Ship records; no merge, deployment, or installation is claimed.
 - Push environment note: the installed pre-commit hook's relative config path
   does not resolve from a linked worktree; WIP and range checks were run manually
   before the documented one-shot no-config retry.
