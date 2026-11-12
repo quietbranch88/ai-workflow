@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Prepare portable context-loading, compaction and fresh-session evidence
+      guidance with preserved safety gates and synchronized workflow mirror.
+      See `.spec/context-loading-20261112/`; merge and activation remain separate.
+
 - [x] Prepare and verify the reviewed cost-evidence contract and builder mirror.
       See `.spec/cost-evidence-20261105/`; no pilot or installation is implied.
 

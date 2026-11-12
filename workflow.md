@@ -58,8 +58,8 @@ git worktree add ../<repo>-<ticket> -b <ticket>    # or: wt <ticket> (shell/alia
 
 ## Context discipline (two-tier docs)
 
-Docs split into two tiers. The split is what keeps a coding agent aligned across sessions
-without anyone having to remember to update things.
+Docs split into two tiers; keep them current and load [context by task](context-management.md#context-loading-and-compaction).
+Small entrypoints and on-demand detail never waive applicable safety or verification gates.
 
 - **Living tier** — must always reflect the current state:
   - `.spec/<ticket>/current.md` (the spec / current truth), `.spec/<ticket>/tasks.md`

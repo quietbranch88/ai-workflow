@@ -1,5 +1,16 @@
 # Devlog
 
+## 2026-11-12 — Define on-demand context loading
+
+- Keep core safety gates and explicit mandatory document routes available; load
+  applicable detail before dependent work and reread missing rules after compaction.
+- Bound routine tool results, separate external memory writes from compaction,
+  and require trace-based fresh-session claims with scoped token/cost evidence.
+- Synchronize the canonical workflow route and Claude mirror; plugin source
+  version 0.6.20. No personal policies, runtime intervention or savings promise.
+- Validation and feature-branch delivery are tracked in
+  `.spec/context-loading-20261112/`; merge and plugin installation remain separate.
+
 ## 2026-11-05 — Define evidence for agent cost comparisons
 
 - Distinguish billed cost, price estimates and token proxies, including cache
