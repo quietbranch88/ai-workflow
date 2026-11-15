@@ -16,7 +16,8 @@
 Use one block per criterion. Missing fields produce a warning so old or draft
 specs stay workable; Ship still requires every checkbox to be complete.
 
-- [ ] Observable: <result a reviewer can see or measure>
+- [ ] AC-1: <one User Story acceptance condition>
+  - Observable: <result a reviewer can see or measure>
   - Environment: <local, CI, staging, production, or named device>
   - Verify: <exact command or numbered manual steps>
   - Oracle: <independent requirement, invariant, versioned contract or incident fixture>

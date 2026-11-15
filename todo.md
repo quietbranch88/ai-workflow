@@ -1,5 +1,8 @@
 # Todo
 
+- [x] Implement and locally verify acceptance-to-evidence mapping in existing records.
+      See `.spec/verification-map-20261115/`; no publication or activation is implied.
+
 - [x] Prepare portable context-loading, compaction and fresh-session evidence
       guidance with preserved safety gates and synchronized workflow mirror.
       See `.spec/context-loading-20261112/`; merge and activation remain separate.

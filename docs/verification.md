@@ -245,6 +245,34 @@ the code and one status line in the current section in the same pull request.
 A personal project also includes `devlog.md` and `todo.md`. A team project
 follows its own convention for those two files.
 
+## Acceptance-to-evidence links
+
+Use the existing `current.md` and `tasks.md`, not a second evidence document.
+Give acceptance checklist items stable `AC-1:` IDs. New task templates declare
+`Verification map: required`; each mapped task has `Acceptance: AC-1` (or a
+comma-separated list), `Oracle`, `Required boundary`, `Verify`, `Detection` and
+`Evidence` fields. Setup tasks need no artificial acceptance link.
+
+Use `Detection: mutation: <evidence reference>` or `fail-to-pass: <reference>`;
+for behavior-neutral work use `not-applicable: <reason>`. Reuse valid detection
+evidence for the same requirement and tested revision/boundary. Prioritize critical
+failure paths and settings; no global mutation or verification-token percentage
+is required. A planned WIP record may say evidence is not run yet; keep it open.
+
+The existing document validator checks declared/covered IDs and populated fields
+when the marker or an Acceptance field is present. Legacy tickets remain valid
+without opting in. It reads the target Git revision in range mode and never runs
+recorded commands. It cannot establish evidence truth, independence or product
+correctness; reviewers inspect the referenced results and product CI runs the
+checks. Passing this structural gate is not a product-verification claim.
+
+Prefer a type/API constraint, lint rule or regression test for a recurring,
+mechanically detectable mistake, then remove the redundant prose reminder while
+retaining requirement sources, decisions and authorization boundaries. Consider
+TLA+ for complex concurrent state models or Lean for precise algorithm properties
+only when the risk warrants it; model/proof assumptions must match the product,
+and real-boundary verification still applies.
+
 ## Evidence record
 
 Record revision, environment/service versions, exact commands or reproducible steps,
