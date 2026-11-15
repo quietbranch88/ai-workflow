@@ -65,6 +65,19 @@ class VerificationMapTests(unittest.TestCase):
                     self.assertNotEqual(0, result.returncode, result.stdout)
                     self.assertIn(field, result.stderr)
 
+    def test_real_content_with_angle_brackets_or_todo_words_passes(self):
+        for value in ['rendered <br> tag check passed', 'parser returns Vec<String>; test passed',
+                      'Map<K, V> lookup test passed', 'line-break uses <br/> ok',
+                      'a<b && c>d assertion passed', 'removed the TODO comment; 3 tests passed',
+                      'see `git show <rev>:path` for the run', 'RFC 9110 <section 15> response rules',
+                      'a < b and c > d held', 'span <div> wrapper rendered']:
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                tasks = TASKS.replace('audit.md records revision, environment, assertion and result', value)
+                self.fixture(root, tasks=tasks)
+                result = self.run_check(root)
+                self.assertEqual(0, result.returncode, result.stderr)
+
     def test_detection_explanation_cannot_be_filler(self):
         for invalid in ['mutation: TODO', 'mutation: ...', 'fail-to-pass: N/A']:
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory() as tmp:

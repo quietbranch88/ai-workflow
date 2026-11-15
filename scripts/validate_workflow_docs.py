@@ -207,18 +207,24 @@ def acceptance_blocks(text: str) -> list[str]:
 
 
 FILLER_VALUE = re.compile(r"(?i)(?:todo|n/?a|none|-+|\.+|…)")
-ANGLE_PLACEHOLDER = re.compile(r"<[A-Za-z][^<>\r\n]*>")
+# Template slots are lowercase words, e.g. <later> or <evidence reference>.
+# Code (`...`), generics (<String>, <K, V>), comparisons and short HTML tags are content.
+ANGLE_SLOT = re.compile(r"<([a-z][a-z \-]*[a-z])>")
+HTML_TAGS = {"br", "hr", "div", "span", "code", "pre", "table", "thead", "tbody", "td", "tr", "th",
+             "li", "ul", "ol", "img", "input", "form", "body", "head", "html", "script", "style"}
 
 
 def is_filler(value: str) -> bool:
     """True when a mapped field holds no checkable content."""
     value = value.strip()
+    prose = re.sub(r"`[^`]*`", "", value)
+    slots = [slot for slot in ANGLE_SLOT.findall(prose) if slot not in HTML_TAGS]
     return (
         not value
         or bool(FILLER_VALUE.fullmatch(value))
-        or bool(re.search(r"(?i)\bTODO\b", value))
-        or bool(ANGLE_PLACEHOLDER.search(value))
-        or bool(PLACEHOLDER.search(value))
+        or bool(re.match(r"(?i)TODO\b", value))
+        or bool(slots)
+        or bool(PLACEHOLDER.search(prose))
     )
 
 
