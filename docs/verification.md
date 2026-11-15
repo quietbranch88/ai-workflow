@@ -258,6 +258,8 @@ for behavior-neutral work use `not-applicable: <reason>`. Reuse valid detection
 evidence for the same requirement and tested revision/boundary. Prioritize critical
 failure paths and settings; no global mutation or verification-token percentage
 is required. A planned WIP record may say evidence is not run yet; keep it open.
+The validator does not detect a checked task whose evidence was never run;
+reviewers check that.
 
 The existing document validator checks declared/covered IDs and populated fields
 when the marker or an Acceptance field is present. Legacy tickets remain valid

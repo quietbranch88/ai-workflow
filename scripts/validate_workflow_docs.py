@@ -206,13 +206,29 @@ def acceptance_blocks(text: str) -> list[str]:
     return blocks
 
 
+FILLER_VALUE = re.compile(r"(?i)(?:todo|n/?a|none|-+|\.+|…)")
+ANGLE_PLACEHOLDER = re.compile(r"<[A-Za-z][^<>\r\n]*>")
+
+
+def is_filler(value: str) -> bool:
+    """True when a mapped field holds no checkable content."""
+    value = value.strip()
+    return (
+        not value
+        or bool(FILLER_VALUE.fullmatch(value))
+        or bool(re.search(r"(?i)\bTODO\b", value))
+        or bool(ANGLE_PLACEHOLDER.search(value))
+        or bool(PLACEHOLDER.search(value))
+    )
+
+
 def validate_verification_map(report: Report, current: str, tasks: str, relative: str) -> None:
     """Check declared links only; never execute Verify or certify evidence truth."""
     heading = re.search(r"(?mi)^## Acceptance[ \t]*$", tasks)
     task_body = tasks[:heading.start()] if heading else tasks
-    field_pattern = r"(?mi)^[ \t]*-[ \t]+Acceptance:[ \t]*([^\r\n]*)$"
+    field_pattern = rf"(?mi)^[ \t]*{LIST_MARKER}[ \t]+Acceptance:[ \t]*([^\r\n]*)$"
     if not re.search(field_pattern, task_body) and not re.search(
-        r"(?mi)^Verification map:[ \t]*required[ \t]*$", tasks
+        rf"(?mi)^[ \t]*(?:{LIST_MARKER}[ \t]+)?Verification map:[ \t]*required[ \t]*$", tasks
     ):
         return  # Legacy tickets opt in; no historical migration is implied.
 
@@ -248,16 +264,16 @@ def validate_verification_map(report: Report, current: str, tasks: str, relative
             covered.add(criterion)
         for name in ("Oracle", "Required boundary", "Verify", "Detection", "Evidence"):
             values = re.findall(
-                rf"(?mi)^[ \t]*-[ \t]+{re.escape(name)}:[ \t]*([^\r\n]*)$", block
+                rf"(?mi)^[ \t]*{LIST_MARKER}[ \t]+{re.escape(name)}:[ \t]*([^\r\n]*)$", block
             )
             value = values[0].strip() if len(values) == 1 else ""
-            if not value or re.fullmatch(r"<[^>]+>", value) or PLACEHOLDER.search(value):
+            if is_filler(value):
                 report.errors.append(Finding(relative, f"{label}: {name} requires one populated field"))
             elif name == "Detection":
                 detection = re.fullmatch(
                     r"(?:mutation|fail-to-pass|not-applicable):[ \t]*(\S[^\r\n]*)", value
                 )
-                if not detection or re.fullmatch(r"<[^>]+>", detection.group(1).strip()):
+                if not detection or is_filler(detection.group(1)):
                     report.errors.append(Finding(relative, f"{label}: Detection requires mutation, fail-to-pass, or not-applicable plus evidence/reason"))
     for criterion in sorted(criteria - covered):
         report.errors.append(Finding(relative, f"unmapped acceptance criterion: {criterion}"))

@@ -53,6 +53,49 @@ class VerificationMapTests(unittest.TestCase):
                     self.assertNotEqual(0, result.returncode, result.stdout)
                     self.assertIn(field, result.stderr)
 
+    def test_filler_values_count_as_placeholders(self):
+        for field in ['Oracle', 'Required boundary', 'Verify', 'Detection', 'Evidence']:
+            for value in ['TODO', '...', 'N/A', '-', 'see <later> x']:
+                with self.subTest(field=field, value=value), tempfile.TemporaryDirectory() as tmp:
+                    root = Path(tmp)
+                    tasks = '\n'.join('  - ' + field + ': ' + value if line.strip().startswith('- ' + field + ':') else line
+                                      for line in TASKS.splitlines())
+                    self.fixture(root, tasks=tasks)
+                    result = self.run_check(root)
+                    self.assertNotEqual(0, result.returncode, result.stdout)
+                    self.assertIn(field, result.stderr)
+
+    def test_detection_explanation_cannot_be_filler(self):
+        for invalid in ['mutation: TODO', 'mutation: ...', 'fail-to-pass: N/A']:
+            with self.subTest(invalid=invalid), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                self.fixture(root, tasks=TASKS.replace(
+                    'mutation: wrong report result fails unchanged assertions', invalid))
+                result = self.run_check(root)
+                self.assertNotEqual(0, result.returncode, result.stdout)
+                self.assertIn('Detection', result.stderr)
+
+    def test_other_list_markers_still_opt_in_and_are_checked(self):
+        starred = '\n'.join(line.replace('  - ', '  * ', 1) if line.startswith('  - ') else line
+                            for line in TASKS.splitlines())
+        cases = {
+            'starred fields, no marker': starred.replace('Verification map: required', ''),
+            'starred fields, listed marker': starred.replace('Verification map: required',
+                                                             '- Verification map: required'),
+        }
+        for name, tasks in cases.items():
+            with self.subTest(case=name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                self.fixture(root, tasks=tasks)
+                self.assertEqual(0, self.run_check(root).returncode, 'complete starred record should pass')
+            with self.subTest(case=name + ', empty Oracle'), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                broken = tasks.replace('  * Oracle: current.md AC-1 and the report schema contract', '  * Oracle:')
+                self.fixture(root, tasks=broken)
+                result = self.run_check(root)
+                self.assertNotEqual(0, result.returncode, result.stdout)
+                self.assertIn('Oracle', result.stderr)
+
     def test_missing_duplicate_unknown_or_uncovered_criterion_fails(self):
         cases = [
             (CURRENT.replace('AC-1:', 'No ID:'), TASKS),

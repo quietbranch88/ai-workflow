@@ -21,6 +21,7 @@ existing failure for the same requirement/revision/boundary instead of repeating
 ## Acceptance
 
 - [ ] Mapped results were reviewed; structural validation is not proof of correctness
+- [ ] Assertions were not weakened to make checks pass
 - [ ] Required real boundaries and affected failure/recovery cases ran; substitutions are labeled
 - [ ] Applicable UI interactions and results were checked in Chrome or the native app/emulator
 - [ ] Applicable security, dependency and secret scans and missing tools are recorded
