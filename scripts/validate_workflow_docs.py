@@ -13,7 +13,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 SPEC_PATH = re.compile(r"^\.spec/(.+)/(current|tasks)\.md$", re.IGNORECASE)
@@ -323,7 +323,7 @@ def validate_file_structure(
                 Finding(relative, "Tasks requires at least one Acceptance checklist item")
             )
         current_root = root if root is not None else path.parent
-        current_relative = str(Path(relative).with_name("current.md")) if root is not None else "current.md"
+        current_relative = str(PurePosixPath(relative).with_name("current.md")) if root is not None else "current.md"
         current = read_document(current_root, current_relative, revision) or ""
         validate_verification_map(report, without_fenced_code(current), prose, relative)
 

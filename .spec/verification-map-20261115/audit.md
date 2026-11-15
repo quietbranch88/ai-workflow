@@ -72,3 +72,16 @@
 - This follow-up records check receipts only. No runtime source, acceptance
   oracle or tests changed after the final suite. Branch remains local; no PR,
   merge, hosted CI, plugin activation or installed-source update is claimed.
+
+## Cross-platform path follow-up
+
+- Final range review found that host-native Path formatting could send Windows
+  backslashes to Git object lookup. Use PurePosixPath for the Git-relative
+  current.md reference; filesystem paths retain Path. This changes only that
+  lookup path, not oracles, assertions or the detection gate.
+- Windows execution itself remains untested on this Mac; portable path formatting
+  is source-reviewed and tracked/local-only CLI fixtures run locally.
+
+- After the path correction, the full suite ran 107 tests in 89.807 seconds;
+  all passed. Earlier mutation evidence exercises the unchanged gate call;
+  fixed-revision and local-only tests cover the updated path lookup.
