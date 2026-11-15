@@ -13,7 +13,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 SPEC_PATH = re.compile(r"^\.spec/(.+)/(current|tasks)\.md$", re.IGNORECASE)
@@ -206,6 +206,86 @@ def acceptance_blocks(text: str) -> list[str]:
     return blocks
 
 
+FILLER_VALUE = re.compile(r"(?i)(?:todo|n/?a|none|-+|\.+|…)")
+# Template slots are lowercase words, e.g. <later> or <evidence reference>.
+# Code (`...`), generics (<String>, <K, V>), comparisons and short HTML tags are content.
+ANGLE_SLOT = re.compile(r"<([a-z][a-z \-]*[a-z])>")
+HTML_TAGS = {"br", "hr", "div", "span", "code", "pre", "table", "thead", "tbody", "td", "tr", "th",
+             "li", "ul", "ol", "img", "input", "form", "body", "head", "html", "script", "style",
+             "details", "summary", "section", "article", "nav", "header", "footer", "main", "label", "button"}
+
+
+def is_filler(value: str) -> bool:
+    """True when a mapped field holds no checkable content."""
+    value = value.strip()
+    prose = re.sub(r"`[^`]*`", "", value)
+    slots = [slot for slot in ANGLE_SLOT.findall(prose) if slot not in HTML_TAGS]
+    return (
+        not value
+        or bool(FILLER_VALUE.fullmatch(value))
+        or bool(re.match(r"TODO(?:\s*:|\s*$)", value))
+        or bool(slots)
+        or bool(PLACEHOLDER.search(prose))
+    )
+
+
+def validate_verification_map(report: Report, current: str, tasks: str, relative: str) -> None:
+    """Check declared links only; never execute Verify or certify evidence truth."""
+    heading = re.search(r"(?mi)^## Acceptance[ \t]*$", tasks)
+    task_body = tasks[:heading.start()] if heading else tasks
+    field_pattern = rf"(?mi)^[ \t]*{LIST_MARKER}[ \t]+Acceptance:[ \t]*([^\r\n]*)$"
+    if not re.search(field_pattern, task_body) and not re.search(
+        rf"(?mi)^[ \t]*(?:{LIST_MARKER}[ \t]+)?Verification map:[ \t]*required[ \t]*$", tasks
+    ):
+        return  # Legacy tickets opt in; no historical migration is implied.
+
+    criteria: set[str] = set()
+    for block in acceptance_blocks(current):
+        match = re.match(rf"{LIST_MARKER}[ \t]+\[[ xX]\][ \t]+(AC-[1-9]\d*):", block)
+        if not match:
+            report.errors.append(Finding(relative, "mapped acceptance requires unique AC-<number>: IDs in current.md"))
+            continue
+        criterion = match.group(1)
+        if criterion in criteria:
+            report.errors.append(Finding(relative, f"duplicate acceptance ID: {criterion}"))
+        criteria.add(criterion)
+
+    covered: set[str] = set()
+    starts = list(TASK_CHECKBOX.finditer(task_body))
+    for index, start in enumerate(starts):
+        end = starts[index + 1].start() if index + 1 < len(starts) else len(task_body)
+        block = task_body[start.start():end]
+        links = re.findall(field_pattern, block)
+        if not links:
+            continue  # Setup/coordination tasks need not invent acceptance evidence.
+        label = block.splitlines()[0].strip()
+        if len(links) != 1 or not re.fullmatch(r"AC-[1-9]\d*(?:[ \t]*,[ \t]*AC-[1-9]\d*)*", links[0].strip()):
+            report.errors.append(Finding(relative, f"{label}: Acceptance requires comma-separated AC IDs"))
+            continue
+        ids = [value.strip() for value in links[0].split(",")]
+        if len(ids) != len(set(ids)):
+            report.errors.append(Finding(relative, f"{label}: duplicate Acceptance reference"))
+        for criterion in ids:
+            if criterion not in criteria:
+                report.errors.append(Finding(relative, f"{label}: unknown Acceptance reference {criterion}"))
+            covered.add(criterion)
+        for name in ("Oracle", "Required boundary", "Verify", "Detection", "Evidence"):
+            values = re.findall(
+                rf"(?mi)^[ \t]*{LIST_MARKER}[ \t]+{re.escape(name)}:[ \t]*([^\r\n]*)$", block
+            )
+            value = values[0].strip() if len(values) == 1 else ""
+            if is_filler(value):
+                report.errors.append(Finding(relative, f"{label}: {name} requires one populated field"))
+            elif name == "Detection":
+                detection = re.fullmatch(
+                    r"(?:mutation|fail-to-pass|not-applicable):[ \t]*(\S[^\r\n]*)", value
+                )
+                if not detection or is_filler(detection.group(1)):
+                    report.errors.append(Finding(relative, f"{label}: Detection requires mutation, fail-to-pass, or not-applicable plus evidence/reason"))
+    for criterion in sorted(criteria - covered):
+        report.errors.append(Finding(relative, f"unmapped acceptance criterion: {criterion}"))
+
+
 def validate_file_structure(
     report: Report, path: Path, relative: str, kind: str, mode: str, *,
     root: Path | None = None, revision: str | None = None,
@@ -265,6 +345,10 @@ def validate_file_structure(
             report.errors.append(
                 Finding(relative, "Tasks requires at least one Acceptance checklist item")
             )
+        current_root = root if root is not None else path.parent
+        current_relative = str(PurePosixPath(relative).with_name("current.md")) if root is not None else "current.md"
+        current = read_document(current_root, current_relative, revision) or ""
+        validate_verification_map(report, without_fenced_code(current), prose, relative)
 
 
 def validate_workflow_documents(

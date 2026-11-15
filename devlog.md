@@ -1,5 +1,15 @@
 # Devlog
 
+## 2026-11-15 — Link acceptance to checks and detection evidence
+
+- Reuse spec/task records with stable acceptance IDs and optional mapped-field validation;
+  preserve legacy tickets, WIP, private records and immutable Git-range reads.
+- Add CLI regression fixtures for incomplete evidence, mapping errors and commands
+  that must never execute; structural success does not certify product behavior.
+- Synchronize the verification contract and builder mirror; plugin source 0.6.21.
+- Local implementation/evidence: `.spec/verification-map-20261115/`; publication,
+  merge, installation and product adoption remain separate.
+
 ## 2026-11-12 — Define on-demand context loading
 
 - Keep core safety gates and explicit mandatory document routes available; load
