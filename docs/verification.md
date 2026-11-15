@@ -260,6 +260,8 @@ failure paths and settings; no global mutation or verification-token percentage
 is required. A planned WIP record may say evidence is not run yet; keep it open.
 The validator does not detect a checked task whose evidence was never run;
 reviewers check that.
+Its filler check catches common template placeholders (empty, `TODO`, `N/A`,
+`<lowercase slot>`); it is a heuristic, so reviewers still read every value.
 
 The existing document validator checks declared/covered IDs and populated fields
 when the marker or an Acceptance field is present. Legacy tickets remain valid

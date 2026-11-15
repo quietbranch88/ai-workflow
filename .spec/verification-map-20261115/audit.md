@@ -85,3 +85,10 @@
 - After the path correction, the full suite ran 107 tests in 89.807 seconds;
   all passed. Earlier mutation evidence exercises the unchanged gate call;
   fixed-revision and local-only tests cover the updated path lookup.
+
+## Fresh review (2026-11-15, Claude reviewer, three rounds)
+
+- R1 at 8821dcf: AIWF-R1-01 (P2) filler values such as TODO, N/A, "...", inline `<later>` passed mapped fields; AIWF-R1-02 (P2) `*`/`+`/numbered bullets skipped the mapping check; R1-03..05 (P3) doc wording, removed builder marker, removed template line. Fixed in 353c4dc with tests that failed first.
+- R2 at 353c4dc: R1 fixes verified; AIWF-R2-01 (P2) the new filler check rejected real content (`Vec<String>`, `<br>`, inline code). Fixed in 6b6717f with tests that failed first (9 of 10 red).
+- R3 at 6b6717f: R2-01 verified; AIWF-R3-02 (P3) `todo-list`, `Todo app`, `<details>` rejected; fixed with tests that failed first (3 red). AIWF-R3-01 (P3) capitalised/underscored slots such as `<Later>`, `<evidence_ref>` and a trailing `TODO later` still pass: accepted as a heuristic limit and documented; reviewers read every value. Round cap reached; no fourth review round.
+- Gitleaks over c6e6887..HEAD: no leaks. No dependency or lockfile changes. Full suite: 111 tests OK at the final commit.

@@ -211,7 +211,8 @@ FILLER_VALUE = re.compile(r"(?i)(?:todo|n/?a|none|-+|\.+|…)")
 # Code (`...`), generics (<String>, <K, V>), comparisons and short HTML tags are content.
 ANGLE_SLOT = re.compile(r"<([a-z][a-z \-]*[a-z])>")
 HTML_TAGS = {"br", "hr", "div", "span", "code", "pre", "table", "thead", "tbody", "td", "tr", "th",
-             "li", "ul", "ol", "img", "input", "form", "body", "head", "html", "script", "style"}
+             "li", "ul", "ol", "img", "input", "form", "body", "head", "html", "script", "style",
+             "details", "summary", "section", "article", "nav", "header", "footer", "main", "label", "button"}
 
 
 def is_filler(value: str) -> bool:
@@ -222,7 +223,7 @@ def is_filler(value: str) -> bool:
     return (
         not value
         or bool(FILLER_VALUE.fullmatch(value))
-        or bool(re.match(r"(?i)TODO\b", value))
+        or bool(re.match(r"TODO(?:\s*:|\s*$)", value))
         or bool(slots)
         or bool(PLACEHOLDER.search(prose))
     )

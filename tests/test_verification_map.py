@@ -70,7 +70,9 @@ class VerificationMapTests(unittest.TestCase):
                       'Map<K, V> lookup test passed', 'line-break uses <br/> ok',
                       'a<b && c>d assertion passed', 'removed the TODO comment; 3 tests passed',
                       'see `git show <rev>:path` for the run', 'RFC 9110 <section 15> response rules',
-                      'a < b and c > d held', 'span <div> wrapper rendered']:
+                      'a < b and c > d held', 'span <div> wrapper rendered',
+                      'todo-list feature verified at abc123', 'Todo app E2E passed',
+                      '<details> block rendered']:
             with self.subTest(value=value), tempfile.TemporaryDirectory() as tmp:
                 root = Path(tmp)
                 tasks = TASKS.replace('audit.md records revision, environment, assertion and result', value)
