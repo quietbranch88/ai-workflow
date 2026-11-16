@@ -56,3 +56,17 @@
   The original PR #40 is already merged; no duplicate PR is needed.
 - Local checks and PR metadata are ready. Push/PR creation and hosted CI are
   pending until actual provider receipts are obtained. No merge is authorized.
+
+## Confirmed publication receipts
+
+- `python3 scripts/check_close_the_loop.py` with explicit main/HEAD refs and
+  committed-range Ship validation both passed with zero warnings before push.
+- Gitleaks 8.24.3 outgoing range main..0ee6f19: exit 0, one commit scanned,
+  no leaks. Directory scan also had no leaks.
+- `git push -u github fix/verification-map-valid-content-20261116` succeeded;
+  GitHub ref readback confirmed 0ee6f1958dc0638ad9731b9a4feea8aaf3b7f883.
+- PR #41 created and read back as OPEN against main:
+  https://github.com/quietbranch88/ai-workflow/pull/41
+- This receipt-only commit changes no executable source or tests. Follow the
+  PR's live check results for its final head, not the historical creation snapshot.
+  No merge, deployment, repository setting change or plugin activation occurred.

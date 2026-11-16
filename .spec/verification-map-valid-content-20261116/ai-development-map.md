@@ -10,5 +10,6 @@
 - Structural checking is not semantic proof; inherited Low subprocess warnings
   remain, and no Windows execution, production probe or dependency audit is claimed.
 - Authority: push a reviewed feature branch and open a PR; do not merge or deploy.
-- Delivery is prepared, not confirmed; record actual remote SHA/PR/CI receipts
-  in audit.md after the provider confirms each operation.
+- Delivery confirmed: PR #41 is OPEN at
+  https://github.com/quietbranch88/ai-workflow/pull/41 ; receipts are in audit.md.
+  Read live hosted checks for the current head; do not infer merge or activation.
