@@ -209,10 +209,11 @@ def acceptance_blocks(text: str) -> list[str]:
 FILLER_VALUE = re.compile(r"(?i)(?:todo|n/?a|none|-+|\.+|…)")
 # Template slots are lowercase words, e.g. <later> or <evidence reference>.
 # Code (`...`), generics (<String>, <K, V>), comparisons and short HTML tags are content.
-ANGLE_SLOT = re.compile(r"<([a-z][a-z \-]*[a-z])>")
+ANGLE_SLOT = re.compile(r"(?<![\w.])<([a-z][a-z \-]*[a-z])>")
 HTML_TAGS = {"br", "hr", "div", "span", "code", "pre", "table", "thead", "tbody", "td", "tr", "th",
              "li", "ul", "ol", "img", "input", "form", "body", "head", "html", "script", "style",
-             "details", "summary", "section", "article", "nav", "header", "footer", "main", "label", "button"}
+             "details", "summary", "section", "article", "nav", "header", "footer", "main", "label", "button",
+             "strong", "em", "a", "b", "i", "u", "p"}
 
 
 def is_filler(value: str) -> bool:
@@ -241,7 +242,7 @@ def validate_verification_map(report: Report, current: str, tasks: str, relative
 
     criteria: set[str] = set()
     for block in acceptance_blocks(current):
-        match = re.match(rf"{LIST_MARKER}[ \t]+\[[ xX]\][ \t]+(AC-[1-9]\d*):", block)
+        match = re.match(rf"[ \t]*{LIST_MARKER}[ \t]+\[[ xX]\][ \t]+(AC-[1-9]\d*):", block)
         if not match:
             report.errors.append(Finding(relative, "mapped acceptance requires unique AC-<number>: IDs in current.md"))
             continue

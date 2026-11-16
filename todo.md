@@ -1,5 +1,9 @@
 # Todo
 
+- [x] Prepare the reviewed valid-content correction and verification evidence.
+      See `.spec/verification-map-valid-content-20261116/`; PR #40 is already
+      merged, so authorized delivery uses a separate follow-up PR.
+
 - [x] Implement and locally verify acceptance-to-evidence mapping in existing records.
       See `.spec/verification-map-20261115/`; no publication or activation is implied.
 

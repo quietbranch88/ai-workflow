@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-11-16 — Preserve valid verification evidence
+
+- Fix review findings IR-01/IR-02: preserve indented acceptance IDs and accept
+  directly adjacent lowercase generic types and common formatting tags.
+- Keep known filler rejection, legacy/WIP behavior and private-record boundaries.
+- New tests fail first on merged main; the corrected CLI passes independent probes
+  and the 113-test repository suite. Security scope and receipts are recorded in
+  `.spec/verification-map-valid-content-20261116/`; merge/activation are separate.
+
 ## 2026-11-15 — Link acceptance to checks and detection evidence
 
 - Reuse spec/task records with stable acceptance IDs and optional mapped-field validation;
