@@ -20,6 +20,28 @@ TASKS = VALID_TASKS.replace('# Tasks', '# Tasks\n\nVerification map: required').
 
 
 class VerificationMapTests(unittest.TestCase):
+    def test_indented_acceptance_keeps_existing_checklist_compatibility(self):
+        for indent in [' ', '  ', '   ', '\t']:
+            with self.subTest(indent=repr(indent)), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                current = CURRENT.replace('- [ ] AC-1:', indent + '- [ ] AC-1:')
+                self.fixture(root, current=current)
+                result = self.run_check(root)
+                self.assertEqual(0, result.returncode, result.stderr)
+
+    def test_lowercase_generics_and_formatting_tags_are_real_evidence(self):
+        for value in ['List<string> round-trip assertion passed',
+                      'Map<key> retains the expected entry',
+                      'Rendered <strong> emphasis correctly in Chrome',
+                      'Rendered <em> emphasis correctly in Chrome',
+                      'Rendered <p> text correctly in Chrome']:
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                self.fixture(root, tasks=TASKS.replace(
+                    'audit.md records revision, environment, assertion and result', value))
+                result = self.run_check(root)
+                self.assertEqual(0, result.returncode, result.stderr)
+
     def fixture(self, root, current=CURRENT, tasks=TASKS, complete=True):
         create_docs(root, complete=complete)
         for name, value in [('current', current), ('tasks', tasks)]:
