@@ -88,6 +88,22 @@ occupancy. File shrinkage or a single fixture pair does not establish a general
 token, billing or quota reduction. Name the tested surface: CLI evidence is not
 proof of desktop UI, another tool adapter or an already-running session reload.
 
+## Prune documentation without losing contracts
+
+When a document is stale or duplicates maintained content, identify its owner,
+canonical replacement and inbound references before removing it. Keep User Stories,
+acceptance criteria, non-obvious rationale, decisions, evidence and authorization
+boundaries; historical records retain their append-only policy. Update affected
+routes and declared mirrors in the same patch. Comments explaining why a surprising
+constraint exists remain useful; do not delete comments or Markdown by quota.
+
+For a reminder replaced by an executable safeguard, first verify its positive and
+negative cases under the enforcement contract in `docs/verification.md`. For moving
+required detail on demand, preserve explicit triggers and run the fresh-session
+loading checks above. Report untested adapters and any missing traces. Review only
+the affected documentation; this guidance does not authorize sweeping deletions or
+changes to generated memory. Measure comparable tasks before claiming token savings.
+
 ## Resume pending operations
 
 Use the existing [resume snapshot](templates/ai-development-map.md) for external

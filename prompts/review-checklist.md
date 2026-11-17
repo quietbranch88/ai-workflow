@@ -39,6 +39,7 @@ checkpoint are in [docs/review.md](../docs/review.md).
 - [ ] Abstractions justify their responsibility, dependency boundary or test seam; a single implementation is not itself a defect
 - [ ] No hallucinated APIs (verify external calls exist)
 - [ ] Comments explain WHY where non-obvious
+- [ ] Recurring/reproducible mistakes assessed for an enforceable safeguard; any new restriction has evidence, valid/invalid checks and scoped exceptions under [verification](../docs/verification.md#enforceable-safeguards)
 
 ## Output format
 
