@@ -27,10 +27,10 @@ Stop only when a decision can change the result, authorization, or data-loss bou
 ## Stages
 
 1. **Define** — Turn the aligned request into scope, constraints, non-goals, and acceptance criteria in `.spec/<ticket>/current.md`. Each criterion should name an **Observable** result, **Environment**, and exact **Verify** command or manual step. Ask only questions that change the result or authorization.
-2. **Plan** — Break the accepted spec into atomic, dependency-ordered tasks in `.spec/<ticket>/tasks.md`. Each task names its change surface and verification.
+2. **Plan** — Break the accepted spec into atomic, dependency-ordered tasks in `.spec/<ticket>/tasks.md`. Each task names its change surface and verification. For consequential state or algorithmic invariants, assess [formal methods](docs/verification.md#formal-methods-during-plan) before implementation.
 3. **Build** — Implement one accepted slice at a time on a feature branch. Use test-first development when required or useful; TDD is otherwise optional. Follow [verification contracts](docs/verification.md), including independent oracles and applicable defect-detection evidence.
 4. **Verify** — Run the relevant checks and record exact commands, output, environment and exercised boundaries. A local pass is local evidence; it is not production-derived proof. Missing required gates remain unverified.
-5. **Review** — Use fresh context to check spec conformance, correctness, and the risks the diff actually introduces. Fix and reverify findings, or record the human decision that explicitly accepts them.
+5. **Review** — Use fresh context to check spec conformance, correctness, and the risks the diff actually introduces. Fix and reverify findings, or record the human decision that explicitly accepts them. Assess whether a recurring or reproducible error warrants an [enforceable safeguard](docs/verification.md#enforceable-safeguards); no new rule is required when it adds no value.
 6. **Ship** — Close the loop, create a cohesive commit and PR, and report what was and was not verified. Ship prepares integration; it does not authorize merge, migration, deployment, or another external state change.
 
 ## Proportional workspace isolation

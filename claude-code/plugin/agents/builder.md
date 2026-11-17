@@ -322,12 +322,82 @@ recorded commands. It cannot establish evidence truth, independence or product
 correctness; reviewers inspect the referenced results and product CI runs the
 checks. Passing this structural gate is not a product-verification claim.
 
-Prefer a type/API constraint, lint rule or regression test for a recurring,
-mechanically detectable mistake, then remove the redundant prose reminder while
-retaining requirement sources, decisions and authorization boundaries. Consider
-TLA+ for complex concurrent state models or Lean for precise algorithm properties
-only when the risk warrants it; model/proof assumptions must match the product,
-and real-boundary verification still applies.
+## Enforceable safeguards
+
+For a recurring or reproducible mistake, assess the smallest check that can reject
+it: a type/API constraint, lint rule or regression test. Record the failure evidence,
+requirement source, affected callers and chosen enforcement point in the existing
+task audit. If it is a judgment rather than a mechanically detectable property,
+retain concise guidance. This assessment does not require a new check per review.
+
+Before adopting a check, run a representative valid case and a deliberately invalid
+case. Keep the oracle unchanged and confirm the invalid case fails for the intended
+reason; reuse equivalent fail-to-pass evidence. Record where the check actually runs
+(local, CI or both), its coverage and exceptions. A local hook is not server
+enforcement. Remove a redundant prose reminder only after its replacement is
+verified, retaining requirement sources, rationale and authorization boundaries.
+
+Constrain an API only when observed misuse or a concrete contract risk justifies it.
+Inspect the actual client/version and callers before choosing a typed result,
+existing adapter, narrow wrapper or lint restriction; do not add a wrapper by default.
+State allowed callers, migration/compatibility behavior and justified exceptions.
+Verify the real adapter boundary and relevant failures, and check bypasses at the
+claimed enforcement point. A restriction requires project-scoped authorization;
+this guidance neither bans APIs globally nor authorizes modifying shared CI.
+
+For example, a Kafka interface can distinguish queued, broker-acknowledged,
+rejected and unknown outcomes. Queue admission is not broker acknowledgement;
+acknowledgement is not consumer completion. Timeout can mean an unknown outcome,
+not confirmed rejection. Test the configured client's actual contract; do not
+promise durability or exactly-once effects from an interface name or a unit test.
+
+## Formal methods during Plan
+
+Consider formal methods when a consequential property is hard to examine with
+ordinary tests: concurrent transitions, retries and partial failure, or a precise
+algorithmic invariant. Record the decision in the existing plan; simple bounded
+error propagation needs no model. Use TLA+ for state-transition designs and Lean
+for explicit propositions/proofs when appropriate expertise and tooling are available.
+Neither tool is a universal requirement or a substitute for integration evidence.
+
+Start from the User Story and acceptance invariants, then describe the smallest
+relevant states/actions and environmental assumptions. For TLA+/TLC, record the
+model/configuration revision, finite bounds, checked safety properties, and any
+liveness/fairness assumptions. Distinguish exhaustive exploration within those
+bounds from simulation or an incomplete run. A successful bounded check is not
+an unbounded proof. For Lean, record the theorem, assumptions/axioms, tool version
+and checked proof status; a proposed proof or a proof with unfilled obligations
+is not a completed verification.
+
+Inspect counterexamples against the product requirement before changing the model;
+do not weaken an invariant or exclude a required failure simply to obtain a pass.
+Map model actions/proof assumptions to implementation boundaries and turn applicable
+counterexamples into regression cases. Apply defect-detection checks to important
+implementation paths with unchanged test expectations. Record abstractions, omitted
+failures and remaining real-boundary checks in the audit. A model/proof result does
+not establish that production code implements it.
+
+Kafka retry example (illustrative, not an executed model): distinguish broker
+acceptance from delivery of its reply. Explore accept -> reply lost -> timeout ->
+retry, with duplicate effects if the modeled consumer lacks deduplication. Require
+an explicit business contract before adding deduplication; producer idempotence
+alone does not prove exactly-once business effects.
+
+## Verification effort and feedback
+
+Allocate verification by affected risk, uncertainty and uncovered acceptance, not
+a fixed percentage of tokens or a universal mutation score. Prioritize critical
+failure paths and meaningful boundaries. Reuse passing evidence only when revision,
+inputs and environment remain applicable; rerun affected checks after changes.
+
+Use existing authorized task/usage records to identify repeated reads, redundant
+checks and missing evidence. Record which acceptance criteria a check exercises,
+what it detected and what remains unverified. Keep cached input, uncached input,
+output and any included reasoning distinct; serialized image payload length is not
+a text-token count. Include review agents and failed attempts when their usage is
+available, and report missing coverage rather than estimating savings from file
+size. Apply the cost-comparison contract before claiming improvement. This adds no
+background collection, schedule, fixed quota or new transcript retention.
 
 ## Evidence record
 

@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-11-17 — Make workflow safeguards actionable
+
+- Add evidence-driven enforcement, scoped API constraints, safe documentation pruning,
+  proportional verification and optional formal-method planning.
+- Ten independent scoped reviews found no actionable defects; 113 repository tests,
+  strict plugin/marketplace checks and secret scan passed locally.
+- Evidence tracked in `.spec/enforceable-workflow-20261117/`; not published or installed.
+
 ## 2026-11-16 — Preserve valid verification evidence
 
 - Fix review findings IR-01/IR-02: preserve indented acceptance IDs and accept
