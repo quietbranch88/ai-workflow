@@ -1,6 +1,6 @@
 # Todo
 
-- [ ] Complete local review and verification for `.spec/enforceable-workflow-20261117/`.
+- [x] Complete local review and verification for `.spec/enforceable-workflow-20261117/`; publication and installation remain separate.
 
 - [x] Prepare the reviewed valid-content correction and verification evidence.
       See `.spec/verification-map-valid-content-20261116/`; PR #40 is already
