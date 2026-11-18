@@ -357,4 +357,16 @@ Name the original goal and what this run actually exercised. State whether the
 observed result matched that goal, and which part was not compared. A green
 suite, a file that contains the required words, or a command that exited 0 does
 not by itself establish the comparison.
+For large verification output, keep a compact receipt in context: tested revision,
+environment, exact command, discovered/executed/passed/failed/skipped counts when
+reported, relevant assertions and failure cause, exercised/substituted/missing
+boundaries, and a reference to the complete redacted artifact. Keep unavailable
+counts explicit; do not infer discovery or coverage from exit status. Inspect
+failure excerpts and expand to surrounding evidence when the cause remains unclear.
+Retain complete authorized evidence in the existing task/CI artifact location with
+its revision/run identity; label unavailable or expired artifacts rather than
+claiming a summary preserves retrievable proof. Respect privacy and retention rules;
+this is not permission to save secrets or upload private logs. Output reduction
+never waives a required check or changes its oracle.
+
 Reconcile completion claims with [review and delivery records](review.md).
