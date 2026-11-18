@@ -1,5 +1,11 @@
 # Devlog
 
+## 2026-11-18 — Bound tool output while preserving evidence
+
+- Scope discovery, browser observations and tool schemas without skipping required reads.
+- Preserve traceable verification receipts and authorized complete artifacts.
+- Review and delivery: `.spec/bounded-output-20261118/`.
+
 ## 2026-11-17 — Make workflow safeguards actionable
 
 - Add evidence-driven enforcement, scoped API constraints, safe documentation pruning,

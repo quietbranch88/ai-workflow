@@ -1,5 +1,7 @@
 # Todo
 
+- [ ] Review and deliver bounded-output guidance; see `.spec/bounded-output-20261118/`.
+
 - [x] Complete local review and verification for `.spec/enforceable-workflow-20261117/`; publication and installation remain separate.
 
 - [x] Prepare the reviewed valid-content correction and verification evidence.
