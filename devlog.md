@@ -1,5 +1,9 @@
 # Devlog
 
+## 2026-11-22 — Run the hook installation test in GitHub Actions
+
+The hosted job now installs pre-commit 4.7.0. The hook test names any missing executable and fails in CI.
+
 ## 2026-11-22 — Show coverage beside reviewer recall
 
 The CLI reports how many known defects were assessed across all trials. A 1/1

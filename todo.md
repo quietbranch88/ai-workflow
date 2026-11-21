@@ -1,5 +1,7 @@
 # Todo
 
+- [x] Supply the pre-commit runner for the existing GitHub Actions hook installation test.
+
 - [x] Show unassessed defects beside reviewer recall and verify the zero-assessed case (PR #44).
 
 - [x] Prepare reviewed bounded-output guidance for authorized PR delivery; see `.spec/bounded-output-20261118/`.

@@ -60,7 +60,7 @@ the four confirmed design-review findings, and link the owner's relevant writing
 - [x] Observable: the optional pre-push template launches the installed validator
   from a target repository even when the user's home path contains spaces; code
   without required living records is still rejected and a valid draft passes.
-  - Environment: disposable Git repository and real pre-commit runner.
+  - Environment: disposable Git repository and real pre-commit runner, required in GitHub Actions.
   - Verify: fail-to-pass regression using the template's actual local-hook block.
 - [x] Observable: a visible root `codex/` entry and README links guide Codex users
   to the shared sources without implying a separate installer or copied rules.
