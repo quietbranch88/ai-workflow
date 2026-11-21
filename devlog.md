@@ -1,5 +1,10 @@
 # Devlog
 
+## 2026-11-22 — Show coverage beside reviewer recall
+
+The CLI reports how many known defects were assessed across all trials. A 1/1
+result now also shows when another known defect went unassessed. See PR #44.
+
 ## 2026-11-18 — Bound tool output while preserving evidence
 
 - Scope discovery, browser observations and tool schemas without skipping required reads.

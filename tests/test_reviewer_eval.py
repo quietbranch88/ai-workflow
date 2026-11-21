@@ -75,6 +75,24 @@ class ReferenceBehaviorTests(unittest.TestCase):
 
 
 class ScorerTests(unittest.TestCase):
+    def test_cli_displays_completed_recall_with_all_known_defects(self):
+        record = sample()
+        record["results"][0]["findings"] = [
+            dict(id="f1", defect_id="mode-dispatch", reason="check calls write")]
+        record["results"][3].update(status="infrastructure_error", error="timeout", rounds=0)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "record.json"
+            path.write_text(json.dumps(record))
+            output = subprocess.check_output(
+                [sys.executable, "-X", "utf8", str(ROOT / "scripts/reviewer_eval.py"), "score", str(path)],
+                encoding="utf-8")
+        result = json.loads(output)
+        self.assertEqual(1.0, result["recall_on_completed"])
+        self.assertEqual(2, result["total_known_defects"])
+        summary = "已評檢出率 1/1（100%）。各輪合計 2 個已知缺陷，1 個確認檢出、0 個已評未檢出、1 個未評。"
+        self.assertEqual(summary, result["recall_summary"])
+        self.assertIn(summary, output)
+
     def test_hand_calculated_mixed_outcomes_and_cli(self):
         record = sample()
         record["results"][0]["findings"] = [
@@ -89,6 +107,8 @@ class ScorerTests(unittest.TestCase):
             "completed", "infrastructure_errors", "detected_defects", "missed_defects",
             "false_positive_findings", "duplicate_matches")))
         self.assertEqual(0.5, result["recall_on_completed"])
+        self.assertEqual("已評檢出率 1/2（50%）。各輪合計 2 個已知缺陷，1 個確認檢出、1 個已評未檢出、0 個未評。",
+                         result["recall_summary"])
         self.assertEqual(1.0, result["clean_case_false_alarm_rate"])
         self.assertEqual(2, result["mean_rounds_completed"])
         with tempfile.TemporaryDirectory() as directory:
@@ -105,6 +125,8 @@ class ScorerTests(unittest.TestCase):
         result = EVAL.score(record)
         self.assertIsNone(result["recall_on_completed"])
         self.assertEqual(2, result["unassessed_defects"])
+        self.assertEqual("已評檢出率無法計算（已評 0 個）。各輪合計 2 個已知缺陷，0 個確認檢出、0 個已評未檢出、2 個未評。",
+                         result["recall_summary"])
         self.assertEqual(0, result["clean_case_false_alarm_rate"])
         for result in record["results"]:
             result.update(status="infrastructure_error", error="timeout", rounds=0)

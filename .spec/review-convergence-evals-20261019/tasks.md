@@ -11,6 +11,7 @@
 - [x] Convergence tabletop, reference behavior checks and scorer mutation recorded.
 - [x] Four final case reports scored; two invalid reference versions and limitations retained.
 - [x] Independent review finding fixed; source and packaged contracts agree.
+- [x] Verified the CLI recall summary on partial, complete and zero assessment coverage in three focused regression tests (PR #44).
 
 ## Delivery boundary
 

@@ -18,6 +18,9 @@ Base: d6f1e10e3071338bd28298e38b3e0fcfc90b48c3.
 - [x] Observable: Offline scoring counts detected/missed defects, false alarms, duplicate findings, completion and review rounds, with infrastructure failures separate; invalid or incomplete records are rejected.
   - Environment: Adjudicated JSON records, no provider/network calls.
   - Verify: CLI tests with hand-calculated scores, negative inputs and a targeted scorer mutation.
+- [x] Observable: The recall summary shows detected, missed and unassessed defects alongside recall on assessed defects.
+  - Environment: Offline reviewer CLI with adjudicated synthetic records.
+  - Verify: Detecting one of two known defects with the other unassessed shows 1/1 (100%) and one unassessed. With neither assessed, recall is undefined.
 - [x] Observable: A bounded fresh-context pilot preserves raw reports and states its isolation, model and small-sample limits; no measured improvement or unattended enforcement is claimed.
   - Environment: Exported answer-free packets and separate adjudication.
   - Verify: Read reports and score against the frozen oracle; record contamination/permission limitations.
