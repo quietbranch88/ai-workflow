@@ -120,11 +120,20 @@ def score(record):
                              false_positive_findings=false_positives, rounds=count))
     require(len(seen) == len(cases) * trials,
             "Every case/trial needs a result, including infrastructure errors")
-    totals["missed_defects"] = totals["expected_defects"] - totals["detected_defects"]
+    assessed = totals["expected_defects"]
+    detected = totals["detected_defects"]
+    unassessed = totals["unassessed_defects"]
+    total_known = assessed + unassessed
+    missed = assessed - detected
+    recall = detected / assessed if assessed else None
+    completed_summary = ("已評檢出率無法計算（已評 0 個）" if recall is None else
+                         f"已評檢出率 {detected}/{assessed}（{recall * 100:g}%）")
     return {"kind": record["kind"], "dataset_digest": record["dataset_digest"],
             "metadata": metadata, "trials": trials, "scheduled": len(seen), **totals,
-            "recall_on_completed": (totals["detected_defects"] / totals["expected_defects"]
-                                    if totals["expected_defects"] else None),
+            "missed_defects": missed, "total_known_defects": total_known,
+            "recall_on_completed": recall,
+            "recall_summary": (f"{completed_summary}。各輪合計 {total_known} 個已知缺陷，"
+                               f"{detected} 個確認檢出、{missed} 個已評未檢出、{unassessed} 個未評。"),
             "clean_case_false_alarm_rate": (totals["clean_cases_with_false_alarm"] /
                                            totals["clean_cases"] if totals["clean_cases"] else None),
             "mean_rounds_completed": statistics.mean(rounds) if rounds else None,
@@ -143,7 +152,11 @@ def main():
                   score(json.loads(args.record.read_text(encoding="utf-8"))))
     except (ValueError, OSError, TypeError) as exc:
         parser.exit(2, f"reviewer-eval: {exc}\n")
-    print(json.dumps(result, indent=2, sort_keys=True))
+    try:
+        print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False))
+    except UnicodeEncodeError:
+        # Keep the report valid JSON on output streams with a legacy encoding.
+        print(json.dumps(result, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
