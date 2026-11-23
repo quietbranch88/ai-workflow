@@ -13,9 +13,15 @@ from test_workflow_enforcement import create_docs
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@unittest.skipUnless(shutil.which("pre-commit") and shutil.which("git"), "pre-commit and git required")
 class HookInstallationTests(unittest.TestCase):
     def test_template_launches_from_spaced_home_and_preserves_guard_results(self):
+        missing = [name for name in ("git", "pre-commit") if not shutil.which(name)]
+        if missing:
+            reason = "Hook installation test requires these commands on PATH: " + ", ".join(missing)
+            if os.environ.get("GITHUB_ACTIONS") == "true":
+                self.fail(reason)
+            self.skipTest(reason)
+
         with tempfile.TemporaryDirectory(prefix="workflow hook install ") as directory:
             root = Path(directory)
             fixture = root / "project"
